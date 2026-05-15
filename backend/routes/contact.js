@@ -2,7 +2,62 @@ const express = require("express");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const Contact = require("../models/Contact");
+const nodemailer = require("nodemailer");
 
+// ─── Email Transporter ────────────────────────────────────────────────────────
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+// ─── Send Notification Email ──────────────────────────────────────────────────
+async function sendNotificationEmail(submission) {
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: process.env.EMAIL_USER,
+    subject: `📩 New Enquiry from ${submission.firstName} ${submission.lastName}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
+        <div style="background: #0B1B3A; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 20px;">
+          <h1 style="color: #00D4AA; margin: 0; font-size: 24px;">VI Microsystems</h1>
+          <p style="color: rgba(255,255,255,0.6); margin: 5px 0 0;">New Contact Form Submission</p>
+        </div>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr style="background: #f8f9fa;">
+            <td style="padding: 12px; font-weight: bold; color: #475569; width: 40%;">Full Name</td>
+            <td style="padding: 12px; color: #0F172A;">${submission.firstName} ${submission.lastName}</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; font-weight: bold; color: #475569;">Email</td>
+            <td style="padding: 12px;"><a href="mailto:${submission.email}" style="color: #1A56DB;">${submission.email}</a></td>
+          </tr>
+          <tr style="background: #f8f9fa;">
+            <td style="padding: 12px; font-weight: bold; color: #475569;">Enquiry Type</td>
+            <td style="padding: 12px; color: #0F172A;">${submission.enquiryType}</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px; font-weight: bold; color: #475569;">Message</td>
+            <td style="padding: 12px; color: #0F172A;">${submission.message}</td>
+          </tr>
+          <tr style="background: #f8f9fa;">
+            <td style="padding: 12px; font-weight: bold; color: #475569;">Submitted At</td>
+            <td style="padding: 12px; color: #0F172A;">${new Date(submission.createdAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}</td>
+          </tr>
+        </table>
+        <div style="margin-top: 20px; padding: 15px; background: #f0fdf4; border-radius: 8px; border-left: 4px solid #00D4AA;">
+          <p style="margin: 0; color: #475569; font-size: 14px;">This email was automatically sent from your VI Microsystems contact form.</p>
+        </div>
+      </div>
+    `,
+  };
+
+  await transporter.sendMail(mailOptions);
+}
+
+// ─── Validation Rules ─────────────────────────────────────────────────────────
 const contactValidation = [
   body("firstName").trim().notEmpty().withMessage("First name is required").isLength({ max: 50 }),
   body("lastName").trim().notEmpty().withMessage("Last name is required").isLength({ max: 50 }),
@@ -30,6 +85,12 @@ router.post("/", contactValidation, async (req, res) => {
       firstName, lastName, email, enquiryType, message,
       ipAddress: req.ip,
     });
+
+    // Send email notification (don't block response if email fails)
+    sendNotificationEmail(submission).catch(err =>
+      console.error("Email notification error:", err)
+    );
+
     return res.status(201).json({
       success: true,
       message: "Thank you! Your message has been received. We'll get back to you shortly.",
