@@ -128,6 +128,11 @@
   .contact-item h4 { font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--gray-300); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
   .contact-item p, .contact-item a { font-size: 15px; color: var(--navy); line-height: 1.6; text-decoration: none; font-weight: 500; }
   .contact-item a:hover { color: var(--blue); }
+
+  /* ── Google Maps ── */
+  .map-wrapper { margin-top: 36px; border-radius: 16px; overflow: hidden; border: 1px solid var(--gray-100); box-shadow: 0 8px 32px rgba(11,27,58,0.08); }
+  .map-wrapper iframe { display: block; width: 100%; height: 280px; border: 0; }
+
   .contact-form { background: var(--off-white); border-radius: 24px; padding: 44px; border: 1px solid var(--gray-100); }
   .contact-form h3 { font-family: var(--font-head); font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 28px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -190,6 +195,7 @@
     .services-grid, .intern-grid { grid-template-columns: 1fr; }
     .contact-form { padding: 28px 20px; }
     .toast { bottom: 16px; right: 16px; left: 16px; max-width: none; }
+    .map-wrapper iframe { height: 220px; }
   }
 </style>
 </head>
@@ -369,10 +375,22 @@
   <p class="section-lead">Have a project in mind, or looking to enroll in our internship program? Reach out — we're happy to help.</p>
   <div class="contact-grid">
     <div class="contact-info">
-      <div class="contact-item"><div class="contact-icon">📍</div><div><h4>Address</h4><p>VI Microsystems Pvt Ltd<br />Chennai, Tamil Nadu, India</p></div></div>
-      <div class="contact-item"><div class="contact-icon">📞</div><div><h4>Phone</h4><a href="tel:+919999999999">+91 99999 99999</a></div></div>
+      <div class="contact-item"><div class="contact-icon">📍</div><div><h4>Address</h4><p>VI Microsystems Pvt Ltd<br />Industrial Estate, Perungudi<br />Chennai, Tamil Nadu 600096</p></div></div>
+      <div class="contact-item"><div class="contact-icon">📞</div><div><h4>Phone</h4><a href="tel:+914424960774">+91 44 2496 0774</a></div></div>
       <div class="contact-item"><div class="contact-icon">✉️</div><div><h4>Email</h4><a href="mailto:info@vimicrosystems.in">info@vimicrosystems.in</a></div></div>
-      <div class="contact-item"><div class="contact-icon">🕘</div><div><h4>Working Hours</h4><p>Mon – Sat: 9:00 AM – 6:00 PM<br />Sunday: Closed</p></div></div>
+      <div class="contact-item"><div class="contact-icon">🕘</div><div><h4>Working Hours</h4><p>Mon – Sat: 8:30 AM – 5:30 PM<br />Sunday: Closed</p></div></div>
+
+      <!-- ── Google Maps Embed ── -->
+      <div class="map-wrapper">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.592!2d80.2437669!3d12.9556566!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525b6b746c11c1%3A0x32bd999294e277ca!2sVi%20Micro%20Systems%20Private%20Limited!5e0!3m2!1sen!2sin!4v1715760000000!5m2!1sen!2sin"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="VI Microsystems Location">
+        </iframe>
+      </div>
+
     </div>
     <div class="contact-form">
       <h3>Send Us a Message</h3>
@@ -525,7 +543,7 @@
 
     try {
       // Step 1 — Send email via EmailJS first
-    await emailjs.send("service_xtoia6c", "template_q31lyar", {
+      await emailjs.send("service_xtoia6c", "template_q31lyar", {
         firstName:   data.firstName,
         lastName:    data.lastName,
         email:       data.email,
