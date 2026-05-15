@@ -4,9 +4,11 @@ const { body, validationResult } = require("express-validator");
 const Contact = require("../models/Contact");
 const nodemailer = require("nodemailer");
 
-// ─── Email Transporter ────────────────────────────────────────────────────────
+// ─── Email Transporter (port 587) ─────────────────────────────────────────────
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -53,7 +55,6 @@ async function sendNotificationEmail(submission) {
       </div>
     `,
   };
-
   await transporter.sendMail(mailOptions);
 }
 
