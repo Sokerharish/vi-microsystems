@@ -24,7 +24,7 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) callback(null, true);
     else callback(new Error(`CORS: origin '${origin}' not allowed`));
   },
-  methods: ["GET", "POST", "PATCH", "OPTIONS"],
+methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
