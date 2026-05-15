@@ -4,7 +4,7 @@ const { body, validationResult } = require("express-validator");
 const Contact = require("../models/Contact");
 const nodemailer = require("nodemailer");
 
-// ─── Email Transporter (port 587) ─────────────────────────────────────────────
+// ─── Email Transporter ────────────────────────────────────────────────────────
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
@@ -50,7 +50,7 @@ async function sendNotificationEmail(submission) {
           </tr>
         </table>
         <div style="margin-top: 20px; padding: 15px; background: #f0fdf4; border-radius: 8px; border-left: 4px solid #00D4AA;">
-          <p style="margin: 0; color: #475569; font-size: 14px;">This email was automatically sent from your VI Microsystems contact form.</p>
+          <p style="margin: 0; color: #475569; font-size: 14px;">Sent from VI Microsystems contact form.</p>
         </div>
       </div>
     `,
@@ -70,7 +70,7 @@ const contactValidation = [
   body("message").trim().notEmpty().withMessage("Message is required").isLength({ min: 10, max: 2000 }),
 ];
 
-// POST - Submit form
+// ─── POST - Submit form ───────────────────────────────────────────────────────
 router.post("/", contactValidation, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -87,7 +87,6 @@ router.post("/", contactValidation, async (req, res) => {
       ipAddress: req.ip,
     });
 
-    // Send email notification (don't block response if email fails)
     sendNotificationEmail(submission).catch(err =>
       console.error("Email notification error:", err)
     );
@@ -108,7 +107,7 @@ router.post("/", contactValidation, async (req, res) => {
   }
 });
 
-// GET - List all submissions
+// ─── GET - List all submissions ───────────────────────────────────────────────
 router.get("/", async (req, res) => {
   try {
     const page  = Math.max(1, parseInt(req.query.page) || 1);
@@ -131,7 +130,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET - Single submission
+// ─── GET - Single submission ──────────────────────────────────────────────────
 router.get("/:id", async (req, res) => {
   try {
     const submission = await Contact.findById(req.params.id);
@@ -142,7 +141,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// PATCH - Update status
+// ─── PATCH - Update status ────────────────────────────────────────────────────
 router.patch("/:id/status", async (req, res) => {
   const { status } = req.body;
   if (!["new", "read", "replied"].includes(status)) {
@@ -152,6 +151,17 @@ router.patch("/:id/status", async (req, res) => {
     const updated = await Contact.findByIdAndUpdate(req.params.id, { status }, { new: true });
     if (!updated) return res.status(404).json({ success: false, message: "Not found" });
     return res.json({ success: true, data: updated });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// ─── DELETE - Remove submission ───────────────────────────────────────────────
+router.delete("/:id", async (req, res) => {
+  try {
+    const deleted = await Contact.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ success: false, message: "Not found" });
+    return res.json({ success: true, message: "Deleted successfully" });
   } catch (err) {
     return res.status(500).json({ success: false, message: "Server error" });
   }

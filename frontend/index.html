@@ -7,45 +7,19 @@
 
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --navy: #0B1B3A;
-    --navy-mid: #142454;
-    --blue: #1A56DB;
-    --blue-light: #3B82F6;
-    --accent: #00D4AA;
-    --accent-dark: #00A882;
-    --gold: #F59E0B;
-    --white: #FFFFFF;
-    --off-white: #F4F7FF;
-    --gray-100: #E8EDF5;
-    --gray-300: #94A3B8;
-    --gray-600: #475569;
-    --gray-800: #1E293B;
-    --text: #0F172A;
-    --font-head: 'Segoe UI', Arial, sans-serif;
-    --font-body: 'Segoe UI', Arial, sans-serif;
-    --success: #10B981;
-    --error: #EF4444;
+    --navy: #0B1B3A; --navy-mid: #142454; --blue: #1A56DB; --blue-light: #3B82F6;
+    --accent: #00D4AA; --accent-dark: #00A882; --white: #FFFFFF; --off-white: #F4F7FF;
+    --gray-100: #E8EDF5; --gray-300: #94A3B8; --gray-600: #475569; --gray-800: #1E293B;
+    --text: #0F172A; --font-head: 'Segoe UI', Arial, sans-serif; --font-body: 'Segoe UI', Arial, sans-serif;
+    --success: #10B981; --error: #EF4444;
   }
-
   html { scroll-behavior: smooth; }
   body { font-family: var(--font-body); color: var(--text); background: var(--white); overflow-x: hidden; }
 
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(11,27,58,0.97); backdrop-filter: blur(12px);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 5vw; height: 68px;
-    border-bottom: 1px solid rgba(0,212,170,0.15);
-  }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(11,27,58,0.97); backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: space-between; padding: 0 5vw; height: 68px; border-bottom: 1px solid rgba(0,212,170,0.15); }
   .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-  .nav-logo-mark {
-    width: 40px; height: 40px;
-    background: linear-gradient(135deg, var(--accent) 0%, var(--blue-light) 100%);
-    border-radius: 10px; display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-head); font-weight: 800; font-size: 16px; color: #fff;
-  }
+  .nav-logo-mark { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent) 0%, var(--blue-light) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-weight: 800; font-size: 16px; color: #fff; }
   .nav-brand { font-family: var(--font-head); font-weight: 700; font-size: 15px; color: #fff; line-height: 1.2; }
   .nav-brand span { display: block; font-size: 10px; font-weight: 400; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; }
   .nav-links { display: flex; gap: 32px; list-style: none; }
@@ -68,11 +42,11 @@
   .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
   .btn-primary { background: var(--accent); color: var(--navy); font-family: var(--font-body); font-weight: 700; font-size: 15px; border: none; border-radius: 10px; padding: 16px 34px; cursor: pointer; text-decoration: none; display: inline-block; transition: transform 0.2s, background 0.2s; }
   .btn-primary:hover { transform: translateY(-2px); background: var(--accent-dark); }
-  .btn-outline { background: transparent; color: #fff; font-family: var(--font-body); font-weight: 500; font-size: 15px; border: 1px solid rgba(255,255,255,0.25); border-radius: 10px; padding: 16px 34px; cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.2s, background 0.2s; }
+  .btn-outline { background: transparent; color: #fff; font-family: var(--font-body); font-weight: 500; font-size: 15px; border: 1px solid rgba(255,255,255,0.25); border-radius: 10px; padding: 16px 34px; cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.2s; }
   .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
   .hero-stats { display: flex; gap: 48px; margin-top: 64px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.08); }
   .stat-num { font-family: var(--font-head); font-size: 36px; font-weight: 800; color: var(--accent); letter-spacing: -1px; }
-  .stat-label { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 2px; letter-spacing: 0.5px; }
+  .stat-label { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 2px; }
 
   section { padding: 96px 5vw; }
   .section-tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); background: rgba(26,86,219,0.08); border-radius: 100px; padding: 6px 16px; margin-bottom: 16px; }
@@ -166,7 +140,7 @@
   .form-group textarea { resize: vertical; min-height: 110px; }
   .form-submit { width: 100%; background: var(--navy); color: #fff; border: none; border-radius: 12px; padding: 16px; font-family: var(--font-head); font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s; display: flex; align-items: center; justify-content: center; gap: 10px; }
   .form-submit:hover:not(:disabled) { background: var(--blue); transform: translateY(-1px); }
-  .form-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+  .form-submit:disabled { opacity: 0.65; cursor: not-allowed; }
   .toast { position: fixed; bottom: 32px; right: 32px; z-index: 999; padding: 16px 24px; border-radius: 14px; font-size: 15px; font-weight: 600; max-width: 380px; box-shadow: 0 16px 40px rgba(0,0,0,0.18); display: flex; align-items: center; gap: 12px; transform: translateY(80px); opacity: 0; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1); }
   .toast.show { transform: translateY(0); opacity: 1; }
   .toast.success { background: var(--success); color: #fff; }
@@ -550,36 +524,29 @@
     btnText.innerHTML = '<span class="spinner"></span> Sending…';
 
     try {
-      // Step 1 — Save to MongoDB
-      const res    = await fetch(`${API_BASE}/api/contact`, {
+      // Step 1 — Send email via EmailJS first
+    await emailjs.send("service_xtoia6c", "template_q31lyar", {
+        firstName:   data.firstName,
+        lastName:    data.lastName,
+        email:       data.email,
+        enquiryType: data.enquiryType,
+        message:     data.message,
+      });
+
+      // Step 2 — Save to MongoDB in background (non-blocking)
+      fetch(`${API_BASE}/api/contact`, {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
         body:    JSON.stringify(data),
-      });
-      const result = await res.json();
+      }).catch(err => console.log("DB save failed:", err));
 
-      if (res.ok && result.success) {
-        // Step 2 — Send email via EmailJS
-        await emailjs.send("service_xtoia6c", "k2jr2cf", {
-          firstName:   data.firstName,
-          lastName:    data.lastName,
-          email:       data.email,
-          enquiryType: data.enquiryType,
-          message:     data.message,
-        });
+      showToast("Thank you! Your message has been received. We'll get back to you shortly.", "success");
+      ["firstName","lastName","email","message"].forEach(f => document.getElementById(f).value = "");
+      document.getElementById("enquiryType").value = "";
 
-        showToast("Thank you! Your message has been received. We'll get back to you shortly.", "success");
-        ["firstName","lastName","email","message"].forEach(f => document.getElementById(f).value = "");
-        document.getElementById("enquiryType").value = "";
-      } else if (res.status === 422 && result.errors) {
-        showFieldErrors(result.errors);
-        showToast("Please fix the errors below.", "error");
-      } else {
-        showToast(result.message || "Something went wrong. Please try again.", "error");
-      }
     } catch (err) {
       console.error("Submission error:", err);
-      showToast("Unable to connect to server. Please try again later.", "error");
+      showToast("Unable to send message. Please try again later.", "error");
     } finally {
       btn.disabled     = false;
       btnText.textContent = "Submit Message";
