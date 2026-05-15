@@ -32,7 +32,6 @@
   html { scroll-behavior: smooth; }
   body { font-family: var(--font-body); color: var(--text); background: var(--white); overflow-x: hidden; }
 
-  /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     background: rgba(11,27,58,0.97); backdrop-filter: blur(12px);
@@ -45,40 +44,22 @@
     width: 40px; height: 40px;
     background: linear-gradient(135deg, var(--accent) 0%, var(--blue-light) 100%);
     border-radius: 10px; display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-head); font-weight: 800; font-size: 16px; color: #fff; letter-spacing: -0.5px;
+    font-family: var(--font-head); font-weight: 800; font-size: 16px; color: #fff;
   }
   .nav-brand { font-family: var(--font-head); font-weight: 700; font-size: 15px; color: #fff; line-height: 1.2; }
   .nav-brand span { display: block; font-size: 10px; font-weight: 400; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; }
   .nav-links { display: flex; gap: 32px; list-style: none; }
   .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
   .nav-links a:hover { color: var(--accent); }
-  .nav-cta {
-    background: var(--accent); color: var(--navy); border: none; border-radius: 8px; padding: 10px 22px;
-    font-family: var(--font-body); font-weight: 600; font-size: 14px;
-    cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block;
-  }
+  .nav-cta { background: var(--accent); color: var(--navy); border: none; border-radius: 8px; padding: 10px 22px; font-family: var(--font-body); font-weight: 600; font-size: 14px; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block; }
   .nav-cta:hover { background: var(--accent-dark); transform: translateY(-1px); }
 
-  /* HERO */
-  #home {
-    min-height: 100vh; background: var(--navy);
-    display: flex; align-items: center;
-    padding: 100px 5vw 60px; position: relative; overflow: hidden;
-  }
-  .hero-grid-bg {
-    position: absolute; inset: 0; opacity: 0.04;
-    background-image: linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
+  #home { min-height: 100vh; background: var(--navy); display: flex; align-items: center; padding: 100px 5vw 60px; position: relative; overflow: hidden; }
+  .hero-grid-bg { position: absolute; inset: 0; opacity: 0.04; background-image: linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px); background-size: 60px 60px; }
   .hero-glow { position: absolute; top: -100px; right: -100px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,170,0.12) 0%, transparent 70%); pointer-events: none; }
   .hero-glow2 { position: absolute; bottom: -150px; left: 10%; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(26,86,219,0.15) 0%, transparent 70%); pointer-events: none; }
   .hero-content { position: relative; max-width: 700px; }
-  .hero-tag {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(0,212,170,0.12); border: 1px solid rgba(0,212,170,0.3);
-    border-radius: 100px; padding: 6px 16px;
-    font-size: 12px; font-weight: 500; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 28px;
-  }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,212,170,0.12); border: 1px solid rgba(0,212,170,0.3); border-radius: 100px; padding: 6px 16px; font-size: 12px; font-weight: 500; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 28px; }
   .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: blink 1.8s infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
   .hero-h1 { font-family: var(--font-head); font-size: clamp(38px, 5.5vw, 72px); font-weight: 800; line-height: 1.05; color: #fff; letter-spacing: -1.5px; margin-bottom: 24px; }
@@ -93,13 +74,11 @@
   .stat-num { font-family: var(--font-head); font-size: 36px; font-weight: 800; color: var(--accent); letter-spacing: -1px; }
   .stat-label { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 2px; letter-spacing: 0.5px; }
 
-  /* SECTION COMMONS */
   section { padding: 96px 5vw; }
   .section-tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); background: rgba(26,86,219,0.08); border-radius: 100px; padding: 6px 16px; margin-bottom: 16px; }
   .section-h2 { font-family: var(--font-head); font-size: clamp(30px, 3.5vw, 48px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--navy); margin-bottom: 20px; }
   .section-lead { font-size: 17px; color: var(--gray-600); line-height: 1.75; max-width: 620px; }
 
-  /* ABOUT */
   #about { background: var(--off-white); }
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
   .about-visual { position: relative; }
@@ -118,7 +97,6 @@
   .point-body h4 { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
   .point-body p { font-size: 14px; color: var(--gray-600); line-height: 1.65; }
 
-  /* SERVICES */
   #services { background: var(--white); }
   .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
   .service-card { background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 20px; padding: 36px 32px; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; position: relative; overflow: hidden; }
@@ -131,7 +109,6 @@
   .service-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
   .stag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px; background: rgba(26,86,219,0.08); color: var(--blue); }
 
-  /* INTERNSHIP */
   #internship { background: var(--navy); position: relative; overflow: hidden; }
   .intern-bg-glow { position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 500px; background: radial-gradient(ellipse, rgba(0,212,170,0.08) 0%, transparent 70%); pointer-events: none; }
   .intern-header { position: relative; }
@@ -152,7 +129,6 @@
   .highlight-box .num { font-family: var(--font-head); font-size: 28px; font-weight: 800; color: var(--accent); }
   .highlight-box .lbl { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 4px; }
 
-  /* WHY US */
   #why { background: var(--off-white); }
   .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; margin-top: 56px; }
   .why-list { display: flex; flex-direction: column; gap: 20px; }
@@ -170,7 +146,6 @@
   .cert-box .name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); }
   .cert-box .sub { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
 
-  /* CONTACT */
   #contact { background: var(--white); }
   .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; margin-top: 56px; align-items: start; }
   .contact-info { display: flex; flex-direction: column; gap: 28px; }
@@ -184,36 +159,22 @@
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
   .form-group label { font-size: 13px; font-weight: 600; color: var(--gray-600); letter-spacing: 0.5px; }
-  .form-group input, .form-group select, .form-group textarea {
-    background: var(--white); border: 1.5px solid var(--gray-100); border-radius: 10px; padding: 12px 16px;
-    font-family: var(--font-body); font-size: 14px; color: var(--text); outline: none; transition: border-color 0.2s; width: 100%;
-  }
+  .form-group input, .form-group select, .form-group textarea { background: var(--white); border: 1.5px solid var(--gray-100); border-radius: 10px; padding: 12px 16px; font-family: var(--font-body); font-size: 14px; color: var(--text); outline: none; transition: border-color 0.2s; width: 100%; }
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--blue); }
   .form-group input.error, .form-group select.error, .form-group textarea.error { border-color: var(--error); }
   .field-error { font-size: 12px; color: var(--error); margin-top: -4px; }
   .form-group textarea { resize: vertical; min-height: 110px; }
-  .form-submit {
-    width: 100%; background: var(--navy); color: #fff; border: none; border-radius: 12px; padding: 16px;
-    font-family: var(--font-head); font-size: 16px; font-weight: 700; cursor: pointer;
-    transition: background 0.2s, transform 0.15s; display: flex; align-items: center; justify-content: center; gap: 10px;
-  }
+  .form-submit { width: 100%; background: var(--navy); color: #fff; border: none; border-radius: 12px; padding: 16px; font-family: var(--font-head); font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s; display: flex; align-items: center; justify-content: center; gap: 10px; }
   .form-submit:hover:not(:disabled) { background: var(--blue); transform: translateY(-1px); }
   .form-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
-  .toast {
-    position: fixed; bottom: 32px; right: 32px; z-index: 999;
-    padding: 16px 24px; border-radius: 14px; font-size: 15px; font-weight: 600;
-    max-width: 380px; box-shadow: 0 16px 40px rgba(0,0,0,0.18);
-    display: flex; align-items: center; gap: 12px;
-    transform: translateY(80px); opacity: 0; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
-  }
+  .toast { position: fixed; bottom: 32px; right: 32px; z-index: 999; padding: 16px 24px; border-radius: 14px; font-size: 15px; font-weight: 600; max-width: 380px; box-shadow: 0 16px 40px rgba(0,0,0,0.18); display: flex; align-items: center; gap: 12px; transform: translateY(80px); opacity: 0; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1); }
   .toast.show { transform: translateY(0); opacity: 1; }
   .toast.success { background: var(--success); color: #fff; }
-  .toast.error   { background: var(--error);   color: #fff; }
+  .toast.error { background: var(--error); color: #fff; }
   .toast-icon { font-size: 20px; flex-shrink: 0; }
   .spinner { width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* FOOTER */
   footer { background: var(--gray-800); color: rgba(255,255,255,0.6); padding: 48px 5vw 32px; }
   .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 28px; }
   .footer-brand { font-family: var(--font-head); font-size: 18px; font-weight: 700; color: #fff; }
@@ -225,7 +186,16 @@
   .footer-copy { font-size: 13px; }
   .footer-made span { color: var(--accent); }
 
-  /* RESPONSIVE */
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; background: rgba(11,27,58,0.98); z-index: 99; flex-direction: column; padding: 20px 5vw 28px; border-bottom: 1px solid rgba(0,212,170,0.15); }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 16px; font-weight: 500; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); transition: color 0.2s; }
+  .mobile-menu a:hover { color: var(--accent); }
+
   @media (max-width: 900px) {
     .nav-links, .nav-cta { display: none; }
     .hamburger { display: flex; }
@@ -247,22 +217,10 @@
     .contact-form { padding: 28px 20px; }
     .toast { bottom: 16px; right: 16px; left: 16px; max-width: none; }
   }
-
-  /* HAMBURGER */
-  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
-  .hamburger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
-  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; background: rgba(11,27,58,0.98); z-index: 99; flex-direction: column; padding: 20px 5vw 28px; border-bottom: 1px solid rgba(0,212,170,0.15); }
-  .mobile-menu.open { display: flex; }
-  .mobile-menu a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 16px; font-weight: 500; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); transition: color 0.2s; }
-  .mobile-menu a:hover { color: var(--accent); }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="#home" class="nav-logo">
     <div class="nav-logo-mark">VI</div>
@@ -282,7 +240,6 @@
   </button>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#home" onclick="closeMenu()">Home</a>
   <a href="#about" onclick="closeMenu()">About</a>
@@ -292,7 +249,6 @@
   <a href="#contact" onclick="closeMenu()">Contact</a>
 </div>
 
-<!-- HERO -->
 <section id="home">
   <div class="hero-grid-bg"></div>
   <div class="hero-glow"></div>
@@ -314,7 +270,6 @@
   </div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
   <div class="section-tag">About Us</div>
   <h2 class="section-h2">Who We Are</h2>
@@ -331,10 +286,7 @@
           <span class="badge">Automation</span><span class="badge">Signal Processing</span>
         </div>
       </div>
-      <div class="about-float">
-        <div class="num">15+</div>
-        <div class="lbl">Years of Innovation</div>
-      </div>
+      <div class="about-float"><div class="num">15+</div><div class="lbl">Years of Innovation</div></div>
     </div>
     <div class="about-points">
       <div class="about-point"><div class="point-icon">🚀</div><div class="point-body"><h4>Industry-Driven Innovation</h4><p>We design and develop electronics solutions aligned with industry demands, delivering products that set benchmarks in reliability and performance.</p></div></div>
@@ -345,28 +297,26 @@
   </div>
 </section>
 
-<!-- SERVICES -->
 <section id="services">
   <div class="section-tag">Products &amp; Services</div>
   <h2 class="section-h2">What We Build & Deliver</h2>
   <p class="section-lead">From embedded firmware to full PCB assemblies — our end-to-end offerings cover every stage of the electronics product lifecycle.</p>
   <div class="services-grid">
-    <div class="service-card"><span class="service-icon">🧠</span><h3>Embedded Systems Design</h3><p>Custom microcontroller-based systems using ARM Cortex, AVR, PIC, and STM32 platforms. From concept to prototype to production-ready firmware.</p><div class="service-tags"><span class="stag">ARM Cortex</span><span class="stag">STM32</span><span class="stag">RTOS</span></div></div>
-    <div class="service-card"><span class="service-icon">📡</span><h3>IoT Solutions</h3><p>Connected device development covering sensors, gateways, cloud integration, and dashboards. We build smart solutions for smart environments.</p><div class="service-tags"><span class="stag">ESP32</span><span class="stag">MQTT</span><span class="stag">AWS IoT</span></div></div>
-    <div class="service-card"><span class="service-icon">🖥️</span><h3>PCB Design & Fabrication</h3><p>Complete PCB design services — schematic capture, layout, DFM review, and fabrication coordination for single to multilayer boards.</p><div class="service-tags"><span class="stag">Altium</span><span class="stag">KiCad</span><span class="stag">SMT</span></div></div>
-    <div class="service-card"><span class="service-icon">⚡</span><h3>Power Electronics</h3><p>Design and analysis of power supply units, DC-DC converters, inverters, and motor drive systems for industrial and consumer applications.</p><div class="service-tags"><span class="stag">SMPS</span><span class="stag">Inverters</span><span class="stag">Motor Drives</span></div></div>
-    <div class="service-card"><span class="service-icon">🔩</span><h3>Industrial Automation</h3><p>PLC programming, SCADA integration, and sensor interfacing for factory automation, process control, and smart manufacturing projects.</p><div class="service-tags"><span class="stag">PLC</span><span class="stag">SCADA</span><span class="stag">HMI</span></div></div>
-    <div class="service-card"><span class="service-icon">💡</span><h3>R&amp;D Consulting</h3><p>Expert guidance for product development, technology evaluation, and system architecture for startups, academia, and enterprise teams.</p><div class="service-tags"><span class="stag">Prototyping</span><span class="stag">Architecture</span><span class="stag">Testing</span></div></div>
+    <div class="service-card"><span class="service-icon">🧠</span><h3>Embedded Systems Design</h3><p>Custom microcontroller-based systems using ARM Cortex, AVR, PIC, and STM32 platforms.</p><div class="service-tags"><span class="stag">ARM Cortex</span><span class="stag">STM32</span><span class="stag">RTOS</span></div></div>
+    <div class="service-card"><span class="service-icon">📡</span><h3>IoT Solutions</h3><p>Connected device development covering sensors, gateways, cloud integration, and dashboards.</p><div class="service-tags"><span class="stag">ESP32</span><span class="stag">MQTT</span><span class="stag">AWS IoT</span></div></div>
+    <div class="service-card"><span class="service-icon">🖥️</span><h3>PCB Design & Fabrication</h3><p>Complete PCB design services — schematic capture, layout, DFM review, and fabrication coordination.</p><div class="service-tags"><span class="stag">Altium</span><span class="stag">KiCad</span><span class="stag">SMT</span></div></div>
+    <div class="service-card"><span class="service-icon">⚡</span><h3>Power Electronics</h3><p>Design and analysis of power supply units, DC-DC converters, inverters, and motor drive systems.</p><div class="service-tags"><span class="stag">SMPS</span><span class="stag">Inverters</span><span class="stag">Motor Drives</span></div></div>
+    <div class="service-card"><span class="service-icon">🔩</span><h3>Industrial Automation</h3><p>PLC programming, SCADA integration, and sensor interfacing for factory automation.</p><div class="service-tags"><span class="stag">PLC</span><span class="stag">SCADA</span><span class="stag">HMI</span></div></div>
+    <div class="service-card"><span class="service-icon">💡</span><h3>R&amp;D Consulting</h3><p>Expert guidance for product development, technology evaluation, and system architecture.</p><div class="service-tags"><span class="stag">Prototyping</span><span class="stag">Architecture</span><span class="stag">Testing</span></div></div>
   </div>
 </section>
 
-<!-- INTERNSHIP -->
 <section id="internship">
   <div class="intern-bg-glow"></div>
   <div class="intern-header">
     <div class="section-tag">Internship Programs</div>
     <h2 class="section-h2">Build Your Career with Us</h2>
-    <p class="section-lead">We offer structured, industry-level internship programs for ECE, EEE, and CSE students — with live projects, mentorship, and certification.</p>
+    <p class="section-lead">We offer structured, industry-level internship programs for ECE, EEE, and CSE students.</p>
   </div>
   <div class="intern-grid">
     <div class="intern-card">
@@ -414,22 +364,21 @@
   </div>
 </section>
 
-<!-- WHY US -->
 <section id="why">
   <div class="section-tag">Why VI Microsystems</div>
   <h2 class="section-h2">What Sets Us Apart</h2>
   <p class="section-lead">We combine deep technical expertise with a genuine commitment to client success and student development.</p>
   <div class="why-grid">
     <div class="why-list">
-      <div class="why-item"><div class="why-num">01</div><div class="why-text"><h4>Expert Engineering Team</h4><p>Our team consists of seasoned electronics engineers with real-world industry experience across automotive, industrial, and consumer electronics.</p></div></div>
-      <div class="why-item"><div class="why-num">02</div><div class="why-text"><h4>End-to-End Project Support</h4><p>From feasibility analysis to final deployment, we own the entire product lifecycle — no handoffs, no gaps.</p></div></div>
-      <div class="why-item"><div class="why-num">03</div><div class="why-text"><h4>Live Project Training</h4><p>Interns work on actual client-grade projects — not simulations — giving them a genuine edge in interviews and campus placements.</p></div></div>
-      <div class="why-item"><div class="why-num">04</div><div class="why-text"><h4>Competitive Pricing</h4><p>We offer high-quality electronics solutions and training programs at affordable rates, making excellence accessible.</p></div></div>
-      <div class="why-item"><div class="why-num">05</div><div class="why-text"><h4>Timely Delivery Guaranteed</h4><p>Our disciplined project management ensures deliverables are on time, every time — no compromises on deadlines.</p></div></div>
+      <div class="why-item"><div class="why-num">01</div><div class="why-text"><h4>Expert Engineering Team</h4><p>Seasoned electronics engineers with real-world industry experience across automotive, industrial, and consumer electronics.</p></div></div>
+      <div class="why-item"><div class="why-num">02</div><div class="why-text"><h4>End-to-End Project Support</h4><p>From feasibility analysis to final deployment, we own the entire product lifecycle.</p></div></div>
+      <div class="why-item"><div class="why-num">03</div><div class="why-text"><h4>Live Project Training</h4><p>Interns work on actual client-grade projects — not simulations.</p></div></div>
+      <div class="why-item"><div class="why-num">04</div><div class="why-text"><h4>Competitive Pricing</h4><p>High-quality electronics solutions and training programs at affordable rates.</p></div></div>
+      <div class="why-item"><div class="why-num">05</div><div class="why-text"><h4>Timely Delivery Guaranteed</h4><p>Disciplined project management ensures deliverables are on time, every time.</p></div></div>
     </div>
     <div class="why-visual">
       <h3>🏆 Trusted by Students &amp; Industry</h3>
-      <p>Our track record speaks for itself — hundreds of students placed, dozens of products shipped, and a community of engineers who started here.</p>
+      <p>Our track record speaks for itself — hundreds of students placed, dozens of products shipped.</p>
       <div class="cert-grid">
         <div class="cert-box"><div class="icon">📜</div><div class="name">ISO Certified</div><div class="sub">Quality Assured</div></div>
         <div class="cert-box"><div class="icon">🎓</div><div class="name">AICTE Aligned</div><div class="sub">Internship Programs</div></div>
@@ -440,7 +389,6 @@
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="section-tag">Contact Us</div>
   <h2 class="section-h2">Let's Work Together</h2>
@@ -496,12 +444,9 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div>
-      <div class="footer-brand">VI Microsystems Pvt Ltd<span>Electronics &amp; Embedded Systems | Chennai, India</span></div>
-    </div>
+    <div><div class="footer-brand">VI Microsystems Pvt Ltd<span>Electronics &amp; Embedded Systems | Chennai, India</span></div></div>
     <div class="footer-links">
       <a href="#home">Home</a><a href="#about">About</a>
       <a href="#services">Services</a><a href="#internship">Internship</a>
@@ -514,14 +459,15 @@
   </div>
 </footer>
 
-<!-- Toast -->
 <div class="toast" id="toast">
   <span class="toast-icon" id="toastIcon"></span>
   <span id="toastMsg"></span>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
-  // ── Change this to your backend URL when deploying ──
+  // ── Config ──
+  emailjs.init("8cOhhqLkjvgntRiRE");
   const API_BASE = "https://vi-microsystems.onrender.com";
 
   // NAV
@@ -568,7 +514,7 @@
     if (firstErr) document.getElementById(firstErr)?.focus();
   }
 
-  // CLIENT-SIDE VALIDATION
+  // VALIDATION
   function validateForm(data) {
     const errs = [];
     if (!data.firstName.trim())  errs.push({ field: "firstName",   message: "First name is required" });
@@ -598,12 +544,13 @@
     const clientErrors = validateForm(data);
     if (clientErrors.length > 0) { showFieldErrors(clientErrors); return; }
 
-    const btn    = document.getElementById("submitBtn");
+    const btn     = document.getElementById("submitBtn");
     const btnText = document.getElementById("btnText");
-    btn.disabled = true;
+    btn.disabled  = true;
     btnText.innerHTML = '<span class="spinner"></span> Sending…';
 
     try {
+      // Step 1 — Save to MongoDB
       const res    = await fetch(`${API_BASE}/api/contact`, {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
@@ -612,7 +559,16 @@
       const result = await res.json();
 
       if (res.ok && result.success) {
-        showToast(result.message, "success");
+        // Step 2 — Send email via EmailJS
+        await emailjs.send("service_xtoia6c", "k2jr2cf", {
+          firstName:   data.firstName,
+          lastName:    data.lastName,
+          email:       data.email,
+          enquiryType: data.enquiryType,
+          message:     data.message,
+        });
+
+        showToast("Thank you! Your message has been received. We'll get back to you shortly.", "success");
         ["firstName","lastName","email","message"].forEach(f => document.getElementById(f).value = "");
         document.getElementById("enquiryType").value = "";
       } else if (res.status === 422 && result.errors) {
@@ -622,9 +578,10 @@
         showToast(result.message || "Something went wrong. Please try again.", "error");
       }
     } catch (err) {
+      console.error("Submission error:", err);
       showToast("Unable to connect to server. Please try again later.", "error");
     } finally {
-      btn.disabled = false;
+      btn.disabled     = false;
       btnText.textContent = "Submit Message";
     }
   }
