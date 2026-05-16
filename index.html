@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VI Microsystems Pvt Ltd – Electronics & Embedded Systems</title>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0B1B3A; --navy-mid: #142454; --blue: #1A56DB; --blue-light: #3B82F6;
+    --accent: #00D4AA; --accent-dark: #00A882; --white: #FFFFFF; --off-white: #F4F7FF;
+    --gray-100: #E8EDF5; --gray-300: #94A3B8; --gray-600: #475569; --gray-800: #1E293B;
+    --text: #0F172A; --font-head: 'Segoe UI', Arial, sans-serif; --font-body: 'Segoe UI', Arial, sans-serif;
+    --success: #10B981; --error: #EF4444;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); color: var(--text); background: var(--white); overflow-x: hidden; }
+
+  /* Smooth modal open lock */
+  body.modal-open { overflow: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(11,27,58,0.97); backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: space-between; padding: 0 5vw; height: 68px; border-bottom: 1px solid rgba(0,212,170,0.15); }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-mark { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent) 0%, var(--blue-light) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-weight: 800; font-size: 16px; color: #fff; }
+  .nav-brand { font-family: var(--font-head); font-weight: 700; font-size: 15px; color: #fff; line-height: 1.2; }
+  .nav-brand span { display: block; font-size: 10px; font-weight: 400; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta { background: var(--accent); color: var(--navy); border: none; border-radius: 8px; padding: 10px 22px; font-family: var(--font-body); font-weight: 600; font-size: 14px; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .nav-cta:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+  #home { min-height: 100vh; background: var(--navy); display: flex; align-items: center; padding: 100px 5vw 60px; position: relative; overflow: hidden; }
+  .hero-grid-bg { position: absolute; inset: 0; opacity: 0.04; background-image: linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px); background-size: 60px 60px; }
+  .hero-glow { position: absolute; top: -100px; right: -100px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,170,0.12) 0%, transparent 70%); pointer-events: none; }
+  .hero-glow2 { position: absolute; bottom: -150px; left: 10%; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(26,86,219,0.15) 0%, transparent 70%); pointer-events: none; }
+  .hero-content { position: relative; max-width: 700px; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,212,170,0.12); border: 1px solid rgba(0,212,170,0.3); border-radius: 100px; padding: 6px 16px; font-size: 12px; font-weight: 500; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 28px; }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: blink 1.8s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .hero-h1 { font-family: var(--font-head); font-size: clamp(38px, 5.5vw, 72px); font-weight: 800; line-height: 1.05; color: #fff; letter-spacing: -1.5px; margin-bottom: 24px; }
+  .hero-h1 em { font-style: normal; color: var(--accent); }
+  .hero-sub { font-size: 18px; font-weight: 300; line-height: 1.7; color: rgba(255,255,255,0.6); max-width: 560px; margin-bottom: 44px; }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: var(--navy); font-family: var(--font-body); font-weight: 700; font-size: 15px; border: none; border-radius: 10px; padding: 16px 34px; cursor: pointer; text-decoration: none; display: inline-block; transition: transform 0.2s, background 0.2s; }
+  .btn-primary:hover { transform: translateY(-2px); background: var(--accent-dark); }
+  .btn-outline { background: transparent; color: #fff; font-family: var(--font-body); font-weight: 500; font-size: 15px; border: 1px solid rgba(255,255,255,0.25); border-radius: 10px; padding: 16px 34px; cursor: pointer; text-decoration: none; display: inline-block; transition: border-color 0.2s; }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stats { display: flex; gap: 48px; margin-top: 64px; padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .stat-num { font-family: var(--font-head); font-size: 36px; font-weight: 800; color: var(--accent); letter-spacing: -1px; }
+  .stat-label { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+  section { padding: 96px 5vw; }
+  .section-tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); background: rgba(26,86,219,0.08); border-radius: 100px; padding: 6px 16px; margin-bottom: 16px; }
+  .section-h2 { font-family: var(--font-head); font-size: clamp(30px, 3.5vw, 48px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; color: var(--navy); margin-bottom: 20px; }
+  .section-lead { font-size: 17px; color: var(--gray-600); line-height: 1.75; max-width: 620px; }
+
+  #about { background: var(--off-white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+  .about-visual { position: relative; }
+  .about-card { background: var(--navy); border-radius: 20px; padding: 40px; color: #fff; position: relative; overflow: hidden; }
+  .about-card-accent { position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,170,0.2) 0%, transparent 70%); }
+  .about-card h3 { font-family: var(--font-head); font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+  .about-card p { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; }
+  .about-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .badge { background: rgba(0,212,170,0.15); border: 1px solid rgba(0,212,170,0.3); color: var(--accent); border-radius: 100px; font-size: 12px; font-weight: 600; padding: 5px 14px; }
+  .about-float { position: absolute; bottom: -20px; right: -20px; background: var(--accent); border-radius: 14px; padding: 20px 24px; color: var(--navy); box-shadow: 0 20px 40px rgba(0,212,170,0.3); }
+  .about-float .num { font-family: var(--font-head); font-size: 32px; font-weight: 800; }
+  .about-float .lbl { font-size: 12px; font-weight: 600; margin-top: 2px; }
+  .about-points { display: flex; flex-direction: column; gap: 28px; }
+  .about-point { display: flex; gap: 20px; align-items: flex-start; }
+  .point-icon { flex-shrink: 0; width: 48px; height: 48px; border-radius: 12px; background: rgba(26,86,219,0.08); display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .point-body h4 { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .point-body p { font-size: 14px; color: var(--gray-600); line-height: 1.65; }
+
+  #services { background: var(--white); }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+  .service-card { background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 20px; padding: 36px 32px; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; position: relative; overflow: hidden; cursor: pointer; }
+  .service-card:hover { transform: translateY(-6px); box-shadow: 0 24px 48px rgba(11,27,58,0.1); border-color: var(--accent); }
+  .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue) 0%, var(--accent) 100%); opacity: 0; transition: opacity 0.25s; }
+  .service-card:hover::before { opacity: 1; }
+  .service-icon { font-size: 36px; margin-bottom: 20px; display: block; }
+  .service-card h3 { font-family: var(--font-head); font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+  .service-card p { font-size: 14px; color: var(--gray-600); line-height: 1.7; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .stag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px; background: rgba(26,86,219,0.08); color: var(--blue); }
+  
+  .service-link-hint { font-size: 12px; font-weight: 600; color: var(--blue); display: inline-flex; align-items: center; gap: 4px; margin-top: 16px; opacity: 0.8; transition: opacity 0.2s; }
+  .service-card:hover .service-link-hint { opacity: 1; color: var(--accent-dark); }
+
+  /* ── Interactive Modal Engine ── */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(11, 27, 58, 0.4); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+  .modal-overlay.active { opacity: 1; pointer-events: auto; }
+  .modal-window { background: var(--white); width: 100%; max-width: 880px; max-height: 88vh; border-radius: 24px; box-shadow: 0 32px 64px -12px rgba(11, 27, 58, 0.25); display: flex; flex-direction: column; overflow: hidden; transform: scale(0.95) translateY(10px); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); border: 1px solid var(--gray-100); }
+  .modal-overlay.active .modal-window { transform: scale(1) translateY(0); }
+  .modal-header { padding: 24px 36px; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--accent); position: relative; }
+  .modal-header h3 { font-family: var(--font-head); font-size: 20px; font-weight: 700; max-width: 85%; }
+  .modal-close { background: rgba(255,255,255,0.08); border: none; width: 36px; height: 36px; border-radius: 50%; color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.15s; }
+  .modal-close:hover { background: var(--error); transform: rotate(90deg); }
+  .modal-body { padding: 36px; overflow-y: auto; font-size: 14.5px; color: var(--text); line-height: 1.65; }
+  
+  .modal-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: var(--off-white); border-radius: 12px; overflow: hidden; border: 1px solid var(--gray-100); }
+  .modal-table th, .modal-table td { padding: 10px 16px; text-align: left; font-size: 13.5px; border-bottom: 1px solid var(--gray-100); }
+  .modal-table th { background: var(--navy-mid); color: #fff; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+  .modal-table tr:last-child td { border-bottom: none; }
+  
+  .modal-price { display: inline-flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: var(--success); font-weight: 700; padding: 10px 18px; border-radius: 10px; margin: 16px 0; font-size: 16px; }
+  .modal-section-title { font-family: var(--font-head); color: var(--navy); font-size: 15.5px; font-weight: 700; margin: 24px 0 12px; display: flex; align-items: center; gap: 8px; border-bottom: 1px dashed var(--gray-300); padding-bottom: 6px; }
+  .modal-list { list-style: none; padding-left: 4px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .modal-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--gray-600); }
+  .modal-list li::before { content: '•'; color: var(--accent-dark); font-weight: 900; padding-right: 4px; }
+  .modal-text-block { margin-bottom: 16px; text-align: justify; color: var(--gray-600); font-size: 14px; }
+  
+  /* Responsive diagram wrapper inside modals */
+  .modal-image-wrapper { width: 100%; text-align: center; margin: 24px 0; padding: 16px; background: #fff; border: 1px solid var(--gray-100); border-radius: 16px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+  .modal-image-wrapper img { max-width: 100%; height: auto; border-radius: 8px; display: inline-block; }
+  .modal-image-caption { font-size: 12px; color: var(--gray-600); font-weight: 600; margin-top: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+
+  #internship { background: var(--navy); position: relative; overflow: hidden; }
+  .intern-bg-glow { position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 500px; background: radial-gradient(ellipse, rgba(0,212,170,0.08) 0%, transparent 70%); pointer-events: none; }
+  .intern-header { position: relative; }
+  .intern-header .section-tag { color: var(--accent); background: rgba(0,212,170,0.1); }
+  .intern-header .section-h2 { color: #fff; }
+  .intern-header .section-lead { color: rgba(255,255,255,0.55); }
+  .intern-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; position: relative; }
+  .intern-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 36px; transition: background 0.25s, border-color 0.25s; }
+  .intern-card:hover { background: rgba(0,212,170,0.06); border-color: rgba(0,212,170,0.3); }
+  .intern-dept { font-family: var(--font-head); font-size: 36px; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--blue-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; }
+  .intern-dept-name { font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 20px; }
+  .intern-card h3 { font-family: var(--font-head); font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+  .intern-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .intern-list li { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.5; display: flex; gap: 10px; align-items: flex-start; }
+  .intern-list li::before { content: '→'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+  .intern-highlights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 56px; position: relative; }
+  .highlight-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 24px; text-align: center; }
+  .highlight-box .num { font-family: var(--font-head); font-size: 28px; font-weight: 800; color: var(--accent); }
+  .highlight-box .lbl { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+
+  #why { background: var(--off-white); }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; margin-top: 56px; }
+  .why-list { display: flex; flex-direction: column; gap: 20px; }
+  .why-item { background: var(--white); border-radius: 16px; border: 1px solid var(--gray-100); padding: 24px 28px; display: flex; gap: 20px; align-items: center; transition: box-shadow 0.2s; }
+  .why-item:hover { box-shadow: 0 8px 24px rgba(11,27,58,0.08); }
+  .why-num { font-family: var(--font-head); font-size: 28px; font-weight: 800; color: var(--gray-100); flex-shrink: 0; }
+  .why-text h4 { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .why-text p { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
+  .why-visual { background: var(--navy); border-radius: 24px; padding: 48px; color: #fff; position: sticky; top: 100px; }
+  .why-visual h3 { font-family: var(--font-head); font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+  .why-visual p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 28px; }
+  .cert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cert-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; text-align: center; }
+  .cert-box .icon { font-size: 28px; margin-bottom: 8px; }
+  .cert-box .name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); }
+  .cert-box .sub { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+
+  #contact { background: var(--white); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; margin-top: 56px; align-items: start; }
+  .contact-info { display: flex; flex-direction: column; gap: 28px; }
+  .contact-item { display: flex; gap: 18px; align-items: flex-start; }
+  .contact-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(26,86,219,0.08); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .contact-item h4 { font-family: var(--font-head); font-size: 14px; font-weight: 700; color: var(--gray-300); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
+  .contact-item p, .contact-item a { font-size: 15px; color: var(--navy); line-height: 1.6; text-decoration: none; font-weight: 500; }
+  .contact-item a:hover { color: var(--blue); }
+
+  .map-wrapper { margin-top: 36px; border-radius: 16px; overflow: hidden; border: 1px solid var(--gray-100); box-shadow: 0 8px 32px rgba(11,27,58,0.08); }
+  .map-wrapper iframe { display: block; width: 100%; height: 280px; border: 0; }
+
+  .contact-form { background: var(--off-white); border-radius: 24px; padding: 44px; border: 1px solid var(--gray-100); }
+  .contact-form h3 { font-family: var(--font-head); font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 28px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .form-group label { font-size: 13px; font-weight: 600; color: var(--gray-600); letter-spacing: 0.5px; }
+  .form-group input, .form-group select, .form-group textarea { background: var(--white); border: 1.5px solid var(--gray-100); border-radius: 10px; padding: 12px 16px; font-family: var(--font-body); font-size: 14px; color: var(--text); outline: none; transition: border-color 0.2s; width: 100%; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--blue); }
+  .form-group input.error, .form-group select.error, .form-group textarea.error { border-color: var(--error); }
+  .field-error { font-size: 12px; color: var(--error); margin-top: -4px; }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .form-submit { width: 100%; background: var(--navy); color: #fff; border: none; border-radius: 12px; padding: 16px; font-family: var(--font-head); font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .form-submit:hover:not(:disabled) { background: var(--blue); transform: translateY(-1px); }
+  .form-submit:disabled { opacity: 0.65; cursor: not-allowed; }
+  .toast { position: fixed; bottom: 32px; right: 32px; z-index: 999; padding: 16px 24px; border-radius: 14px; font-size: 15px; font-weight: 600; max-width: 380px; box-shadow: 0 16px 40px rgba(0,0,0,0.18); display: flex; align-items: center; gap: 12px; transform: translateY(80px); opacity: 0; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { background: var(--success); color: #fff; }
+  .toast.error { background: var(--error); color: #fff; }
+  .toast-icon { font-size: 20px; flex-shrink: 0; }
+  .spinner { width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  footer { background: var(--gray-800); color: rgba(255,255,255,0.6); padding: 48px 5vw 32px; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 28px; }
+  .footer-brand { font-family: var(--font-head); font-size: 18px; font-weight: 700; color: #fff; }
+  .footer-brand span { display: block; font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.35); margin-top: 2px; }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { font-size: 13px; }
+  .footer-made span { color: var(--accent); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; background: rgba(11,27,58,0.98); z-index: 99; flex-direction: column; padding: 20px 5vw 28px; border-bottom: 1px solid rgba(0,212,170,0.15); }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 16px; font-weight: 500; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); transition: color 0.2s; }
+  .mobile-menu a:hover { color: var(--accent); }
+
+  @media (max-width: 900px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 72px 5vw; }
+    .about-grid, .why-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    .about-float { position: static; margin-top: 16px; display: inline-block; }
+    .services-grid, .intern-grid { grid-template-columns: 1fr 1fr; }
+    .intern-highlights { grid-template-columns: 1fr 1fr; }
+    .why-visual { position: static; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; flex-wrap: wrap; }
+    .modal-window { max-height: 90vh; max-width: 95vw; }
+    .modal-body { padding: 24px; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 56px 4vw; }
+    .hero-h1 { font-size: 32px; }
+    .hero-btns { flex-direction: column; }
+    .btn-primary, .btn-outline { width: 100%; text-align: center; padding: 14px 20px; }
+    .services-grid, .intern-grid { grid-template-columns: 1fr; }
+    .contact-form { padding: 28px 20px; }
+    .toast { bottom: 16px; right: 16px; left: 16px; max-width: none; }
+    .map-wrapper iframe { height: 220px; }
+    .modal-header { padding: 20px 24px; }
+    .modal-body { padding: 20px 16px; }
+    .modal-table th, .modal-table td { padding: 10px 12px; font-size: 12.5px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#home" class="nav-logo">
+    <div class="nav-logo-mark">VI</div>
+    <div class="nav-brand">VI Microsystems<span>Pvt Ltd</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Products & Services</a></li>
+    <li><a href="#internship">Internships</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="closeMenu()">Home</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#services" onclick="closeMenu()">Products & Services</a>
+  <a href="#internship" onclick="closeMenu()">Internships</a>
+  <a href="#why" onclick="closeMenu()">Why Us</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<section id="home">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Electronics & Embedded Systems Experts</div>
+    <h1 class="hero-h1">Powering the Future<br />with <em>Smart Electronics</em></h1>
+    <p class="hero-sub">VI Microsystems Pvt Ltd delivers cutting-edge embedded systems, electronics design, and industry-ready training — bridging academia and the real world since day one.</p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">Explore Our Services</a>
+      <a href="#internship" class="btn-outline">Internship Programs</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">500+</div><div class="stat-label">Students Trained</div></div>
+      <div><div class="stat-num">15+</div><div class="stat-label">Years Experience</div></div>
+      <div><div class="stat-num">200+</div><div class="stat-label">Projects Delivered</div></div>
+      <div><div class="stat-num">ECE · EEE · CSE</div><div class="stat-label">Internship Streams</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-tag">About Us</div>
+  <h2 class="section-h2">Who We Are</h2>
+  <p class="section-lead">VI Microsystems Pvt Ltd is a Chennai-based electronics and embedded systems company committed to delivering innovative technology solutions and nurturing the next generation of engineers.</p>
+  <div class="about-grid">
+    <div class="about-visual">
+      <div class="about-card">
+        <div class="about-card-accent"></div>
+        <h3>🔬 Our Core Expertise</h3>
+        <p>We specialize in embedded systems design, PCB development, IoT solutions, and industrial automation — delivering reliable, scalable electronics for diverse industries.</p>
+        <div class="about-badges">
+          <span class="badge">Embedded Systems</span><span class="badge">PCB Design</span>
+          <span class="badge">IoT Solutions</span><span class="badge">VLSI Design</span>
+          <span class="badge">Automation</span><span class="badge">Signal Processing</span>
+        </div>
+      </div>
+      <div class="about-float"><div class="num">15+</div><div class="lbl">Years of Innovation</div></div>
+    </div>
+    <div class="about-points">
+      <div class="about-point"><div class="point-icon">🚀</div><div class="point-body"><h4>Industry-Driven Innovation</h4><p>We design and develop electronics solutions aligned with industry demands, delivering products that set benchmarks in reliability and performance.</p></div></div>
+      <div class="about-point"><div class="point-icon">🎓</div><div class="point-body"><h4>Knowledge Transfer at Heart</h4><p>Our internship and training programs turn engineering students into confident professionals, with hands-on exposure to real project environments.</p></div></div>
+      <div class="about-point"><div class="point-icon">🤝</div><div class="point-body"><h4>Client-Centric Approach</h4><p>Every engagement begins with understanding our client's vision. We deliver customized solutions — never off-the-shelf compromises.</p></div></div>
+      <div class="about-point"><div class="point-icon">🌐</div><div class="point-body"><h4>Chennai's Trusted Tech Partner</h4><p>Rooted in Tamil Nadu, we serve clients across India with a reputation built on technical excellence and on-time delivery.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-tag">Products & Services</div>
+  <h2 class="section-h2">What We Build & Deliver</h2>
+  <p class="section-lead">From embedded firmware to full PCB assemblies — our end-to-end offerings cover every stage of the electronics product lifecycle.</p>
+  <div class="services-grid">
+    <div class="service-card" onclick="openModal('viLan05')">
+      <span class="service-icon">🔒</span>
+      <h3>ViLaN-05 Networking & Cyber Security</h3>
+      <p>UNO Q based network LAN training framework engineered for socket programming, network stacks, and cyber security studies.</p>
+      <div class="service-tags"><span class="stag">Cyber Security</span><span class="stag">ViLaN-05</span><span class="stag">LAN Stack</span></div>
+      <span class="service-link-hint">View Unabridged Pages →</span>
+    </div>
+
+    <div class="service-card" onclick="openModal('cobot3c')">
+      <span class="service-icon">🦾</span>
+      <h3>ASYSTR 3C Collaborative Robot</h3>
+      <p>Industrial 6-axis collaborative arm developed to execute production processes safely alongside humans without safety fencing.</p>
+      <div class="service-tags"><span class="stag">6-Axis Cobot</span><span class="stag">MODBUS RTU</span><span class="stag">3kg Payload</span></div>
+      <span class="service-link-hint">View Unabridged Pages →</span>
+    </div>
+
+    <div class="service-card" onclick="openModal('roboOrin')">
+      <span class="service-icon">🤖</span>
+      <h3>MR Robo: NVIDIA Jetson Orin Nano</h3>
+      <p>ROS 2 autonomous mobile robot foundation housing 67 INT8 TOPS of edge AI capacity for advanced SLAM mapping and path planning.</p>
+      <div class="service-tags"><span class="stag">Jetson Orin</span><span class="stag">Nav2 Stack</span><span class="stag">LiDAR</span></div>
+      <span class="service-link-hint">View Unabridged Pages →</span>
+    </div>
+
+    <div class="service-card" onclick="openModal('roboUnoQ')">
+      <span class="service-icon">🎛️</span>
+      <h3>MR Robo: Arduino UNO Q Platform</h3>
+      <p>Dual-processor autonomous robotics baseline integrating a high-performance Qualcomm MPU with a real-time STM32 MCU block.</p>
+      <div class="service-tags"><span class="stag">Qualcomm Core</span><span class="stag">Debian Linux</span><span class="stag">SBC</span></div>
+      <span class="service-link-hint">View Unabridged Pages →</span>
+    </div>
+
+    <div class="service-card" onclick="openModal('roboESP32')">
+      <span class="service-icon">🔌</span>
+      <h3>MR Robo: ESP32 Micro-ROS Core</h3>
+      <p>Resource-constrained lightweight embedded layout running native micro-ROS firmware nodes for hardware device execution.</p>
+      <div class="service-tags"><span class="stag">micro-ROS</span><span class="stag">Tensilica LX6</span><span class="stag">PWM Driving</span></div>
+      <span class="service-link-hint">View Unabridged Pages →</span>
+    </div>
+
+    <div class="service-card"><span class="service-icon">🧠</span><h3>Embedded Systems Design</h3><p>Custom microcontroller-based systems using ARM Cortex, AVR, PIC, and STM32 platforms.</p><div class="service-tags"><span class="stag">ARM Cortex</span><span class="stag">STM32</span><span class="stag">RTOS</span></div></div>
+    <div class="service-card"><span class="service-icon">📡</span><h3>IoT Solutions</h3><p>Connected device development covering sensors, gateways, cloud integration, and dashboards.</p><div class="service-tags"><span class="stag">ESP32</span><span class="stag">MQTT</span><span class="stag">AWS IoT</span></div></div>
+    <div class="service-card"><span class="service-icon">🖥️</span><h3>PCB Design & Fabrication</h3><p>Complete PCB design services — schematic capture, layout, DFM review, and fabrication coordination.</p><div class="service-tags"><span class="stag">Altium</span><span class="stag">KiCad</span><span class="stag">SMT</span></div></div>
+  </div>
+</section>
+
+<div class="modal-overlay" id="productModal" onclick="closeModalOnOverlay(event)">
+  <div class="modal-window">
+    <div class="modal-header">
+      <h3 id="mTitle">Product Specifications</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="mBody">
+      </div>
+  </div>
+</div>
+
+<section id="internship">
+  <div class="intern-bg-glow"></div>
+  <div class="intern-header">
+    <div class="section-tag">Internship Programs</div>
+    <h2 class="section-h2">Build Your Career with Us</h2>
+    <p class="section-lead">We offer structured, industry-level internship programs for ECE, EEE, and CSE students.</p>
+  </div>
+  <div class="intern-grid">
+    <div class="intern-card">
+      <div class="intern-dept">ECE</div>
+      <div class="intern-dept-name">Electronics & Communication</div>
+      <h3>Core Electronics Internship</h3>
+      <ul class="intern-list">
+        <li>Embedded systems with ARM & AVR microcontrollers</li>
+        <li>PCB design, soldering & circuit testing</li>
+        <li>Communication protocols (UART, SPI, I2C)</li>
+        <li>Signal processing & analog circuit design</li>
+        <li>IoT-based mini project development</li>
+      </ul>
+    </div>
+    <div class="intern-card">
+      <div class="intern-dept">EEE</div>
+      <div class="intern-dept-name">Electrical & Electronics</div>
+      <h3>Power & Systems Internship</h3>
+      <ul class="intern-list">
+        <li>Power electronics design & simulation</li>
+        <li>Motor control & drive systems</li>
+        <li>PLC programming & industrial automation</li>
+        <li>Renewable energy system design</li>
+        <li>MATLAB/Simulink-based analysis</li>
+      </ul>
+    </div>
+    <div class="intern-card">
+      <div class="intern-dept">CSE</div>
+      <div class="intern-dept-name">Computer Science & Engineering</div>
+      <h3>Embedded Software Internship</h3>
+      <ul class="intern-list">
+        <li>Firmware development in C/C++</li>
+        <li>Python & data logging for IoT systems</li>
+        <li>RTOS (FreeRTOS) programming</li>
+        <li>Edge computing & device integration</li>
+        <li>Dashboard & cloud connectivity</li>
+      </ul>
+    </div>
+  </div>
+  <div class="intern-highlights">
+    <div class="highlight-box"><div class="num">4–12</div><div class="lbl">Weeks Duration</div></div>
+    <div class="highlight-box"><div class="num">100%</div><div class="lbl">Hands-on Projects</div></div>
+    <div class="highlight-box"><div class="num">✓</div><div class="lbl">Industry Certificate</div></div>
+    <div class="highlight-box"><div class="num">LOR</div><div class="lbl">Letter of Recommendation</div></div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="section-tag">Why VI Microsystems</div>
+  <h2 class="section-h2">What Sets Us Apart</h2>
+  <p class="section-lead">We combine deep technical expertise with a genuine commitment to client success and student development.</p>
+  <div class="why-grid">
+    <div class="why-list">
+      <div class="why-item"><div class="why-num">01</div><div class="why-text"><h4>Expert Engineering Team</h4><p>Seasoned electronics engineers with real-world industry experience across automotive, industrial, and consumer electronics.</p></div></div>
+      <div class="why-item"><div class="why-num">02</div><div class="why-text"><h4>End-to-End Project Support</h4><p>From feasibility analysis to final deployment, we own the entire product lifecycle.</p></div></div>
+      <div class="why-item"><div class="why-num">03</div><div class="why-text"><h4>Live Project Training</h4><p>Interns work on actual client-grade projects — not simulations.</p></div></div>
+      <div class="why-item"><div class="why-num">04</div><div class="why-text"><h4>Competitive Pricing</h4><p>High-quality electronics solutions and training programs at affordable rates.</p></div></div>
+      <div class="why-item"><div class="why-num">05</div><div class="why-text"><h4>Timely Delivery Guaranteed</h4><p>Disciplined project management ensures deliverables are on time, every time.</p></div></div>
+    </div>
+    <div class="why-visual">
+      <h3>🏆 Trusted by Students & Industry</h3>
+      <p>Our track record speaks for itself — hundreds of students placed, dozens of products shipped.</p>
+      <div class="cert-grid">
+        <div class="cert-box"><div class="icon">📜</div><div class="name">ISO Certified</div><div class="sub">Quality Assured</div></div>
+        <div class="cert-box"><div class="icon">🎓</div><div class="name">AICTE Aligned</div><div class="sub">Internship Programs</div></div>
+        <div class="cert-box"><div class="icon">🤝</div><div class="name">MoU Partners</div><div class="sub">Multiple Colleges</div></div>
+        <div class="cert-box"><div class="icon">🏭</div><div class="name">Industry Ready</div><div class="sub">Real-World Exposure</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-tag">Contact Us</div>
+  <h2 class="section-h2">Let's Work Together</h2>
+  <p class="section-lead">Have a project in mind, or looking to enroll in our internship program? Reach out — we're happy to help.</p>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-item"><div class="contact-icon">📍</div><div><h4>Address</h4><p>VI Microsystems Pvt Ltd<br />Industrial Estate, Perungudi<br />Chennai, Tamil Nadu 600096</p></div></div>
+      <div class="contact-item"><div class="contact-icon">📞</div><div><h4>Phone</h4><a href="tel:+914424960774">+91 44 2496 0774</a></div></div>
+      <div class="contact-item"><div class="contact-icon">✉️</div><div><h4>Email</h4><a href="mailto:info@vimicrosystems.in">info@vimicrosystems.in</a></div></div>
+      <div class="contact-item"><div class="contact-icon">🕘</div><div><h4>Working Hours</h4><p>Mon – Sat: 8:30 AM – 5:30 PM<br />Sunday: Closed</p></div></div>
+
+      <div class="map-wrapper">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.592!2d80.2437669!3d12.9556566!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525b6b746c11c1%3A0x32bd999294e277ca!2sVi%20Micro%20Systems%20Private%20Limited!5e0!3m2!1sen!2sin!4v1715760000000!5m2!1sen!2sin"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="VI Microsystems Location">
+        </iframe>
+      </div>
+
+    </div>
+    <div class="contact-form">
+      <h3>Send Us a Message</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input id="firstName" type="text" placeholder="Arun" />
+          <span class="field-error" id="err-firstName"></span>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input id="lastName" type="text" placeholder="Kumar" />
+          <span class="field-error" id="err-lastName"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input id="email" type="email" placeholder="arun@example.com" />
+        <span class="field-error" id="err-email"></span>
+      </div>
+      <div class="form-group">
+        <label for="enquiryType">Enquiry Type</label>
+        <select id="enquiryType">
+          <option value="">Select an option</option>
+          <option>Product / Services Inquiry</option>
+          <option>ECE Internship</option>
+          <option>EEE Internship</option>
+          <option>CSE Internship</option>
+          <option>R&D Consulting</option>
+          <option>Other</option>
+        </select>
+        <span class="field-error" id="err-enquiryType"></span>
+      </div>
+      <div class="form-group">
+        <label for="message">Your Message</label>
+        <textarea id="message" placeholder="Tell us about your project or query…"></textarea>
+        <span class="field-error" id="err-message"></span>
+      </div>
+      <button class="form-submit" id="submitBtn" onclick="submitContactForm()">
+        <span id="btnText">Submit Message</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div><div class="footer-brand">VI Microsystems Pvt Ltd<span>Electronics & Embedded Systems | Chennai, India</span></div></div>
+    <div class="footer-links">
+      <a href="#home">Home</a><a href="#about">About</a>
+      <a href="#services">Services</a><a href="#internship">Internship</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 VI Microsystems Pvt Ltd. All rights reserved.</div>
+    <div class="footer-made">Crafted with <span>♥</span> in Chennai</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">
+  <span class="toast-icon" id="toastIcon"></span>
+  <span id="toastMsg"></span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+  emailjs.init("8cOhhqLkjvgntRiRE");
+  const API_BASE = "https://vi-microsystems.onrender.com";
+
+  const hamburger  = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobileMenu");
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("open");
+    mobileMenu.classList.toggle("open");
+  });
+  function closeMenu() {
+    hamburger.classList.remove("open");
+    mobileMenu.classList.remove("open");
+  }
+  window.addEventListener("scroll", closeMenu);
+
+  function showToast(message, type = "success") {
+    const toast = document.getElementById("toast");
+    document.getElementById("toastMsg").textContent  = message;
+    document.getElementById("toastIcon").textContent = type === "success" ? "✅" : "❌";
+    toast.className = `toast ${type} show`;
+    setTimeout(() => { toast.className = "toast"; }, 5000);
+  }
+
+  function clearErrors() {
+    ["firstName","lastName","email","enquiryType","message"].forEach(f => {
+      document.getElementById(f).classList.remove("error");
+      document.getElementById("err-" + f).textContent = "";
+    });
+  }
+
+  function showFieldErrors(errors) {
+    errors.forEach(({ field, message }) => {
+      const el = document.getElementById(field);
+      if (el) {
+        el.classList.add("error");
+        const errEl = document.getElementById("err-" + field);
+        if (errEl) errEl.textContent = message;
+      }
+    });
+    const firstErr = errors[0]?.field;
+    if (firstErr) document.getElementById(firstErr)?.focus();
+  }
+
+  function validateForm(data) {
+    const errs = [];
+    if (!data.firstName.trim())  errs.push({ field: "firstName",   message: "First name is required" });
+    if (!data.lastName.trim())   errs.push({ field: "lastName",    message: "Last name is required" });
+    if (!data.email.trim())      errs.push({ field: "email",       message: "Email is required" });
+    else if (!/^\S+@\S+\.\S+$/.test(data.email))
+                                 errs.push({ field: "email",       message: "Enter a valid email address" });
+    if (!data.enquiryType)       errs.push({ field: "enquiryType", message: "Please select an enquiry type" });
+    if (!data.message.trim())    errs.push({ field: "message",     message: "Message is required" });
+    else if (data.message.trim().length < 10)
+                                 errs.push({ field: "message",     message: "Message must be at least 10 characters" });
+    return errs;
+  }
+
+  async function submitContactForm() {
+    clearErrors();
+    const data = {
+      firstName:   document.getElementById("firstName").value,
+      lastName:    document.getElementById("lastName").value,
+      email:       document.getElementById("email").value,
+      enquiryType: document.getElementById("enquiryType").value,
+      message:     document.getElementById("message").value,
+    };
+    const clientErrors = validateForm(data);
+    if (clientErrors.length > 0) { showFieldErrors(clientErrors); return; }
+
+    const btn     = document.getElementById("submitBtn");
+    const btnText = document.getElementById("btnText");
+    btn.disabled  = true;
+    btnText.innerHTML = '<span class="spinner"></span> Sending…';
+
+    try {
+      await emailjs.send("service_xtoia6c", "template_q31lyar", {
+        firstName:   data.firstName,
+        lastName:    data.lastName,
+        email:       data.email,
+        enquiryType: data.enquiryType,
+        message:     data.message,
+      });
+      fetch(`${API_BASE}/api/contact`, {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify(data),
+      }).catch(err => console.log("DB save failed:", err));
+
+      showToast("Thank you! Your message has been received. We'll get back to you shortly.", "success");
+      ["firstName","lastName","email","message"].forEach(f => document.getElementById(f).value = "");
+      document.getElementById("enquiryType").value = "";
+    } catch (err) {
+      console.error("Submission error:", err);
+      showToast("Unable to send message. Please try again later.", "error");
+    } finally {
+      btn.disabled     = false;
+      btnText.textContent = "Submit Message";
+    }
+  }
+
+  // ── ROBOTICS & NETWORKING CARD DATA ENGINE WITHOUT CITATION TAGS ──
+  const productData = {
+    viLan05: {
+      title: "ViLaN-05: UNO Q Based Networking: LAN, Stack and Cyber Security Study Trainer",
+      body: `
+        <div class="modal-text-block"><strong>MAKE:</strong> VI MICROSYSTEMS | <strong>MODEL:</strong> ViLaN-05</div>
+        <p class="modal-text-block">The UNO Q Based Network LAN Trainer with Network Stack and Cyber Security Studies is an advanced embedded networking platform developed for learning and experimentation[cite: 525]. The trainer is built around the Arduino UNO Q and integrates Ethernet, serial communication, wireless networking, and cyber security modules for practical hands-on learning[cite: 536]. An indigenous design of LAN Trainer for wired & wireless to study for all topologies like star, bus, mesh and ring has been introduced[cite: 537]. All protocols such as Stop & Wait, Go Back to N, Selective Repeat, Token Ring, Token Bus, CSMA / CD, CSMA / CA can be experimented using ViLaN-05[cite: 538].</p>
+        <p class="modal-text-block">A Microcontroller with 2 Ethernet ports forms one Station[cite: 539]. There are 4 such stations and one station connected to a PC for Graphical Representation of all experiments[cite: 539]. All topologies are implemented using 10/100Mbps Ethernet ports for real feel of Networking[cite: 540]. ViLaN-05 can conduct all experiments as per Anna University Syllabus of ECE Department[cite: 541]. Data transmission speed – 10/100 Mbps[cite: 541].</p>
+        
+        <div class="modal-price">🏷️ Price: Rs.88,660.00 + GST</div>
+
+        <div class="modal-image-wrapper">
+          <img src="images/uno_q_network_topologies.png" alt="ViLaN-05 Network Topologies Diagram" onerror="this.src='https://placehold.co/800x550/0b1b3a/ffffff?text=ViLaN-05+Embedded+Network+Trainer'">
+          <div class="modal-image-caption">Figure 1: Star, Bus, and Ring Embedded Network Architecture Setup</div>
+        </div>
+
+        <div class="modal-section-title">🎯 Core Technical Objectives</div>
+        <ul class="modal-list">
+          <li>Study the TCP/IP protocol stack [cite: 544]</li>
+          <li>Learn embedded LAN communication [cite: 545]</li>
+          <li>Understand Ethernet frame transmission [cite: 546]</li>
+          <li>Implement TCP and UDP socket communication [cite: 547]</li>
+          <li>Analyze network packets [cite: 548]</li>
+          <li>Study cyber security vulnerabilities [cite: 549]</li>
+          <li>Learn secure communication techniques [cite: 550]</li>
+          <li>Develop embedded IoT applications [cite: 551]</li>
+          <li>Perform real-time network monitoring [cite: 552]</li>
+        </ul>
+
+        <div class="modal-section-title">🛡️ Cyber Security & Cryptography Studies</div>
+        <ul class="modal-list">
+          <li>Port scanning experiments & Packet sniffing [cite: 586, 587]</li>
+          <li>MAC filtering layouts & Authentication systems [cite: 588, 589]</li>
+          <li>Password-based access systems & Embedded firewall concepts [cite: 590, 591]</li>
+          <li>Secure data transmission parameters [cite: 592]</li>
+          <li>Encryption and decryption pipelines & Digital signature techniques [cite: 593, 594]</li>
+          <li>Network attack demonstrations & MITM (Man-In-The-Middle) Attacks [cite: 595, 608]</li>
+          <li>Wireless Security configurations: WPA / TKIP, WPA2 / AES, WPA3 / SAE [cite: 602, 603, 604, 605]</li>
+        </ul>
+
+        <div class="modal-image-wrapper">
+          <img src="images/vi_lan_05_node_hardware.png" alt="ViLaN-05 Node System Diagram" onerror="this.src='https://placehold.co/500x500/0b1b3a/ffffff?text=ViLaN-05+Node+Layout'">
+          <div class="modal-image-caption">Figure 2: Hardware Node Interfacing Layout & Port Mapping</div>
+        </div>
+
+        <div class="modal-section-title">🧪 Comprehensive List of Experiments</div>
+        <ul class="modal-list">
+          <li>Topologies covered: Star, Bus, Ring, Mesh [cite: 613, 614, 615, 616]</li>
+          <li>Protocols supported: Stop & Wait, Go Back to N, Selective Repeat, Token Ring, Token Bus, CSMA / CD, CSMA / CA [cite: 618, 619, 620, 621, 622, 623, 624]</li>
+          <li>Serial to Serial communication & Parallel to Parallel Communication [cite: 625, 626]</li>
+          <li>Ethernet communication using RJ 45 interfaces [cite: 627]</li>
+          <li>Study of Socket Programming and Client – Server models [cite: 628]</li>
+          <li>Code simulation loops: ARP / RARP protocols, PING and TRACEROUTE commands [cite: 629, 630]</li>
+          <li>Socket configuration for HTTP webpage uploads and downloads [cite: 631]</li>
+          <li>Program compilation for RPC (Remote Procedure Call) [cite: 632]</li>
+          <li>Implementation of Subnetting profiles [cite: 633]</li>
+          <li>TCP Sockets apps: Echo client and server, Chat, File Transfer [cite: 634]</li>
+          <li>TCP/UDP Socket apps: DNS, SNMP, File Transfer architectures [cite: 635]</li>
+          <li>Study of Network simulator (NS), and Simulation of Congestion Control Algorithms using NS [cite: 636]</li>
+          <li>Routing Algorithm Case Studies: Link State routing, Flooding, Distance vector tracking [cite: 637, 638]</li>
+          <li>Cipher implementations: Caesar Cipher, Playfair Cipher, Hill Cipher [cite: 639]</li>
+          <li>Transposition programming: Rail fence technique - Row major & Column major transformations [cite: 640]</li>
+          <li>Encryption logic programming: DES algorithm, AES algorithm, RSA Encryption algorithm [cite: 641, 642, 643]</li>
+          <li>Diffie-Hellman Key Exchange mechanisms (Alice and Bob simulation layout) [cite: 644]</li>
+          <li>Message Digest calculations: SHA-1 algorithm, MD-5 algorithm [cite: 645, 646]</li>
+          <li>Digital signature standard hardware implementation [cite: 647]</li>
+        </ul>
+
+        <div class="modal-section-title">🖥️ ViLaN-05 Software GUI Features</div>
+        <ul class="modal-list">
+          <li>Graphic representation of data packets (Transmitting, Transmitted, Acknowledged) [cite: 653, 654, 655, 656]</li>
+          <li>Packet error visualization (Acknowledgment lost error, bad packet error, discarded/resend states) [cite: 657, 658, 659]</li>
+          <li>User selectable packet sizes (128, 512, 1024, 2048, 4096, 8192, 16384) with manual error generation [cite: 542, 663, 664]</li>
+          <li>Inter packet delays: 1000-5000ms, Error Generation & Error Correction tracking [cite: 542]</li>
+          <li>Network details indication of computer name, IP address, Port number, status of network, MAC address and OS [cite: 670]</li>
+          <li>Indication of packet serial number, file details, receiver IP, timeout bounds, and transmission data rates (Mbps) [cite: 671]</li>
+        </ul>
+
+        <div class="modal-section-title">📋 Integrated Hardware Specifications</div>
+        <table class="modal-table">
+          <thead><tr><th>Hardware Component</th><th>Detailed Parameter Configuration</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Distributed Nodes</strong></td><td>4 Nodes provided to conduct multi-station experiments[cite: 676]. Each node features one Arduino UNO Q with 2 Ethernet Ports for implementing RING Topography[cite: 673, 674].</td></tr>
+            <tr><td><strong>Ethernet Interface</strong></td><td>10/100 Mbps commercial D-Link Face Plate outlets[cite: 675]. Includes a 4 Port Ethernet switch with D-Link 4 outlets[cite: 678].</td></tr>
+            <tr><td><strong>On-Board Display</strong></td><td>2.4” TFT LCD Screen per node displaying Topology & Protocol parameters in WiFi[cite: 679]. Resolution: 240×320 (QVGA), SPI/Parallel interface, 3.3V-5V operating voltage[cite: 736, 739, 740].</td></tr>
+            <tr><td><strong>W5100 Ethernet Hat</strong></td><td>WIZnet W5100 Controller matching IEEE 802.3 standards over SPI up to 14 MHz[cite: 751, 752, 753, 754]. Features 4 independent hardware sockets with 16 KB internal buffer[cite: 756, 757].</td></tr>
+            <tr><td><strong>Qualcomm QRB2210 MPU</strong></td><td>Quad-core Arm Cortex-A53 running up to 2.0 GHz speeds operating on a Debian Linux environment[cite: 683, 684, 685, 686]. Integrated Adreno GPU, Dual ISP, and hardware compiler toolchains[cite: 649, 688, 689].</td></tr>
+            <tr><td><strong>STM32U585 MCU Core</strong></td><td>Arm Cortex-M33 running up to 160 MHz under Zephyr RTOS / Arduino Framework constraints packing 2 MB Flash memory and 786 KB SRAM[cite: 693, 694, 695, 697, 698, 705].</td></tr>
+            <tr><td><strong>Memory Matrix</strong></td><td>2GB or 4GB LPDDR4 system RAM paired with 16GB or 32GB onboard eMMC[cite: 700, 701].</td></tr>
+            <tr><td><strong>NS3 Simulation</strong></td><td>High Fidelity Network Simulator 3 metrics supporting accurate modeling of delay, jitter, packet loss, and protocol porting mechanics[cite: 769, 770, 772].</td></tr>
+          </tbody>
+        </table>
+      `
+    },
+    cobot3c: {
+      title: "6 – Axis collaborative robot: ASYSTR Robotics ASYSTR 3C",
+      body: `
+        <p class="modal-text-block">The ASYSTR Robotics ASYSTR 3C is a 6-axis collaborative robot (cobot) designed for industrial automation applications[cite: 2]. A collaborative robot is a robot that can safely work alongside humans without heavy safety fencing[cite: 2].</p>
+        
+        <div class="modal-price">🏷️ Price: 14,57,142 + 18% GST [cite: 11]</div>
+
+        <div class="modal-section-title">🚀 Core Robotic Applications</div>
+        <ul class="modal-list">
+          <li>Pick and place operations [cite: 4]</li>
+          <li>Machine tending [cite: 5]</li>
+          <li>Assembly operations [cite: 6]</li>
+          <li>Packaging [cite: 7]</li>
+          <li>Welding support [cite: 8]</li>
+          <li>Material handling [cite: 9]</li>
+        </ul>
+
+        <div class="modal-section-title">📋 Full Engineering Technical Specifications [cite: 10]</div>
+        <table class="modal-table">
+          <thead><tr><th>Category</th><th>Parameter</th><th>Specification</th></tr></thead>
+          <tbody>
+            <tr><td><strong>General</strong></td><td>Payload</td><td>3 kg</td></tr>
+            <tr><td></td><td>Reach</td><td>600 mm</td></tr>
+            <tr><td></td><td>Number of Axes</td><td>6</td></tr>
+            <tr><td></td><td>Repeatability</td><td>±0.05 mm</td></tr>
+            <tr><td></td><td>Max. Translational Speed</td><td>1000 mm/sec</td></tr>
+            <tr><td><strong>Electrical</strong></td><td>Power Supply</td><td>100–240 VAC, 50–60 Hz</td></tr>
+            <tr><td></td><td>Power Consumption</td><td>&lt; 500 W (typical cycle)</td></tr>
+            <tr><td><strong>Protection</strong></td><td>Wrist Protection</td><td>IP67</td></tr>
+            <tr><td></td><td>Body Protection</td><td>IP60</td></tr>
+            <tr><td><strong>Physical</strong></td><td>Weight</td><td>17 kg</td></tr>
+            <tr><td></td><td>Operating Temperature</td><td>0 – 50 °C</td></tr>
+            <tr><td></td><td>Tool Flange</td><td>ISO 9409-1:2004</td></tr>
+            <tr><td></td><td>Robot Footprint</td><td>115 × 115 mm</td></tr>
+            <tr><td></td><td>Mounting Position</td><td>Floor, ceiling & wall</td></tr>
+            <tr><td><strong>Connectivity</strong></td><td>Communication</td><td>Wi-Fi (802.11 b/g/m), IoT ready</td></tr>
+            <tr><td><strong>Joint Motion</strong></td><td>Waist (J1) Range / Speed</td><td>±180° / 150°/sec</td></tr>
+            <tr><td></td><td>Shoulder (J2) Range / Speed</td><td>±150° / 150°/sec</td></tr>
+            <tr><td></td><td>Elbow (J3) Range / Speed</td><td>±150° / 180°/sec</td></tr>
+            <tr><td></td><td>Wrist (J4) Range / Speed</td><td>±180° / 180°/sec</td></tr>
+            <tr><td></td><td>Bend (J5) Range / Speed</td><td>±180° / 180°/sec</td></tr>
+            <tr><td></td><td>Roll (J6) Range / Speed</td><td>±180° / 180°/sec</td></tr>
+            <tr><td><strong>I/O Interface</strong></td><td>Digital Input</td><td>2 Emergency + 2 Safety</td></tr>
+            <tr><td></td><td>Digital Output</td><td>2 Safety</td></tr>
+            <tr><td></td><td>Additional I/O</td><td>10 user-configurable digital I/O</td></tr>
+            <tr><td></td><td>Tool I/O</td><td>8 configurable points</td></tr>
+            <tr><td></td><td>Communication Protocol</td><td>MODBUS RTU (Half-Duplex 10 Mbps)</td></tr>
+            <tr><td></td><td>Integrated Power</td><td>24V, 0.5A</td></tr>
+            <tr><td></td><td>Mounting Type</td><td>DIN Rail</td></tr>
+          </tbody>
+        </table>
+      `
+    },
+    roboOrin: {
+      title: "ROS2 Based Autonomous Robo with Nvidia Jetson Orin Nano Super",
+      body: `
+        <p class="modal-text-block">The NVIDIA Jetson Orin Nano Super Developer Kit is a compact, yet powerful computer that redefines generative AI for small edge devices[cite: 91]. It delivers up to 67 TOPS of AI performance—a 1.7X improvement over its predecessor—to seamlessly run a wide variety of generative AI models, like vision transformers, large language models, vision-language models, and more[cite: 92, 93, 94]. It provides developers, students, and makers with an accessible platform supported by the NVIDIA AI software ecosystem[cite: 95].</p>
+        <p class="modal-text-block">The complete architecture enables distributed robotics development where the ESP32 handles low-level real-time hardware control under micro-ROS while ROS 2 on a Jetson performs advanced processing such as SLAM, navigation, AI inference, and visualization[cite: 146, 147, 148].</p>
+
+        <div class="modal-section-title">🧠 Advanced Jetson Compute Core Specifications [cite: 89]</div>
+        <table class="modal-table">
+          <thead><tr><th>Parameter</th><th>Specification Details</th></tr></thead>
+          <tbody>
+            <tr><td><strong>AI Performance</strong></td><td>67 INT8 TOPS</td></tr>
+            <tr><td><strong>GPU Architecture</strong></td><td>NVIDIA Ampere architecture with 1024 CUDA cores and 32 tensor cores</td></tr>
+            <tr><td><strong>CPU Engine</strong></td><td>6-core Arm® Cortex®-A78AE v8.2 64-bit CPU (1.5MB L2 + 4MB L3)</td></tr>
+            <tr><td><strong>System Memory</strong></td><td>8GB 128-bit LPDDR5 running at 102 GB/s</td></tr>
+            <tr><td><strong>Storage Unit</strong></td><td>512GB NVMe High-Speed Solid-State</td></tr>
+            <tr><td><strong>Power Dissipation</strong></td><td>7W – 25W Operational Draw Boundaries</td></tr>
+            <tr><td><strong>Operating System</strong></td><td>Ubuntu 22.04 with ROS2 Humble Middleware Stack [cite: 288, 289]</td></tr>
+          </tbody>
+        </table>
+
+        <div class="modal-section-title">🛠️ Integrated Hardware & Sensors Ecosystem [cite: 181]</div>
+        <ul class="modal-list">
+          <li><strong>X2 LiDAR Sensor:</strong> Provides real-time 360° distance scanning and obstacle detection for autonomous navigation, SLAM mapping, localization, and environment awareness[cite: 182].</li>
+          <li><strong>30Ah LiFePO4 Battery Pack:</strong> High-capacity Lithium Iron Phosphate battery offering long operational backup, stable voltage, and enhanced thermal safety[cite: 183].</li>
+          <li><strong>USB Camera Module:</strong> Enables real-time image and video acquisition for computer vision and object detection tasks[cite: 185].</li>
+          <li><strong>Locomotion Base:</strong> Dual BTS H-bridge high-current motor driver modules driving powerful geared high-torque DC motors across rugged 130mm rubber wheels[cite: 184, 186, 187].</li>
+        </ul>
+
+        <div class="modal-section-title">🧬 Software Deployments & Capabilities</div>
+        <ul class="modal-list">
+          <li><strong>Full SLAM Integration:</strong> Run 2D SLAM tracking via Cartographer, GMapping, or SLAM Toolbox frameworks for live grid occupancy mapping and target tracking[cite: 189, 190, 191, 192, 193, 196].</li>
+          <li><strong>ROS2 Navigation (Nav2):</strong> Provides path planning, dynamic obstacle avoidance, waypoint following, autonomous docking, and recovery behaviors[cite: 206, 208, 209, 210, 211, 212].</li>
+          <li><strong>Sensor Fusion:</strong> Fuses data from the MPU6050 IMU, wheel odometry, LiDAR odometry, and visual odometry using robot_localization Extended/Unscented Kalman Filters (EKF/UKF)[cite: 227, 228, 229, 230, 231, 233, 234, 235].</li>
+          <li><strong>Generative Visual AI:</strong> TensorRT-optimized inference loops running YOLOv8 networks for real-time person and vehicle tracking[cite: 216, 217, 218, 220, 221].</li>
+          <li><strong>Target Following:</strong> DeepSORT, ByteTrack, or KCF/CSRT dynamic human following models[cite: 243, 248, 249, 250].</li>
+          <li><strong>Digital Twin Simulations:</strong> Integration pipelines matching native URDF models directly with Gazebo and Isaac Sim environments[cite: 283, 284, 285, 286].</li>
+        </ul>
+      `
+    },
+    roboUnoQ: {
+      title: "ROS2 Based Autonomous Robo with Arduino UNO Q",
+      body: `
+        <p class="modal-text-block">The Arduino® UNO Q is an advanced robotics processing baseline that can function as a standalone single-board computer leveraging its built-in Debian Linux operating system environment with upstream support[cite: 307, 308, 318, 319]. By utilizing a USB-C dongle with external power delivery, developers can directly interface a desktop monitor, input devices, audio channels, and camera networks[cite: 309, 310, 311, 312].</p>
+        
+        <div class="modal-section-title">🎛️ Technical Specifications Architecture [cite: 332]</div>
+        <table class="modal-table">
+          <thead><tr><th>Category</th><th>Component Parameter</th><th>Details Configuration</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Board Engine</strong></td><td>SKU Reference Arrays</td><td>2 GB RAM / 16 GB eMMC (ABX00162) or 4 GB RAM / 32 GB eMMC (ABX00173)</td></tr>
+            <tr><td><strong>Application MPU</strong></td><td>Module Core</td><td>Qualcomm Dragonwing™ QRB2210 (Quad-core Arm® Cortex-A53 @ 2.0 GHz) [cite: 296, 297, 298]</td></tr>
+            <tr><td></td><td>GPU Block</td><td>Adreno 702 GPU @ 845 MHz with 3D graphics acceleration</td></tr>
+            <tr><td></td><td>Image Signal Processor</td><td>Dual ISP (13 MP + 13 MP or 25 MP) @ 30 fps [cite: 300]</td></tr>
+            <tr><td><strong>Real-Time MCU</strong></td><td>Microcontroller Core</td><td>STM32U585 Arm® Cortex-M33 running up to 160 MHz speeds [cite: 301, 302, 303]</td></tr>
+            <tr><td></td><td>OS Stack Framework</td><td>Executes Arduino code natively over Zephyr OS</td></tr>
+            <tr><td></td><td>Memory Capacity</td><td>2 MB Dedicated Flash Memory and 786 kB internal SRAM [cite: 304, 305]</td></tr>
+            <tr><td><strong>Radio Array</strong></td><td>WCBN3536A Module</td><td>Simultaneous Dual-band Wi-Fi 5 (2.4/5 GHz) + Bluetooth 5.1 [cite: 321, 322, 323]</td></tr>
+            <tr><td><strong>Logic Voltages</strong></td><td>Operational Thresholds</td><td>+3.3 V DC MCU (5 V tolerant) and +1.8 V DC MPU rails</td></tr>
+            <tr><td><strong>Interfaces</strong></td><td>Exposed IO Matrix</td><td>47 MCU Digital I/O channels, 6 analog inputs (14-bit ADC), 2 DAC ports, and shared PWM lines</td></tr>
+            <tr><td><strong>Connectors</strong></td><td>Expansion Blocks</td><td>Qwiic connection hub for I2C nodes, traditional UNO shield headers, and bottom high-speed connectors [cite: 325, 326, 327]</td></tr>
+          </tbody>
+        </table>
+
+        <div class="modal-section-title">🧬 System Integration Capabilities</div>
+        <ul class="modal-list">
+          <li><strong>Multiple IDE Support:</strong> Program across Arduino App Lab (for concurrent MPU/MCU development) or standard Arduino IDE 2.0+ for direct MCU flashing[cite: 328, 329, 330, 331].</li>
+          <li><strong>Integrated Visual Elements:</strong> Built-in 8 × 13 LED Matrix and dual RGB LEDs for running state animations and error checking.</li>
+          <li><strong>SBC Connective Topology:</strong> Connects directly with external USB cameras and high-current motor driver systems to act as a self-contained AMR hub.</li>
+        </ul>
+      `
+    },
+    roboESP32: {
+      title: "ROS2 Based Autonomous Robo with ESP32 Embedded Controller",
+      body: `
+        <p class="modal-text-block">micro-ROS is a lightweight version of ROS 2 designed specifically for microcontrollers and resource-constrained embedded systems[cite: 26]. Unlike a standard ROS 2 system that typically runs on high-performance computers, micro-ROS allows small embedded controllers to function as intelligent ROS 2 nodes directly participating in the network[cite: 28]. In this system architecture, the ESP32 acts as the main embedded low-level controller handling real-time hardware interfacing, sensor acquisition, and actuator signals[cite: 29, 30].</p>
+
+        <div class="modal-section-title">🎛️ ESP32 Development Board Specifications [cite: 70]</div>
+        <table class="modal-table">
+          <thead><tr><th>Parameter Domain</th><th>Technical Configuration Specification</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Chipset Module</strong></td><td>ESP-WROOM-32 Layout [cite: 71]</td></tr>
+            <tr><td><strong>Core Architecture</strong></td><td>Tensilica Xtensa Dual-Core 32-bit LX6 Microprocessor [cite: 72]</td></tr>
+            <tr><td><strong>Internal Clock Speed</strong></td><td>Up to 240MHz System Frequency [cite: 73]</td></tr>
+            <tr><td><strong>Static Memory Base</strong></td><td>520KB SRAM Architecture Layout [cite: 75]</td></tr>
+            <tr><td><strong>Flash Storage</strong></td><td>4MB Flash memory [cite: 74]</td></tr>
+            <tr><td><strong>Wireless Protocol</strong></td><td>2.4GHz Wi-Fi (802.11 b/g/n) and Bluetooth v4.2 (Classic + BLE) [cite: 76, 77]</td></tr>
+            <tr><td><strong>Exposed IO Matrix</strong></td><td>30-pin layout layout matching ADC, DAC, PWM, I2C, SPI, and UART lines [cite: 63, 65]</td></tr>
+            <tr><td><strong>Operating Voltage</strong></td><td>3.3V Logic Levels with 5V USB Input path [cite: 80]</td></tr>
+          </tbody>
+        </table>
+
+        <div class="modal-section-title">⚡ Real-Time Hardware Interfacing Matrix</div>
+        <ul class="modal-list">
+          <li><strong>Micro XRCE-DDS Middleware:</strong> Runs internal DDS clients communicating over USB Serial protocols with a micro-ROS Agent host link[cite: 44].</li>
+          <li><strong>Locomotion PWM Tuning:</strong> Controls speed regulation and active braking loops via dual BTS7960 high-current H-bridge driver modules connected to geared high-torque DC motors[cite: 32, 33, 84, 86].</li>
+          <li><strong>Inertial Gyro Telemetry:</strong> Continuously reads and publishes acceleration and gyroscope orientation data from an MPU6050 IMU over I2C lines[cite: 35, 37].</li>
+          <li><strong>Safety Proximity Checks:</strong> Continuously monitors distance arrays via two integrated ultrasonic sensors for low-latency obstacle detection[cite: 41, 42].</li>
+          <li><strong>Power System Diagnostics:</strong> Tracks remaining battery life metrics on a 2500mAh LiFePO4 battery pack via internal ADC voltage divider circuits[cite: 38, 39, 83].</li>
+        </ul>
+      `
+    }
+  };
+
+  // MODAL INTERACTION RUNTIME ENGINES
+  function openModal(productId) {
+    const data = productData[productId];
+    if (!data) return;
+    
+    document.getElementById("mTitle").innerHTML = data.title;
+    document.getElementById("mBody").innerHTML = data.body;
+    
+    const overlay = document.getElementById("productModal");
+    overlay.classList.add("active");
+    document.body.classList.add("modal-open");
+    
+    document.addEventListener("keydown", handleEscapeKey);
+  }
+
+  function closeModal() {
+    const overlay = document.getElementById("productModal");
+    overlay.classList.remove("active");
+    document.body.classList.remove("modal-open");
+    document.removeEventListener("keydown", handleEscapeKey);
+  }
+
+  function closeModalOnOverlay(event) {
+    if (event.target.classList.contains("modal-overlay")) {
+      closeModal();
+    }
+  }
+
+  function handleEscapeKey(event) {
+    if (event.key === "Escape") {
+      closeModal();
+    }
+  }
+</script>
+</body>
+</html>
