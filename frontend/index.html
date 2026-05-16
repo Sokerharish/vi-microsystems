@@ -69,25 +69,30 @@
   .about-float .num { font-family: var(--font-head); font-size: 32px; font-weight: 800; }
   .about-float .lbl { font-size: 12px; font-weight: 600; margin-top: 2px; }
   .about-points { display: flex; flex-direction: column; gap: 28px; }
-  .about-points .about-point { display: flex; gap: 20px; align-items: flex-start; }
+  .about-point { display: flex; gap: 20px; align-items: flex-start; }
   .point-icon { flex-shrink: 0; width: 48px; height: 48px; border-radius: 12px; background: rgba(26,86,219,0.08); display: flex; align-items: center; justify-content: center; font-size: 22px; }
   .point-body h4 { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
   .point-body p { font-size: 14px; color: var(--gray-600); line-height: 1.65; }
 
   #services { background: var(--white); }
   .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
-  .service-card { background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 20px; padding: 36px 32px; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; position: relative; overflow: hidden; cursor: pointer; }
-  .service-card:hover { transform: translateY(-6px); box-shadow: 0 24px 48px rgba(11,27,58,0.1); border-color: var(--accent); }
-  .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue) 0%, var(--accent) 100%); opacity: 0; transition: opacity 0.25s; }
-  .service-card:hover::before { opacity: 1; }
-  .service-icon { font-size: 36px; margin-bottom: 20px; display: block; }
-  .service-card h3 { font-family: var(--font-head); font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
-  .service-card p { font-size: 14px; color: var(--gray-600); line-height: 1.7; }
-  .service-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-  .stag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px; background: rgba(26,86,219,0.08); color: var(--blue); }
   
-  .service-link-hint { font-size: 12px; font-weight: 600; color: var(--blue); display: inline-flex; align-items: center; gap: 4px; margin-top: 16px; opacity: 0.8; transition: opacity 0.2s; }
-  .service-card:hover .service-link-hint { opacity: 1; color: var(--accent-dark); }
+  /* Upgraded visual catalog card style mapping */
+  .service-card { background: var(--white); border: 1px solid var(--gray-100); border-radius: 20px; padding: 0; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; position: relative; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; }
+  .service-card:hover { transform: translateY(-6px); box-shadow: 0 24px 48px rgba(11,27,58,0.1); border-color: var(--accent); }
+  .service-card-image-block { width: 100%; height: 190px; background: var(--navy); overflow: hidden; position: relative; border-bottom: 1px solid var(--gray-100); }
+  .service-card-image-block img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+  .service-card:hover .service-card-image-block img { transform: scale(1.05); }
+  
+  .service-card-body { padding: 28px 24px; flex-grow: 1; display: flex; flex-direction: column; }
+  .service-icon { font-size: 24px; margin-bottom: 12px; display: inline-block; }
+  .service-card h3 { font-family: var(--font-head); font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 10px; line-height: 1.3; }
+  .service-card p { font-size: 13.5px; color: var(--gray-600); line-height: 1.6; margin-bottom: 16px; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; margin-bottom: 14px; }
+  .stag { font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 6px; background: rgba(26,86,219,0.06); color: var(--blue); }
+  
+  .service-link-hint { font-size: 12px; font-weight: 700; color: var(--blue); display: inline-flex; align-items: center; gap: 4px; border-top: 1px solid var(--gray-100); width: 100%; padding-top: 12px; transition: color 0.2s; }
+  .service-card:hover .service-link-hint { color: var(--accent-dark); }
 
   /* ── Interactive Modal Engine ── */
   .modal-overlay { position: fixed; inset: 0; background: rgba(11, 27, 58, 0.4); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -112,9 +117,8 @@
   .modal-list li::before { content: '•'; color: var(--accent-dark); font-weight: 900; padding-right: 4px; }
   .modal-text-block { margin-bottom: 16px; text-align: justify; color: var(--gray-600); font-size: 14px; }
   
-  /* Responsive diagram wrapper inside modals */
   .modal-image-wrapper { width: 100%; text-align: center; margin: 24px 0; padding: 16px; background: #fff; border: 1px solid var(--gray-100); border-radius: 16px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
-  .modal-image-wrapper img { max-width: 100%; max-height: 480px; height: auto; border-radius: 8px; display: inline-block; object-fit: contain; }
+  .modal-image-wrapper img { max-width: 100%; max-height: 400px; height: auto; border-radius: 8px; display: inline-block; object-fit: contain; }
   .modal-image-caption { font-size: 12px; color: var(--gray-600); font-weight: 600; margin-top: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
 
   #internship { background: var(--navy); position: relative; overflow: hidden; }
@@ -321,48 +325,81 @@
   <p class="section-lead">From embedded firmware to full PCB assemblies — our end-to-end offerings cover every stage of the electronics product lifecycle.</p>
   <div class="services-grid">
     <div class="service-card" onclick="openModal('viLan05')">
-      <span class="service-icon">🔒</span>
-      <h3>ViLaN-05 Networking & Cyber Security</h3>
-      <p>UNO Q based network LAN training framework engineered for socket programming, network stacks, and cyber security studies.</p>
-      <div class="service-tags"><span class="stag">Cyber Security</span><span class="stag">ViLaN-05</span><span class="stag">LAN Stack</span></div>
-      <span class="service-link-hint">View Unabridged Pages →</span>
+      <div class="service-card-image-block">
+        <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=500&q=80" alt="ViLaN-05 Training Rack Image">
+      </div>
+      <div class="service-card-body">
+        <span class="service-icon">🔒</span>
+        <h3>ViLaN-05 Networking & Cyber Security</h3>
+        <p>UNO Q based network LAN training framework engineered for socket programming, network stacks, and cyber security studies[cite: 523, 525].</p>
+        <div class="service-tags"><span class="stag">Cyber Security</span><span class="stag">ViLaN-05</span><span class="stag">LAN Stack</span></div>
+        <span class="service-link-hint">More Info / Specifications →</span>
+      </div>
     </div>
 
     <div class="service-card" onclick="openModal('cobot3c')">
-      <span class="service-icon">🦾</span>
-      <h3>ASYSTR 3C Collaborative Robot</h3>
-      <p>Industrial 6-axis collaborative arm developed to execute production processes safely alongside humans without safety fencing.</p>
-      <div class="service-tags"><span class="stag">6-Axis Cobot</span><span class="stag">MODBUS RTU</span><span class="stag">3kg Payload</span></div>
-      <span class="service-link-hint">View Unabridged Pages →</span>
+      <div class="service-card-image-block">
+        <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=500&q=80" alt="Industrial Robotic Arm Image">
+      </div>
+      <div class="service-card-body">
+        <span class="service-icon">🦾</span>
+        <h3>ASYSTR 3C Collaborative Robot</h3>
+        <p>Industrial 6-axis collaborative arm developed to execute production processes safely alongside humans without safety fencing[cite: 2].</p>
+        <div class="service-tags"><span class="stag">6-Axis Cobot</span><span class="stag">MODBUS RTU</span><span class="stag">3kg Payload</span></div>
+        <span class="service-link-hint">More Info / Specifications →</span>
+      </div>
     </div>
 
     <div class="service-card" onclick="openModal('roboOrin')">
-      <span class="service-icon">🤖</span>
-      <h3>MR Robo: NVIDIA Jetson Orin Nano</h3>
-      <p>ROS 2 autonomous mobile robot foundation housing 67 INT8 TOPS of edge AI capacity for advanced SLAM mapping and path planning.</p>
-      <div class="service-tags"><span class="stag">Jetson Orin</span><span class="stag">Nav2 Stack</span><span class="stag">LiDAR</span></div>
-      <span class="service-link-hint">View Unabridged Pages →</span>
+      <div class="service-card-image-block">
+        <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=500&q=80" alt="Autonomous Mobile Robot Tracking Base">
+      </div>
+      <div class="service-card-body">
+        <span class="service-icon">🤖</span>
+        <h3>MR Robo: NVIDIA Jetson Orin Nano</h3>
+        <p>ROS 2 autonomous mobile robot foundation housing 67 INT8 TOPS of edge AI capacity for advanced SLAM mapping and path planning[cite: 87, 90, 189].</p>
+        <div class="service-tags"><span class="stag">Jetson Orin</span><span class="stag">Nav2 Stack</span><span class="stag">LiDAR</span></div>
+        <span class="service-link-hint">More Info / Specifications →</span>
+      </div>
     </div>
 
     <div class="service-card" onclick="openModal('roboUnoQ')">
-      <span class="service-icon">🎛️</span>
-      <h3>MR Robo: Arduino UNO Q Platform</h3>
-      <p>Dual-processor autonomous robotics baseline integrating a high-performance Qualcomm MPU with a real-time STM32 MCU block.</p>
-      <div class="service-tags"><span class="stag">Qualcomm Core</span><span class="stag">Debian Linux</span><span class="stag">SBC</span></div>
-      <span class="service-link-hint">View Unabridged Pages →</span>
+      <div class="service-card-image-block">
+        <img src="https://images.unsplash.com/photo-1608564614172-469990831851?auto=format&fit=crop&w=500&q=80" alt="Microprocessor Motherboard Baseline">
+      </div>
+      <div class="service-card-body">
+        <span class="service-icon">🎛️</span>
+        <h3>MR Robo: Arduino UNO Q Platform</h3>
+        <p>Dual-processor autonomous robotics baseline integrating a high-performance Qualcomm MPU with a real-time STM32 MCU block[cite: 294, 297, 302].</p>
+        <div class="service-tags"><span class="stag">Qualcomm Core</span><span class="stag">Debian Linux</span><span class="stag">SBC</span></div>
+        <span class="service-link-hint">More Info / Specifications →</span>
+      </div>
     </div>
 
     <div class="service-card" onclick="openModal('roboESP32')">
-      <span class="service-icon">🔌</span>
-      <h3>MR Robo: ESP32 Micro-ROS Core</h3>
-      <p>Resource-constrained lightweight embedded layout running native micro-ROS firmware nodes for hardware device execution.</p>
-      <div class="service-tags"><span class="stag">micro-ROS</span><span class="stag">Tensilica LX6</span><span class="stag">PWM Driving</span></div>
-      <span class="service-link-hint">View Unabridged Pages →</span>
+      <div class="service-card-image-block">
+        <img src="https://images.unsplash.com/photo-1555664424-778a1e5e1b48?auto=format&fit=crop&w=500&q=80" alt="Microcontroller System Components">
+      </div>
+      <div class="service-card-body">
+        <span class="service-icon">🔌</span>
+        <h3>MR Robo: ESP32 Micro-ROS Core</h3>
+        <p>Resource-constrained lightweight embedded layout running native micro-ROS firmware nodes for hardware device execution[cite: 26, 30].</p>
+        <div class="service-tags"><span class="stag">micro-ROS</span><span class="stag">Tensilica LX6</span><span class="stag">PWM Driving</span></div>
+        <span class="service-link-hint">More Info / Specifications →</span>
+      </div>
     </div>
 
-    <div class="service-card"><span class="service-icon">🧠</span><h3>Embedded Systems Design</h3><p>Custom microcontroller-based systems using ARM Cortex, AVR, PIC, and STM32 platforms.</p><div class="service-tags"><span class="stag">ARM Cortex</span><span class="stag">STM32</span><span class="stag">RTOS</span></div></div>
-    <div class="service-card"><span class="service-icon">📡</span><h3>IoT Solutions</h3><p>Connected device development covering sensors, gateways, cloud integration, and dashboards.</p><div class="service-tags"><span class="stag">ESP32</span><span class="stag">MQTT</span><span class="stag">AWS IoT</span></div></div>
-    <div class="service-card"><span class="service-icon">🖥️</span><h3>PCB Design & Fabrication</h3><p>Complete PCB design services — schematic capture, layout, DFM review, and fabrication coordination.</p><div class="service-tags"><span class="stag">Altium</span><span class="stag">KiCad</span><span class="stag">SMT</span></div></div>
+    <div class="service-card" style="cursor: default;">
+      <div class="service-card-image-block">
+        <img src="https://images.unsplash.com/photo-1517055720413-77a0bf443f4a?auto=format&fit=crop&w=500&q=80" alt="Hardware Engineering Lab Baseline">
+      </div>
+      <div class="service-card-body">
+        <span class="service-icon">🧠</span>
+        <h3>Embedded Systems Design</h3>
+        <p>Custom microcontroller-based firmware architecture engineering using robust ARM Cortex, AVR, PIC, and industrial STM32 processing nodes.</p>
+        <div class="service-tags"><span class="stag">ARM Cortex</span><span class="stag">STM32 Hardware</span><span class="stag">RTOS Blocks</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -531,7 +568,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2025 VI Microsystems Pvt Ltd. All rights reserved.</div>
+    <div class="footer-copy">© 2026 VI Microsystems Pvt Ltd. All rights reserved.</div>
     <div class="footer-made">Crafted with <span>♥</span> in Chennai</div>
   </div>
 </footer>
@@ -648,91 +685,71 @@
     viLan05: {
       title: "ViLaN-05: UNO Q Based Networking: LAN, Stack and Cyber Security Study Trainer",
       body: `
-        <div class="modal-text-block"><strong>MAKE:</strong> VI MICROSYSTEMS | <strong>MODEL:</strong> ViLaN-05</div>
-        <p class="modal-text-block">The UNO Q Based Network LAN Trainer with Network Stack and Cyber Security Studies is an advanced embedded networking platform developed for learning and experimentation. The trainer is built around the Arduino UNO Q and integrates Ethernet, serial communication, wireless networking, and cyber security modules for practical hands-on learning. An indigenous design of LAN Trainer for wired & wireless to study for all topologies like star, bus, mesh and ring has been introduced. All protocols such as Stop & Wait, Go Back to N, Selective Repeat, Token Ring, Token Bus, CSMA / CD, CSMA / CA can be experimented using ViLaN-05.</p>
-        <p class="modal-text-block">A Microcontroller with 2 Ethernet ports forms one Station. There are 4 such stations and one station connected to a PC for Graphical Representation of all experiments. All topologies are implemented using 10/100Mbps Ethernet ports for real feel of Networking. ViLaN-05 can conduct all experiments as per Anna University Syllabus of ECE Department. Data transmission speed – 10/100 Mbps.</p>
+        <div class="modal-text-block"><strong>MAKE:</strong> VI MICROSYSTEMS | <strong>MODEL:</strong> ViLaN-05 [cite: 526, 527]</div>
+        <p class="modal-text-block">The  UNO Q Based Network LAN Trainer with Network Stack and Cyber Security Studies  is an advanced embedded networking platform developed for learning and experimentation[cite: 525]. The trainer is built around the Arduino UNO Q and integrates Ethernet, serial communication, wireless networking, and cyber security modules for practical hands-on learning[cite: 536]. An indigenous design of LAN Trainer for wired & wireless to study for all topologies like  star, bus, mesh and ring  has been introduced[cite: 537]. All protocol ssuch as  Stop & Wait, Go Back to N, Selective Repeat, Token Ring, Token Bus, CSMA / CD, CSMA / CA can be experimented using Vi LaN-05[cite: 538].</p>
+        <p class="modal-text-block">A Microcontroller with 2 Ethernet ports forms one Station[cite: 539]. There are 4 such stations and one station connected to a PC for Graphical Representation of all experiments[cite: 539]. All topologies are implemented using 10/100Mbps Ethernet ports for real feel of Networking[cite: 540]. Vi LaN-05 can conduct all experiments as per Anna University Syllabus of ECE Department[cite: 541]. Data transmission speed –  10/100 Mbps[cite: 541].</p>
         
-        <div class="modal-price">🏷️ Price: Rs.88,660.00 + GST</div>
-
-        <div class="modal-image-wrapper">
-          <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=80" alt="Networking Switch Architecture" onerror="this.style.display='none'">
-          <div class="modal-image-caption">Figure 1: ViLaN-05 Multi-Station Topology Real-Time Interface Mapping</div>
-        </div>
+        <div class="modal-price">🏷️ Price: Rs.88,660.00 + GST [cite: 774]</div>
 
         <div class="modal-section-title">🎯 Core Technical Objectives</div>
         <ul class="modal-list">
-          <li>Study the TCP/IP protocol stack</li>
-          <li>Learn embedded LAN communication</li>
-          <li>Understand Ethernet frame transmission</li>
-          <li>Implement TCP and UDP socket communication</li>
-          <li>Analyze network packets</li>
-          <li>Study cyber security vulnerabilities</li>
-          <li>Learn secure communication techniques</li>
-          <li>Develop embedded IoT applications</li>
-          <li>Perform real-time network monitoring</li>
+          <li>Study the TCP/IP protocol stack [cite: 544]</li>
+          <li>Learn embedded LAN communication [cite: 545]</li>
+          <li>Understand Ethernet frame transmission [cite: 546]</li>
+          <li>Implement TCP and UDP socket communication [cite: 547]</li>
+          <li>Analyze network packets [cite: 548]</li>
+          <li>Study cyber security vulnerabilities [cite: 549]</li>
+          <li>Learn secure communication techniques [cite: 550]</li>
+          <li>Develop embedded IoT applications [cite: 551]</li>
+          <li>Perform real-time network monitoring [cite: 552]</li>
         </ul>
 
         <div class="modal-section-title">🛡️ Cyber Security & Cryptography Studies</div>
         <ul class="modal-list">
-          <li>Port scanning experiments & Packet sniffing</li>
-          <li>MAC filtering layouts & Authentication systems</li>
-          <li>Password-based access systems & Embedded firewall concepts</li>
-          <li>Secure data transmission parameters & Encryption/decryption blocks</li>
-          <li>Digital signature techniques & Network attack demonstrations</li>
-          <li>MITM (Man-In-The-Middle) Attack tracking</li>
-          <li>Wireless Security configurations: WPA / TKIP, WPA2 / AES, WPA3 / SAE</li>
+          <li>Port scanning experiments & Packet sniffing [cite: 586, 587]</li>
+          <li>MAC filtering layouts & Authentication systems [cite: 588, 589]</li>
+          <li>Password-based access systems & Embedded firewall concepts [cite: 590, 591]</li>
+          <li>Secure data transmission parameters & Encryption/decryption blocks [cite: 592, 593]</li>
+          <li>Digital signature techniques & Network attack demonstrations [cite: 594, 595]</li>
+          <li>MITM (Man-In-The-Middle) Attack tracking [cite: 608]</li>
+          <li>Wireless Security configurations: WPA / TKIP, WPA2 / AES, WPA3 / SAE [cite: 602, 603, 604, 605]</li>
         </ul>
 
-        <div class="modal-image-wrapper">
-          <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80" alt="Server Infrastructure Panel" onerror="this.style.display='none'">
-          <div class="modal-image-caption">Figure 2: Distributed Node System Layout & Hardware Interface Array</div>
-        </div>
-
-        <div class="modal-section-title">🧪 Comprehensive List of Experiments</div>
+        <div class="modal-section-title">🧪 Comprehensive List of Experiments [cite: 611]</div>
         <ul class="modal-list">
-          <li>Topologies covered: Star, Bus, Ring, Mesh</li>
-          <li>Protocols supported: Stop & Wait, Go Back to N, Selective Repeat, Token Ring, Token Bus, CSMA / CD, CSMA / CA</li>
-          <li>Serial to Serial communication & Parallel to Parallel Communication</li>
-          <li>Ethernet communication using RJ 45 interfaces</li>
-          <li>Study of Socket Programming and Client – Server models</li>
-          <li>Code simulation loops: ARP / RARP protocols, PING and TRACEROUTE commands</li>
-          <li>Socket configuration for HTTP webpage uploads and downloads</li>
-          <li>Program compilation for RPC (Remote Procedure Call)</li>
-          <li>Implementation of Subnetting profiles</li>
-          <li>TCP Sockets apps: Echo client and server, Chat, File Transfer</li>
-          <li>TCP/UDP Socket apps: DNS, SNMP, File Transfer architectures</li>
-          <li>Study of Network simulator (NS), and Simulation of Congestion Control Algorithms using NS</li>
-          <li>Routing Algorithm Case Studies: Link State routing, Flooding, Distance vector tracking</li>
-          <li>Cipher implementations: Caesar Cipher, Playfair Cipher, Hill Cipher</li>
-          <li>Transposition programming: Rail fence technique - Row major & Column major transformations</li>
-          <li>Encryption logic programming: DES algorithm, AES algorithm, RSA Encryption algorithm</li>
-          <li>Diffie-Hellman Key Exchange mechanisms (Alice and Bob simulation layout)</li>
-          <li>Message Digest calculations: SHA-1 algorithm, MD-5 algorithm</li>
-          <li>Digital signature standard hardware implementation</li>
-        </ul>
-
-        <div class="modal-section-title">🖥️ ViLaN-05 Software GUI Features</div>
-        <ul class="modal-list">
-          <li>Graphic representation of data packets (Transmitting, Transmitted, Acknowledged)</li>
-          <li>Packet error visualization (Acknowledgment lost error, bad packet error, discarded/resend states)</li>
-          <li>User selectable packet sizes (128, 512, 1024, 2048, 4096, 8192, 16384) with manual error generation</li>
-          <li>Inter packet delays: 1000-5000ms, Error Generation & Error Correction tracking</li>
-          <li>Network details indication of computer name, IP address, Port number, status of network, MAC address and OS</li>
-          <li>Indication of packet serial number, file details, receiver IP, timeout bounds, and transmission data rates (Mbps)</li>
+          <li>Topologies covered: Star, Bus, Ring, Mesh [cite: 613, 614, 615, 616]</li>
+          <li>Protocols supported: Stop & Wait, Go Back to N, Selective Repeat, Token Ring, Token Bus, CSMA / CD, CSMA / CA [cite: 618, 619, 620, 621, 622, 623, 624]</li>
+          <li>Serial to Serial communication & Parallel to Parallel Communication [cite: 625, 626]</li>
+          <li>Ethernet communication using RJ 45 interfaces [cite: 627]</li>
+          <li>Study of Socket Programming and Client – Server models [cite: 628]</li>
+          <li>Code simulation loops: ARP / RARP protocols, PING and TRACEROUTE commands [cite: 629, 630]</li>
+          <li>Socket configuration for HTTP webpage uploads and downloads [cite: 631]</li>
+          <li>Program compilation for RPC (Remote Procedure Call) [cite: 632]</li>
+          <li>Implementation of Subnetting profiles [cite: 633]</li>
+          <li>TCP Sockets apps: Echo client and server, Chat, File Transfer [cite: 634]</li>
+          <li>TCP/UDP Socket apps: DNS, SNMP, File Transfer architectures [cite: 635]</li>
+          <li>Study of Network simulator (NS), and Simulation of Congestion Control Algorithms using NS [cite: 636]</li>
+          <li>Routing Algorithm Case Studies: Link State routing, Flooding, Distance vector tracking [cite: 637, 638]</li>
+          <li>Cipher implementations: Caesar Cipher, Playfair Cipher, Hill Cipher [cite: 639]</li>
+          <li>Transposition programming: Rail fence technique - Row major & Column major transformations [cite: 640]</li>
+          <li>Encryption logic programming: DES algorithm, AES algorithm, RSA Encryption algorithm [cite: 641, 642, 643]</li>
+          <li>Diffie-Hellman Key Exchange mechanisms (Alice and Bob simulation layout) [cite: 644]</li>
+          <li>Message Digest calculations: SHA-1 algorithm, MD-5 algorithm [cite: 645, 646]</li>
+          <li>Digital signature standard hardware implementation [cite: 647]</li>
         </ul>
 
         <div class="modal-section-title">📋 Integrated Hardware Specifications</div>
         <table class="modal-table">
           <thead><tr><th>Hardware Component</th><th>Detailed Parameter Configuration</th></tr></thead>
           <tbody>
-            <tr><td><strong>Distributed Nodes</strong></td><td>4 Nodes provided to conduct multi-station experiments. Each node features one Arduino UNO Q with 2 Ethernet Ports for implementing RING Topography.</td></tr>
-            <tr><td><strong>Ethernet Interface</strong></td><td>10/100 Mbps commercial D-Link Face Plate outlets. Includes a 4 Port Ethernet switch with D-Link 4 outlets.</td></tr>
-            <tr><td><strong>On-Board Display</strong></td><td>2.4” TFT LCD Screen per node displaying Topology & Protocol parameters in WiFi. Resolution: 240×320 (QVGA), SPI/Parallel interface, 3.3V-5V operating voltage.</td></tr>
-            <tr><td><strong>W5100 Ethernet Hat</strong></td><td>WIZnet W5100 Controller matching IEEE 802.3 standards over SPI up to 14 MHz. Features 4 independent hardware sockets with 16 KB internal buffer.</td></tr>
-            <tr><td><strong>Qualcomm QRB2210 MPU</strong></td><td>Quad-core Arm Cortex-A53 running up to 2.0 GHz speeds operating on a Debian Linux environment. Integrated Adreno GPU, Dual ISP, and hardware compiler toolchains.</td></tr>
-            <tr><td><strong>STM32U585 MCU Core</strong></td><td>Arm Cortex-M33 running up to 160 MHz under Zephyr RTOS / Arduino Framework constraints packing 2 MB Flash memory and 786 KB SRAM.</td></tr>
-            <tr><td><strong>Memory Matrix</strong></td><td>2GB or 4GB LPDDR4 system RAM paired with 16GB or 32GB onboard eMMC.</td></tr>
-            <tr><td><strong>NS3 Simulation Engine</strong></td><td>High fidelity modular Network Simulator 3 metrics supporting accurate modeling of delay, jitter, packet loss, and protocol porting mechanics.</td></tr>
+            <tr><td><strong>Distributed Nodes</strong></td><td>Total of 4 Nodes provided to conduct many experiments[cite: 676]. Each node features one Arduino UNO Q with 2 Ethernet Ports for implementing RING Topography[cite: 673, 674].</td></tr>
+            <tr><td><strong>Ethernet Interface</strong></td><td>10/100 Mbps commercial D-Link Face Plate outlets[cite: 675]. Includes a 4 Port Ethernet switch with D-Link 4 outlets[cite: 678].</td></tr>
+            <tr><td><strong>On-Board Display</strong></td><td>2.4” TFT Display provided in each Node to display various parameters of Topology & Protocol in WiFi[cite: 679]. Resolution: 240×320 (QVGA) [cite: 736], SPI/Parallel interface [cite: 739], 3.3V-5V operating voltage[cite: 740].</td></tr>
+            <tr><td><strong>W5100 Ethernet Hat</strong></td><td>WIZnet W5100 Controller [cite: 751] matching IEEE 802.3 standards over SPI up to 14 MHz[cite: 752, 753, 754]. Features 4 independent hardware sockets with 16 KB internal buffer[cite: 756, 757].</td></tr>
+            <tr><td><strong>Qualcomm QRB2210 MPU</strong></td><td>Quad-core Arm Cortex-A53 running up to 2.0 GHz speeds operating on a Debian Linux environment[cite: 683, 684, 685, 686]. Integrated Adreno GPU [cite: 688], Dual ISP [cite: 689], and hardware compiler toolchains[cite: 649].</td></tr>
+            <tr><td><strong>STM32U585 MCU Core</strong></td><td>Arm Cortex-M33 running up to 160 MHz under Zephyr RTOS / Arduino Framework constraints packing 2 MB Flash memory and 786 KB SRAM[cite: 693, 694, 695, 697, 698, 705].</td></tr>
+            <tr><td><strong>Memory Matrix</strong></td><td>2GB or 4GB LPDDR4 system RAM paired with 16GB or 32GB onboard eMMC[cite: 700, 701].</td></tr>
+            <tr><td><strong>NS3 Simulation Engine</strong></td><td>High fidelity modular Network Simulator 3 metrics supporting accurate modeling of delay, jitter, packet loss, and protocol porting mechanics[cite: 768, 769, 770, 772].</td></tr>
           </tbody>
         </table>
       `
@@ -740,21 +757,21 @@
     cobot3c: {
       title: "6 – Axis collaborative robot: ASYSTR Robotics ASYSTR 3C",
       body: `
-        <p class="modal-text-block">The ASYSTR Robotics ASYSTR 3C is a 6-axis collaborative robot (cobot) designed for industrial automation applications. A collaborative robot is a robot that can safely work alongside humans without heavy safety fencing.</p>
+        <p class="modal-text-block">The ASYSTR Robotics  ASYSTR 3C  is a  6-axis collaborative robot (cobot)  designed for industrial automation applications.A collaborative robot is a robot that can safely work alongside humans without heavy safety fencing[cite: 2].</p>
         
-        <div class="modal-price">🏷️ Price: 14,57,142 + 18% GST</div>
+        <div class="modal-price">🏷️ Price: 14,57,142 + 18% GST [cite: 11]</div>
 
-        <div class="modal-section-title">🚀 Core Robotic Applications</div>
+        <div class="modal-section-title">🚀 Core Robotic Applications [cite: 3]</div>
         <ul class="modal-list">
-          <li>Pick and place operations</li>
-          <li>Machine tending</li>
-          <li>Assembly operations</li>
-          <li>Packaging</li>
-          <li>Welding support</li>
-          <li>Material handling</li>
+          <li>Pick and place operations [cite: 4]</li>
+          <li>Machine tending [cite: 5]</li>
+          <li>Assembly operations [cite: 6]</li>
+          <li>Packaging [cite: 7]</li>
+          <li>Welding support [cite: 8]</li>
+          <li>Material handling [cite: 9]</li>
         </ul>
 
-        <div class="modal-section-title">📋 Full Engineering Technical Specifications</div>
+        <div class="modal-section-title">📋 Full Engineering Technical Specifications [cite: 10]</div>
         <table class="modal-table">
           <thead><tr><th>Category</th><th>Parameter</th><th>Specification</th></tr></thead>
           <tbody>
@@ -764,7 +781,7 @@
             <tr><td></td><td>Repeatability</td><td>±0.05 mm</td></tr>
             <tr><td></td><td>Max. Translational Speed</td><td>1000 mm/sec</td></tr>
             <tr><td><strong>Electrical</strong></td><td>Power Supply</td><td>100–240 VAC, 50–60 Hz</td></tr>
-            <tr><td></td><td>Power Consumption</td><td>< 500 W (typical cycle)</td></tr>
+            <tr><td></td><td>Power Consumption</td><td>&lt; 500 W (typical cycle)</td></tr>
             <tr><td><strong>Protection</strong></td><td>Wrist Protection</td><td>IP67</td></tr>
             <tr><td></td><td>Body Protection</td><td>IP60</td></tr>
             <tr><td><strong>Physical</strong></td><td>Weight</td><td>17 kg</td></tr>
@@ -793,60 +810,49 @@
     roboOrin: {
       title: "ROS2 Based Autonomous Robo with Nvidia Jetson Orin Nano Super",
       body: `
-        <p class="modal-text-block">The NVIDIA Jetson Orin Nano Super Developer Kit is a compact, yet powerful computer that redefines generative AI for small edge devices. It delivers up to 67 TOPS of AI performance—a 1.7X improvement over its predecessor—to seamlessly run a wide variety of generative AI models, like vision transformers, large language models, vision-language models, and more. It provides developers, students, and makers with an accessible platform supported by the NVIDIA AI software ecosystem.</p>
-        <p class="modal-text-block">The complete architecture enables distributed robotics development where the ESP32 handles low-level real-time hardware control under micro-ROS while ROS 2 on a Jetson performs advanced processing such as SLAM, navigation, AI inference, and visualization.</p>
+        <p class="modal-text-block">The NVIDIA Jetson Orin Nano Super Developer Kit is a compact, yet powerful computer that redefines generative AI for small edge devices[cite: 91]. It delivers up to 67 TOPS of AI performance—a 1.7X improvement over its predecessor—to seamlessly run a wide variety of generative AI models, like vision transformers, large language models, vision-language models, and more[cite: 92, 93, 94].</p>
+        <p class="modal-text-block">The complete architecture enables distributed robotics development where the ESP32 handles low-level real-time hardware control under micro-ROS while ROS 2 on a Jetson performs advanced processing such as SLAM, navigation, AI inference, and visualization[cite: 145, 146, 147, 148].</p>
 
-        <div class="modal-section-title">🧠 Advanced Jetson Compute Core Specifications</div>
+        <div class="modal-section-title">🧠 Advanced Jetson Compute Core Specifications [cite: 89]</div>
         <table class="modal-table">
           <thead><tr><th>Parameter</th><th>Specification Details</th></tr></thead>
           <tbody>
-            <tr><td><strong>AI Performance</strong></td><td>67 INT8 TOPS</td></tr>
-            <tr><td><strong>GPU Architecture</strong></td><td>NVIDIA Ampere architecture with 1024 CUDA cores and 32 tensor cores</td></tr>
-            <tr><td><strong>CPU Engine</strong></td><td>6-core Arm® Cortex®-A78AE v8.2 64-bit CPU (1.5MB L2 + 4MB L3)</td></tr>
-            <tr><td><strong>System Memory</strong></td><td>8GB 128-bit LPDDR5 running at 102 GB/s</td></tr>
-            <tr><td><strong>Storage Unit</strong></td><td>512GB NVMe High-Speed Solid-State</td></tr>
-            <tr><td><strong>Power Dissipation</strong></td><td>7W – 25W Operational Draw Boundaries</td></tr>
-            <tr><td><strong>Operating System</strong></td><td>Ubuntu 22.04 with ROS2 Humble Middleware Stack</td></tr>
+            <tr><td><strong>AI Performance</strong></td><td>67 INT8 TOPS [cite: 90]</td></tr>
+            <tr><td><strong>GPU Architecture</strong></td><td>NVIDIA Ampere architecture with 1024 CUDA cores and 32 tensor cores [cite: 90]</td></tr>
+            <tr><td><strong>CPU Engine</strong></td><td>6-core Arm® Cortex®-A78AE v8.2 64-bit CPU 1.5MB L2 + 4MB L3 [cite: 90]</td></tr>
+            <tr><td><strong>System Memory</strong></td><td>8GB 128-bit LPDDR5 102 GB/s [cite: 90]</td></tr>
+            <tr><td><strong>Storage Unit</strong></td><td>512GB NVMe [cite: 90]</td></tr>
+            <tr><td><strong>Power Dissipation</strong></td><td>7W–25W [cite: 90]</td></tr>
+            <tr><td><strong>Operating System</strong></td><td>Ubuntu Linux with ROS2 Humble Middleware Stack [cite: 106, 288, 289]</td></tr>
           </tbody>
         </table>
 
-        <div class="modal-section-title">🛠️ Integrated Hardware & Sensors Ecosystem</div>
+        <div class="modal-section-title">🛠️ Integrated Hardware & Sensors Ecosystem [cite: 181]</div>
         <ul class="modal-list">
-          <li><strong>X2 LiDAR Sensor:</strong> Provides real-time 360° distance scanning and obstacle detection for autonomous navigation, SLAM mapping, localization, and environment awareness.</li>
-          <li><strong>30Ah LiFePO4 Battery Pack:</strong> High-capacity Lithium Iron Phosphate battery offering long operational backup, stable voltage, and enhanced thermal safety.</li>
-          <li><strong>USB Camera Module:</strong> Enables real-time image and video acquisition for computer vision and AI-based object detection tasks.</li>
-          <li><strong>Locomotion Base:</strong> Dual BTS H-bridge high-current motor driver modules driving powerful geared high-torque DC motors across rugged 130mm rubber wheels.</li>
-        </ul>
-
-        <div class="modal-section-title">🧬 Software Deployments & Capabilities</div>
-        <ul class="modal-list">
-          <li><strong>Full SLAM Integration:</strong> Run 2D SLAM tracking via Cartographer, GMapping, or SLAM Toolbox frameworks for live grid occupancy mapping and target tracking.</li>
-          <li><strong>ROS2 Navigation (Nav2):</strong> Provides path planning, dynamic obstacle avoidance, waypoint following, autonomous docking, and recovery behaviors.</li>
-          <li><strong>Sensor Fusion:</strong> Fuses data from the MPU6050 IMU, wheel odometry, LiDAR odometry, and visual odometry using robot_localization Extended/Unscented Kalman Filters (EKF/UKF).</li>
-          <li><strong>Generative Visual AI:</strong> TensorRT-optimized inference loops running YOLOv8 networks for real-time person and vehicle tracking.</li>
-          <li><strong>Target Following:</strong> DeepSORT, ByteTrack, or KCF/CSRT dynamic human following models.</li>
-          <li><strong>Digital Twin Simulations:</strong> Integration pipelines matching native URDF models directly with Gazebo and Isaac Sim environments.</li>
+          <li><strong>X2 LiDAR Sensor:</strong> Provides real-time 360° distance scanning and obstacle detection for autonomous navigation, SLAM mapping, localization, and environment awareness[cite: 182].</li>
+          <li><strong>30Ah LiFePO4 Battery Pack:</strong> High-capacity Lithium Iron Phosphate battery offering long operational backup, stable voltage, and enhanced thermal safety[cite: 183].</li>
+          <li><strong>USB Camera Module:</strong> Enables real-time image and video acquisition for computer vision and AI-based object detection tasks[cite: 185].</li>
+          <li><strong>Locomotion Base:</strong> Dual BTS H-bridge high-current motor driver modules driving powerful geared high-torque DC motors across rugged 130mm rubber wheels[cite: 184, 186, 187].</li>
         </ul>
       `
     },
     roboUnoQ: {
       title: "ROS2 Based Autonomous Robo with Arduino UNO Q",
       body: `
-        <p class="modal-text-block">The Arduino® UNO Q is an advanced robotics processing baseline that can function as a standalone single-board computer leveraging its built-in Debian Linux operating system environment with upstream support. By utilizing a USB-C dongle with external power delivery, developers can directly interface desktop monitors, input devices, audio channels, and camera networks.</p>
+        <p class="modal-text-block">The Arduino® UNO Q is an advanced robotics processing baseline that can function as a standalone single-board computer leveraging its built-in Debian Linux operating system environment with upstream support[cite: 294, 307, 308, 318, 332]. By utilizing a USB-C dongle with external power delivery, developers can directly interface desktop monitors, input devices, audio channels, and camera networks[cite: 309, 310, 311, 312, 313].</p>
         
-        <div class="modal-section-title">🎛️ Technical Specifications Architecture</div>
+        <div class="modal-section-title">🎛️ Technical Specifications Architecture [cite: 332]</div>
         <table class="modal-table">
           <thead><tr><th>Category</th><th>Component Parameter</th><th>Details Configuration</th></tr></thead>
           <tbody>
             <tr><td><strong>Board Engine</strong></td><td>SKU Reference Arrays</td><td>2 GB RAM / 16 GB eMMC (ABX00162) or 4 GB RAM / 32 GB eMMC (ABX00173)</td></tr>
-            <tr><td><strong>Application MPU</strong></td><td>Module Core</td><td>Qualcomm Dragonwing™ QRB2210 (Quad-core Arm® Cortex-A53 @ 2.0 GHz)</td></tr>
-            <tr><td></td><td>GPU Block</td><td>Adreno 702 GPU @ 845 MHz with 3D graphics acceleration</td></tr>
-            <tr><td></td><td>Image Signal Processor</td><td>Dual ISP (13 MP + 13 MP or 25 MP) @ 30 fps</td></tr>
-            <tr><td><strong>Real-Time MCU</strong></td><td>Microcontroller Core</td><td>STM32U585 Arm® Cortex-M33 running up to 160 MHz speeds</td></tr>
-            <tr><td></td><td>OS Stack Framework</td><td>Executes Arduino code natively over Zephyr OS</td></tr>
-            <tr><td></td><td>Memory Capacity</td><td>2 MB Dedicated Flash Memory and 786 kB internal SRAM</td></tr>
-            <tr><td><strong>Radio Array</strong></td><td>WCBN3536A Module</td><td>Simultaneous Dual-band Wi-Fi 5 (2.4/5 GHz) + Bluetooth 5.1</td></tr>
-            <tr><td><strong>Logic Voltages</strong></td><td>Operational Thresholds</td><td>+3.3 V DC MCU (5 V tolerant) and +1.8 V DC MPU rails</td></tr>
+            <tr><td><strong>Application MPU</strong></td><td>Module Core</td><td>Qualcomm Dragonwing™ QRB2210 (Quad-core Arm® Cortex-A53 @ 2.0 GHz) [cite: 296, 297, 298]</td></tr>
+            <tr><td></td><td>GPU Block</td><td>Adreno 702 GPU @ 845 MHz with 3D graphics acceleration [cite: 299]</td></tr>
+            <tr><td></td><td>Image Signal Processor</td><td>Dual ISP (13 MP + 13 MP or 25 MP) @ 30 fps [cite: 300]</td></tr>
+            <tr><td><strong>Real-Time MCU</strong></td><td>Microcontroller Core</td><td>STM32U585 Arm® Cortex-M33 running up to 160 MHz speeds [cite: 301, 302, 303]</td></tr>
+            <tr><td></td><td>OS Stack Framework</td><td>Executes Arduino code natively over Zephyr OS [cite: 333]</td></tr>
+            <tr><td></td><td>Memory Capacity</td><td>2 MB Dedicated Flash Memory and 786 kB internal SRAM [cite: 304, 305]</td></tr>
+            <tr><td><strong>Radio Array</strong></td><td>WCBN3536A Module</td><td>Simultaneous Dual-band Wi-Fi 5 (2.4/5 GHz) + Bluetooth 5.1 [cite: 320, 321, 322, 323]</td></tr>
           </tbody>
         </table>
       `
@@ -854,18 +860,18 @@
     roboESP32: {
       title: "ROS2 Based Autonomous Robo with ESP32 Embedded Controller",
       body: `
-        <p class="modal-text-block">micro-ROS is a lightweight version of ROS 2 designed specifically for microcontrollers and resource-constrained embedded systems. Unlike a standard ROS 2 system that typically runs on high-performance computers, micro-ROS allows small embedded controllers to function as intelligent ROS 2 nodes directly participating in the network. In this system architecture, the ESP32 acts as the main embedded low-level controller handling real-time hardware interfacing, sensor acquisition, and actuator signals.</p>
+        <p class="modal-text-block">micro-ROS is a lightweight version of ROS 2 designed specifically for microcontrollers and resource-constrained embedded systems[cite: 26]. Unlike a standard ROS 2 system that typically runs on high-performance computers, micro-ROS allows small embedded controllers to function as intelligent ROS 2 nodes directly participating in the network[cite: 28]. In this system architecture, the ESP32 acts as the main embedded low-level controller handling real-time hardware interfacing, sensor acquisition, and actuator signals[cite: 29, 30].</p>
 
-        <div class="modal-section-title">🎛️ ESP32 Development Board Specifications</div>
+        <div class="modal-section-title">🎛️ ESP32 Development Board Specifications [cite: 70]</div>
         <table class="modal-table">
           <thead><tr><th>Parameter Domain</th><th>Technical Configuration Specification</th></tr></thead>
           <tbody>
-            <tr><td><strong>Chipset Module</strong></td><td>ESP-WROOM-32 Layout</td></tr>
-            <tr><td><strong>Core Architecture</strong></td><td>Tensilica Xtensa Dual-Core 32-bit LX6 Microprocessor</td></tr>
-            <tr><td><strong>Internal Clock Speed</strong></td><td>Up to 240MHz System Frequency</td></tr>
-            <tr><td><strong>Static Memory Base</strong></td><td>520KB SRAM Architecture Layout</td></tr>
-            <tr><td><strong>Flash Storage</strong></td><td>4MB Flash memory</td></tr>
-            <tr><td><strong>Wireless Protocol</strong></td><td>2.4GHz Wi-Fi (802.11 b/g/n) and Bluetooth v4.2 (Classic + BLE)</td></tr>
+            <tr><td><strong>Chipset Module</strong></td><td>ESP-WROOM-32 Layout [cite: 71]</td></tr>
+            <tr><td><strong>Core Architecture</strong></td><td>Tensilica Xtensa Dual-Core 32-bit LX6 Microprocessor [cite: 72]</td></tr>
+            <tr><td><strong>Internal Clock Speed</strong></td><td>Up to 240MHz System Frequency [cite: 73]</td></tr>
+            <tr><td><strong>Static Memory Base</strong></td><td>520KB SRAM Architecture Layout [cite: 75]</td></tr>
+            <tr><td><strong>Flash Storage</strong></td><td>4MB Flash memory [cite: 74]</td></tr>
+            <tr><td><strong>Wireless Protocol</strong></td><td>Wi-Fi: IEEE 802.11 b/g/n + Bluetooth: v4.2 (Classic + BLE) [cite: 76, 77]</td></tr>
           </tbody>
         </table>
       `
