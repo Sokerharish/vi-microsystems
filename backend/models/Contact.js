@@ -24,14 +24,8 @@ const contactSchema = new mongoose.Schema(
     enquiryType: {
       type: String,
       required: [true, "Enquiry type is required"],
-      enum: [
-        "Product / Services Inquiry",
-        "ECE Internship",
-        "EEE Internship",
-        "CSE Internship",
-        "R&D Consulting",
-        "Other",
-      ],
+      trim: true
+      // ✅ Restrictive enum array removed so it can seamlessly accept any product name string incoming from your frontend form!
     },
     message: {
       type: String,
