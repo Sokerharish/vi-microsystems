@@ -319,6 +319,14 @@
   <h2 class="section-h2">What We Build & Deliver</h2>
   <p class="section-lead">From embedded firmware to full PCB assemblies — our end-to-end offerings cover every stage of the electronics product lifecycle.</p>
   <div class="services-grid">
+    <div class="service-card" onclick="openModal('viLan05')">
+      <span class="service-icon">🔒</span>
+      <h3>ViLaN-05: Network & Cyber Security Trainer</h3>
+      <p>Arduino UNO Q based multi-topology LAN stack study platform integrating cryptographic ciphers and real-time network layer analysis.</p>
+      <div class="service-tags"><span class="stag">Cyber Security</span><span class="stag">TCP/IP Stack</span><span class="stag">Topology Labs</span></div>
+      <span class="service-link-hint">View Full Specs →</span>
+    </div>
+
     <div class="service-card" onclick="openModal('cobot3c')">
       <span class="service-icon">🦾</span>
       <h3>ASYSTR 3C Collaborative Robot</h3>
@@ -649,15 +657,44 @@
     }
   }
 
-  // ── ROBOTICS CARD DYNAMIC DATA STRUCTS ──
+  // ── ROBOTICS & NETWORKING CARD DATA ENGINE ──
   const productData = {
+    viLan05: {
+      title: "ViLaN-05: Arduino® UNO Q Based Embedded Network & Cyber Security Trainer [cite: 523, 525]",
+      body: `
+        <p>An advanced, dual-processor embedded engineering system designed to conduct deep studies into local area networking, hardware layer protocol routing, and cryptographic edge network security[cite: 525, 536]. Fully aligned with official Anna University ECE department curriculum benchmarks[cite: 541].</p>
+        <div class="modal-price">🏷️ Price: ₹88,660.00 + GST [cite: 774]</div>
+
+        <div class="modal-section-title">🛠️ Hardware Layout Block (4 Node Distributed Station Array) [cite: 539, 676]</div>
+        <table class="modal-table">
+          <thead><tr><th>Hardware Element</th><th>Trainer System Specifications</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Processing Node Setup</strong></td><td>4 Standalone Nodes + 1 Host PC interface featuring an interactive Graphical User Interface (GUI)[cite: 539, 652].</td></tr>
+            <tr><td><strong>Microprocessor (MPU)</strong></td><td>Qualcomm Dragonwing™ QRB2210 Quad-core Arm Cortex-A53 @ 2.0 GHz running Debian Linux[cite: 683, 684, 685, 686].</td></tr>
+            <tr><td><strong>Microcontroller (MCU)</strong></td><td>STM32U585 Arm Cortex-M33 up to 160 MHz handling low-latency deterministic GPIO/PWM processes[cite: 693, 694, 695, 696].</td></tr>
+            <tr><td><strong>Wired Networking</strong></td><td>Dual 10/100 Mbps Ethernet ports per station using integrated D-Link industrial termination plates[cite: 539, 540, 675].</td></tr>
+            <tr><td><strong>Ethernet Controller</strong></td><td>WIZnet W5100 Ethernet ASIC driving 4 hardware sockets over high-speed SPI channels[cite: 751, 753, 756].</td></tr>
+            <tr><td><strong>Chassis Interface Array</strong></td><td>2.4" QVGA (240x320) color TFT monitoring screen, 8x13 debug LED Matrix, and dual multi-role USB/HDMI output hubs[cite: 721, 725, 735, 736].</td></tr>
+          </tbody>
+        </table>
+
+        <div class="modal-section-title">📡 Laboratory Experiment Tracks</div>
+        <ul class="modal-list">
+          <li><strong>LAN Topologies & Media Access:</strong> Direct configuration of physical Star, Bus, Ring, and Mesh topologies using live hardware nodes[cite: 537, 612]. Supports empirical evaluation of Token Ring, Token Bus, CSMA/CD, and CSMA/CA protocol loops[cite: 538, 557].</li>
+          <li><strong>Network Protocol Simulation (NS3):</strong> Highly accurate protocol code testing, porting, and analysis matching live packet behavior using Network Simulator 3 interfaces[cite: 636, 768, 769, 770].</li>
+          <li><strong>Cryptographic Cyber Security Labs:</strong> Hands-on verification of symmetric and asymmetric encryption models including Caesar, Playfair, Hill, DES, AES, RSA, and Diffie-Hellman Key Exchange setups[cite: 639, 641, 642, 643, 644].</li>
+          <li><strong>Security Vulnerability Assessment:</strong> Software-driven verification labs modeling port scanning vectors, real-time packet sniffing exploits, hardware MAC address filtering, and Man-In-The-Middle (MITM) architecture overrides[cite: 586, 587, 588, 608].</li>
+          <li><strong>Industrial IoT Networks:</strong> Local firmware deployment tracking secure WPA2/WPA3 enterprise handshakes, MQTT subscriber blocks, and direct cloud telemetry pipelines[cite: 598, 600, 604, 605].</li>
+        </ul>
+      `
+    },
     cobot3c: {
-      title: "ASYSTR Robotics ASYSTR 3C (6-Axis Cobot) Specification Matrix [cite: 2]",
+      title: "ASYSTR Robotics ASYSTR 3C (6-Axis Cobot) Specification Matrix [cite: 1, 2]",
       body: `
         <p>The ASYSTR Robotics ASYSTR 3C is a highly versatile 6-axis collaborative industrial arm engineered to operate safely alongside factory operators without safety fencing[cite: 2].</p>
         <div class="modal-price">🏷️ Price: ₹14,57,142 + 18% GST [cite: 11]</div>
         
-        <div class="modal-section-title">🏭 Targeted Automation Environments</div>
+        <div class="modal-section-title">🏭 Targeted Automation Environments [cite: 3]</div>
         <ul class="modal-list">
           <li>Pick and place mechanics & conveyor transfer execution [cite: 4]</li>
           <li>CNC / injection mold machine tending configurations [cite: 5]</li>
@@ -667,39 +704,39 @@
           <li>Industrial material handling processes [cite: 9]</li>
         </ul>
 
-        <div class="modal-section-title">📋 Engineering Specifications</div>
+        <div class="modal-section-title">📋 Engineering Specifications [cite: 10]</div>
         <table class="modal-table">
           <thead><tr><th>Category</th><th>Parameter</th><th>Value</th></tr></thead>
           <tbody>
-            <tr><td><strong>General Specs</strong></td><td>Payload Capacity [cite: 10]</td><td>3 kg [cite: 10]</td></tr>
-            <tr><td></td><td>Maximum Operational Reach [cite: 10]</td><td>600 mm [cite: 10]</td></tr>
-            <tr><td></td><td>Axes Count [cite: 10]</td><td>6 [cite: 10]</td></tr>
-            <tr><td></td><td>Mechanical Repeatability [cite: 10]</td><td>±0.05 mm [cite: 10]</td></tr>
-            <tr><td></td><td>Max Translational Velocity [cite: 10]</td><td>1000 mm/sec [cite: 10]</td></tr>
-            <tr><td><strong>Electrical Profiles</strong></td><td>Main Power Input Supply [cite: 10]</td><td>100–240 VAC, 50–60 Hz [cite: 10]</td></tr>
-            <tr><td></td><td>Typical Work Power Consumption [cite: 10]</td><td>&lt; 500 W [cite: 10]</td></tr>
-            <tr><td><strong>Environmental</strong></td><td>Wrist Assembly Ingress Rating [cite: 10]</td><td>IP67 [cite: 10]</td></tr>
-            <tr><td></td><td>Main Chassis Body Ingress Rating [cite: 10]</td><td>IP60 [cite: 10]</td></tr>
-            <tr><td></td><td>Thermal Operating Windows [cite: 10]</td><td>0 – 50 °C [cite: 10]</td></tr>
-            <tr><td><strong>Physical Matrix</strong></td><td>Total Machine Weight [cite: 10]</td><td>17 kg [cite: 10]</td></tr>
-            <tr><td></td><td>Mounting Interfaces [cite: 10]</td><td>Floor, Ceiling, and Wall [cite: 10]</td></tr>
-            <tr><td></td><td>Tool Configuration Flange [cite: 10]</td><td>ISO 9409-1:2004 [cite: 10]</td></tr>
-            <tr><td><strong>Joint Speed Rates</strong></td><td>Waist (J1) Reach Range / Speed [cite: 10]</td><td>±180° / 150°/sec [cite: 10]</td></tr>
-            <tr><td></td><td>Shoulder (J2) Reach Range / Speed [cite: 10]</td><td>±150° / 150°/sec [cite: 10]</td></tr>
-            <tr><td></td><td>Elbow (J3) Reach Range / Speed [cite: 10]</td><td>±150° / 180°/sec [cite: 10]</td></tr>
-            <tr><td></td><td>Wrist Joints (J4-J6) Ranges / Speeds [cite: 10]</td><td>±180° / 180°/sec [cite: 10]</td></tr>
-            <tr><td><strong>I/O Communications</strong></td><td>Industrial Digital Ports [cite: 10]</td><td>2 Emergency Inputs + 2 Safety Ports [cite: 10]</td></tr>
-            <tr><td></td><td>Hardware Communications Interfacing [cite: 10]</td><td>MODBUS RTU Protocol (Half-Duplex 10 Mbps) [cite: 10]</td></tr>
+            <tr><td><strong>General Specs</strong></td><td>Payload Capacity</td><td>3 kg</td></tr>
+            <tr><td></td><td>Maximum Operational Reach</td><td>600 mm</td></tr>
+            <tr><td></td><td>Axes Count</td><td>6</td></tr>
+            <tr><td></td><td>Mechanical Repeatability</td><td>±0.05 mm</td></tr>
+            <tr><td></td><td>Max Translational Velocity</td><td>1000 mm/sec</td></tr>
+            <tr><td><strong>Electrical Profiles</strong></td><td>Main Power Input Supply</td><td>100–240 VAC, 50–60 Hz</td></tr>
+            <tr><td></td><td>Typical Work Power Consumption</td><td>&lt; 500 W</td></tr>
+            <tr><td><strong>Environmental</strong></td><td>Wrist Assembly Ingress Rating</td><td>IP67</td></tr>
+            <tr><td></td><td>Main Chassis Body Ingress Rating</td><td>IP60</td></tr>
+            <tr><td></td><td>Thermal Operating Windows</td><td>0 – 50 °C</td></tr>
+            <tr><td><strong>Physical Matrix</strong></td><td>Total Machine Weight</td><td>17 kg</td></tr>
+            <tr><td></td><td>Mounting Interfaces</td><td>Floor, Ceiling, and Wall</td></tr>
+            <tr><td></td><td>Tool Configuration Flange</td><td>ISO 9409-1:2004</td></tr>
+            <tr><td><strong>Joint Speed Rates</strong></td><td>Waist (J1) Reach Range / Speed</td><td>±180° / 150°/sec</td></tr>
+            <tr><td></td><td>Shoulder (J2) Reach Range / Speed</td><td>±150° / 150°/sec</td></tr>
+            <tr><td></td><td>Elbow (J3) Reach Range / Speed</td><td>±150° / 180°/sec</td></tr>
+            <tr><td></td><td>Wrist Joints (J4-J6) Ranges / Speeds</td><td>±180° / 180°/sec</td></tr>
+            <tr><td><strong>I/O Communications</strong></td><td>Industrial Digital Ports</td><td>2 Emergency Inputs + 2 Safety Ports</td></tr>
+            <tr><td></td><td>Hardware Communications Interfacing</td><td>MODBUS RTU Protocol (Half-Duplex 10 Mbps)</td></tr>
           </tbody>
         </table>
       `
     },
     roboOrin: {
-      title: "MR Robo: ROS 2 Autonomous Base (NVIDIA Jetson Orin Nano) [cite: 87]",
+      title: "MR Robo: ROS 2 Autonomous Base (NVIDIA Jetson Orin Nano) [cite: 87, 88]",
       body: `
-        <p>A full Industrial Autonomous Mobile Robot (AMR) system configured with an NVIDIA edge computing platform to perform simultaneous mapping and AI inspections[cite: 205, 214].</p>
+        <p>A full Industrial Autonomous Mobile Robot (AMR) system configured with an NVIDIA edge computing platform to perform simultaneous mapping and AI inspections[cite: 46, 58].</p>
         
-        <div class="modal-section-title">🧠 Edge Compute Module (Jetson Orin Nano Super) [cite: 88, 91]</div>
+        <div class="modal-section-title">🧠 Edge Compute Module (Jetson Orin Nano Super) [cite: 88, 89]</div>
         <table class="modal-table">
           <thead><tr><th>Hardware Element</th><th>Industrial Deployment Specifications</th></tr></thead>
           <tbody>
@@ -714,22 +751,22 @@
 
         <div class="modal-section-title">⚡ Autonomous Systems Features</div>
         <ul class="modal-list">
-          <li><strong>Integrated Navigation Architecture:</strong> Implements 2D SLAM across Cartographer, GMapping, and SLAM Toolbox frameworks for real-time map storage and extraction[cite: 190, 191, 192, 193, 199].</li>
+          <li><strong>Integrated Navigation Architecture:</strong> Implements 2D SLAM across Cartographer, GMapping, and SLAM Toolbox frameworks for real-time map storage and extraction[cite: 189, 190, 191, 192, 193].</li>
           <li><strong>Nav2 Navigation Pipeline:</strong> Computes path plans, waypoint sweeps, recovery configurations, and dynamic replanning models[cite: 206, 208, 210, 212, 213].</li>
-          <li><strong>Accelerated AI Vision:</strong> Leverages PyTorch and TensorRT pipelines alongside a high-resolution USB camera for real-time YOLOv8 object tracking[cite: 214, 217, 218, 269].</li>
-          <li><strong>Multi-Sensor Fusion Blocks:</strong> Blends MPU6050 data, wheel odometry metrics, and LiDAR tracking loops via Extended Kalman Filters (EKF)[cite: 227, 228, 229, 230, 234].</li>
-          <li><strong>Hardware Integration:</strong> 30Ah LiFePO4 battery pack, dual X2 LiDAR sensors, H-Bridge driver arrays, and rugged 130mm shock-absorbing tires[cite: 182, 183, 184, 186].</li>
+          <li><strong>Accelerated AI Vision:</strong> Leverages PyTorch and TensorRT pipelines alongside a high-resolution USB camera for real-time YOLOv8 object tracking[cite: 214, 217, 218, 273].</li>
+          <li><strong>Multi-Sensor Fusion Blocks:</strong> Blends MPU6050 data, wheel odometry metrics, and LiDAR tracking loops via Extended Kalman Filters (EKF)[cite: 225, 228, 229, 230, 234].</li>
+          <li><strong>Hardware Integration:</strong> 30Ah LiFePO4 battery pack, dual X2 LiDAR sensors, H-Bridge driver arrays, and rugged 130mm shock-absorbing tires[cite: 182, 183, 184, 186, 187].</li>
         </ul>
       `
     },
     roboUnoQ: {
-      title: "MR Robo: Qualcomm Dragonwing™ Arduino UNO Q Platform [cite: 294, 296]",
+      title: "MR Robo: Qualcomm Dragonwing™ Arduino UNO Q Platform [cite: 294, 295]",
       body: `
-        <p>A high-performance standalone Single-Board Computer system running an upstream Debian Linux operating system coupled with a hardware-level microcontroller unit[cite: 301, 307, 318].</p>
+        <p>A high-performance standalone Single-Board Computer system running an upstream Debian Linux operating system coupled with a hardware-level microcontroller unit[cite: 307, 308, 318].</p>
         
-        <div class="modal-section-title">🧱 Core Processors Technical Table [cite: 297, 301]</div>
+        <div class="modal-section-title">🧱 Core Processors Technical Table [cite: 332]</div>
         <table class="modal-table">
-          <thead><tr><th>Parameter Domain</th><th>Qualcomm MPU Specs [cite: 333]</th><th>STM32 MCU Details [cite: 333]</th></tr></thead>
+          <thead><tr><th>Parameter Domain</th><th>Qualcomm MPU Specs</th><th>STM32 MCU Details</th></tr></thead>
           <tbody>
             <tr><td><strong>Core Silicon</strong></td><td>Qualcomm Dragonwing™ QRB2210 [cite: 333]</td><td>STM32U585 Core Engine [cite: 333]</td></tr>
             <tr><td><strong>Architecture</strong></td><td>Quad-core Arm® Cortex-A53 up to 2.0 GHz [cite: 333]</td><td>Arm® Cortex-M33 running up to 160 MHz [cite: 333]</td></tr>
@@ -749,11 +786,11 @@
       `
     },
     roboESP32: {
-      title: "MR Robo: Low-Level ESP32 Micro-ROS Core [cite: 12, 59]",
+      title: "MR Robo: Low-Level ESP32 Micro-ROS Core [cite: 12, 30]",
       body: `
         <p>A specialized real-time low-level microcontroller setup designed to read multi-sensor configurations and pass telemetry directly into a distributed ROS 2 network using native micro-ROS firmware nodes[cite: 26, 29, 30].</p>
         
-        <div class="modal-section-title">📊 ESP-WROOM-32 Silicon Matrix [cite: 70, 71]</div>
+        <div class="modal-section-title">📊 ESP-WROOM-32 Silicon Matrix [cite: 70]</div>
         <table class="modal-table">
           <thead><tr><th>Parameter Label</th><th>Hardware Profile Details</th></tr></thead>
           <tbody>
@@ -769,9 +806,9 @@
         <div class="modal-section-title">⚙️ Low-Level Telemetry Execution Matrix</div>
         <ul class="modal-list">
           <li><strong>Micro XRCE-DDS Middleware:</strong> Maps tracking nodes dynamically to higher-level processing environments over high-speed USB Serial pathways[cite: 31, 44].</li>
-          <li><strong>Responsive Kinematics Subsystem:</strong> Ingests twist command metrics to calculate bidirectional PWM signals across dual BTS high-current motor drivers[cite: 32, 33].</li>
+          <li><strong>Responsive Kinematics Subsystem:</strong> Ingests twist command metrics to calculate bidirectional PWM signals across dual BTS high-current motor drivers[cite: 32, 33, 34].</li>
           <li><strong>Inertial Tracking Integration:</strong> Ingests acceleration and orientation metrics directly from an MPU6050 IMU tracking system over I2C data channels[cite: 35, 36].</li>
-          <li><strong>Chassis Instrumentation:</strong> Continuous distance ranging via dual ultrasonic distance sensors paired with an internal ADC divider circuit tracking LiFePO4 battery discharge cycles[cite: 39, 41].</li>
+          <li><strong>Chassis Instrumentation:</strong> Continuous distance ranging via dual ultrasonic distance sensors paired with an internal ADC divider circuit tracking LiFePO4 battery discharge cycles[cite: 38, 39, 41].</li>
         </ul>
       `
     }
