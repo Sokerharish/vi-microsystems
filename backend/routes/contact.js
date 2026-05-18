@@ -63,10 +63,7 @@ const contactValidation = [
   body("firstName").trim().notEmpty().withMessage("First name is required").isLength({ max: 50 }),
   body("lastName").trim().notEmpty().withMessage("Last name is required").isLength({ max: 50 }),
   body("email").trim().notEmpty().withMessage("Email is required").isEmail().withMessage("Invalid email").normalizeEmail(),
-  body("enquiryType").notEmpty().withMessage("Enquiry type is required").isIn([
-    "Product / Services Inquiry", "ECE Internship", "EEE Internship",
-    "CSE Internship", "R&D Consulting", "Other",
-  ]),
+  body("enquiryType").notEmpty().withMessage("Enquiry type is required"),
   body("message").trim().notEmpty().withMessage("Message is required").isLength({ min: 10, max: 2000 }),
 ];
 
