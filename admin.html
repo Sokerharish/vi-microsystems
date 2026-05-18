@@ -162,7 +162,6 @@
 </header>
  
 <main>
-  <!-- STATS -->
   <div class="stats-grid" id="statsGrid">
     <div class="stat-card">
       <span class="stat-icon">📬</span>
@@ -185,12 +184,11 @@
     <div class="stat-card">
       <span class="stat-icon">🎓</span>
       <div class="stat-value" id="statInternship">—</div>
-      <div class="stat-label">Internship Enquiries</div>
+      <div class="stat-label">Campuses / Internships</div>
       <div class="stat-sub">ECE / EEE / CSE</div>
     </div>
   </div>
  
-  <!-- FILTERS -->
   <div class="filters-bar">
     <span class="filter-label">Filter:</span>
     <input class="search-input" type="text" id="searchInput" placeholder="Search by name, email or message..." oninput="filterTable()" />
@@ -202,7 +200,6 @@
     </select>
     <select class="filter-select" id="typeFilter" onchange="filterTable()">
       <option value="">All Types</option>
-      <!-- ── Product Enquiries ── -->
       <option value="6-Axis Collaborative Robot">6-Axis Cobot</option>
       <option value="ROS2 Robot — ESP32">ROS2 Robot — ESP32</option>
       <option value="ROS2 Robot — Jetson Orin Nano">ROS2 Robot — Jetson Orin</option>
@@ -210,17 +207,14 @@
       <option value="ViLaN-05 LAN & Cyber Security Trainer">ViLaN-05 Trainer</option>
       <option value="Product / Services Inquiry">Services Inquiry</option>
       <option value="Custom Product / R&D">Custom / R&D</option>
-      <!-- ── Internship Enquiries ── -->
       <option value="ECE Internship">ECE Internship</option>
       <option value="EEE Internship">EEE Internship</option>
       <option value="CSE Internship">CSE Internship</option>
-      <!-- ── Other ── -->
       <option value="R&D Consulting">R&D Consulting</option>
       <option value="Other">Other</option>
     </select>
   </div>
  
-  <!-- TABLE -->
   <div class="table-container">
     <div class="table-header">
       <div class="table-title">All Submissions</div>
@@ -235,7 +229,6 @@
   </div>
 </main>
  
-<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal" id="modal">
     <button class="modal-close" onclick="closeModalBtn()">✕</button>
@@ -248,7 +241,6 @@
   </div>
 </div>
  
-<!-- TOAST -->
 <div class="toast" id="toast"><span id="toastMsg"></span></div>
  
 <script>
@@ -280,17 +272,18 @@
     document.getElementById("statTotal").textContent = data.length;
     document.getElementById("statNew").textContent = data.filter(d => d.status === "new").length;
  
-    // Count product enquiries (anything NOT internship)
-    const productTypes = ["6-Axis","ROS2","ViLaN","Services","Custom","R&D","Product"];
-    document.getElementById("statProduct").textContent = data.filter(d =>
-      productTypes.some(t => d.enquiryType.includes(t))
+    // Count internship enquiries cleanly
+    const internshipCount = data.filter(d =>
+      d.enquiryType.includes("Internship") || 
+      d.enquiryType.includes("ECE") ||
+      d.enquiryType.includes("EEE") || 
+      d.enquiryType.includes("CSE")
     ).length;
+    document.getElementById("statInternship").textContent = internshipCount;
  
-    // Count internship enquiries
-    document.getElementById("statInternship").textContent = data.filter(d =>
-      d.enquiryType.includes("Internship") || d.enquiryType.includes("ECE") ||
-      d.enquiryType.includes("EEE") || d.enquiryType.includes("CSE")
-    ).length;
+    // Foolproof Fix: Product enquiries are simply Total minus Internships!
+    // This handles general "Product / Services Inquiry" strings flawlessly.
+    document.getElementById("statProduct").textContent = data.length - internshipCount;
   }
  
   // ── Render Table ──
@@ -302,7 +295,7 @@
     }
  
     const rows = data.map(s => {
-      const initials = (s.firstName[0] + s.lastName[0]).toUpperCase();
+      const initials = (s.firstName && s.lastName) ? (s.firstName[0] + s.lastName[0]).toUpperCase() : "VI";
       const date = new Date(s.createdAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
       const time = new Date(s.createdAt).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
       return `
@@ -350,7 +343,7 @@
     return map[status] || `<span class="badge badge-other">${status}</span>`;
   }
  
-  // ── Type Badge — FIXED: handles ALL enquiry types ──
+  // ── Type Badge ──
   function getTypeBadge(type) {
     if (!type) return `<span class="badge badge-other">Unknown</span>`;
  
@@ -359,7 +352,7 @@
     if (type.includes("EEE")) return `<span class="badge badge-eee">⚡ EEE</span>`;
     if (type.includes("CSE")) return `<span class="badge badge-cse">💻 CSE</span>`;
  
-    // Product types — NEW
+    // Product types
     if (type.includes("6-Axis") || type.includes("Cobot") || type.includes("collaborative"))
       return `<span class="badge badge-product">🦾 6-Axis Cobot</span>`;
     if (type.includes("ESP32"))
@@ -379,7 +372,6 @@
     if (type.includes("Consulting"))
       return `<span class="badge badge-rd">💡 Consulting</span>`;
  
-    // Fallback — show actual type text so nothing is hidden
     return `<span class="badge badge-other">${type}</span>`;
   }
  
