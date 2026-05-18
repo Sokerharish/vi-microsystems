@@ -294,7 +294,7 @@
     }
  
     const rows = data.map(s => {
-      // Foolproof calculations to safeguard fields
+      // Foolproof calculations to safeguard raw entries
       const firstInit = s.firstName ? s.firstName[0] : "V";
       const lastInit = s.lastName ? s.lastName[0] : "I";
       const initials = (firstInit + lastInit).toUpperCase();
@@ -392,12 +392,23 @@
  
     const filtered = allSubmissions.filter(s => {
       const matchSearch = !search ||
-        `${s.firstName} ${s.lastName}`.toLowerCase().includes(search) ||
-        s.email.toLowerCase().includes(search) ||
-        s.message.toLowerCase().includes(search) ||
-        s.enquiryType.toLowerCase().includes(search);
+        `${s.firstName || ""} ${s.lastName || ""}`.toLowerCase().includes(search) ||
+        (s.email && s.email.toLowerCase().includes(search)) ||
+        (s.message && s.message.toLowerCase().includes(search)) ||
+        (s.enquiryType && s.enquiryType.toLowerCase().includes(search));
+        
       const matchStatus = !status || s.status === status;
-      const matchType   = !type || s.enquiryType === type;
+      
+      // Flexible lookup match prevents whitespace or encoding mismatches from dropping product rows
+      let matchType = !type;
+      if (type && s.enquiryType) {
+        if (type === "Product / Services Inquiry") {
+          matchType = s.enquiryType.includes("Product") || s.enquiryType.includes("Services");
+        } else {
+          matchType = s.enquiryType.toLowerCase().includes(type.toLowerCase()) || type === s.enquiryType;
+        }
+      }
+      
       return matchSearch && matchStatus && matchType;
     });
  
