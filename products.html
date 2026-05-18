@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VI Microsystems – Products</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0B1B3A;
+    --navy-mid: #142454;
+    --blue: #1A56DB;
+    --blue-light: #3B82F6;
+    --accent: #00D4AA;
+    --accent-dark: #00A882;
+    --white: #FFFFFF;
+    --off-white: #F4F7FF;
+    --gray-100: #E8EDF5;
+    --gray-300: #94A3B8;
+    --gray-600: #475569;
+    --gray-800: #1E293B;
+    --text: #0F172A;
+    --gold: #F59E0B;
+    --orange: #F97316;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Outfit', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(11,27,58,0.97); backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw; height: 68px;
+    border-bottom: 1px solid rgba(0,212,170,0.15);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-mark { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent) 0%, var(--blue-light) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; color: #fff; }
+  .nav-brand { font-weight: 700; font-size: 15px; color: #fff; line-height: 1.2; }
+  .nav-brand span { display: block; font-size: 10px; font-weight: 400; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+  .nav-cta { background: var(--accent); color: var(--navy); border: none; border-radius: 8px; padding: 10px 22px; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 14px; cursor: pointer; text-decoration: none; transition: background 0.2s; display: inline-block; }
+  .nav-cta:hover { background: var(--accent-dark); }
+
+  /* HERO */
+  .products-hero {
+    background: var(--navy); padding: 120px 5vw 80px;
+    position: relative; overflow: hidden;
+  }
+  .products-hero::before {
+    content: '';
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  .hero-glow { position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,170,0.1) 0%, transparent 70%); }
+  .hero-content { position: relative; max-width: 700px; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,212,170,0.12); border: 1px solid rgba(0,212,170,0.3); border-radius: 100px; padding: 6px 16px; font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px; }
+  .hero-h1 { font-size: clamp(36px, 5vw, 64px); font-weight: 900; color: #fff; line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 20px; }
+  .hero-h1 em { font-style: normal; color: var(--accent); }
+  .hero-sub { font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 520px; }
+
+  /* CAROUSEL */
+  .carousel-section { background: var(--navy); padding: 0 0 80px; position: relative; }
+  .carousel-wrapper { position: relative; overflow: hidden; }
+  .carousel-track {
+    display: flex; gap: 24px; padding: 20px 5vw;
+    overflow-x: auto; scroll-behavior: smooth;
+    scrollbar-width: none; -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+  }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-item {
+    flex: 0 0 320px; scroll-snap-align: start;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+    position: relative;
+  }
+  .carousel-item:hover { transform: translateY(-4px); border-color: var(--accent); }
+  .carousel-img {
+    width: 100%; height: 200px; object-fit: cover;
+    background: linear-gradient(135deg, var(--navy-mid), #1a3a6e);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 64px; position: relative; overflow: hidden;
+  }
+  .carousel-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(11,27,58,0.8));
+  }
+  .carousel-body { padding: 20px; }
+  .carousel-cat { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .carousel-name { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .carousel-price { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 600; color: var(--gold); }
+  .carousel-controls { display: flex; justify-content: center; gap: 12px; padding: 20px; }
+  .carousel-btn { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; font-size: 18px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+  .carousel-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--navy); }
+
+  /* FILTER BAR */
+  .filter-section { background: var(--off-white); padding: 40px 5vw; border-bottom: 1px solid var(--gray-100); position: sticky; top: 68px; z-index: 50; }
+  .filter-inner { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .filter-label { font-size: 13px; font-weight: 700; color: var(--gray-600); letter-spacing: 0.5px; }
+  .filter-btn {
+    padding: 8px 20px; border-radius: 100px;
+    border: 1.5px solid var(--gray-100);
+    background: var(--white); color: var(--gray-600);
+    font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .search-box {
+    margin-left: auto; display: flex; align-items: center; gap: 8px;
+    background: var(--white); border: 1.5px solid var(--gray-100);
+    border-radius: 10px; padding: 8px 16px;
+  }
+  .search-box input { border: none; outline: none; font-family: 'Outfit', sans-serif; font-size: 14px; color: var(--text); background: transparent; width: 200px; }
+  .search-box input::placeholder { color: var(--gray-300); }
+
+  /* PRODUCTS GRID */
+  .products-section { padding: 64px 5vw; background: var(--white); }
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 48px; }
+  .section-title { font-size: clamp(28px, 3vw, 40px); font-weight: 800; color: var(--navy); letter-spacing: -1px; }
+  .section-count { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--gray-300); background: var(--off-white); padding: 6px 14px; border-radius: 100px; }
+
+  .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+
+  .product-card {
+    background: var(--white); border: 1.5px solid var(--gray-100);
+    border-radius: 24px; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    position: relative;
+  }
+  .product-card:hover { transform: translateY(-8px); box-shadow: 0 32px 64px rgba(11,27,58,0.12); border-color: var(--accent); }
+  .product-card.featured { border-color: var(--gold); }
+  .product-card.featured::before { content: '⭐ Featured'; position: absolute; top: 16px; right: 16px; background: var(--gold); color: var(--navy); font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 100px; z-index: 1; }
+
+  .product-img {
+    width: 100%; height: 220px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 72px; position: relative; overflow: hidden;
+  }
+  .product-img .img-bg { position: absolute; inset: 0; }
+  .product-img .emoji { position: relative; z-index: 1; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2)); transition: transform 0.3s; }
+  .product-card:hover .emoji { transform: scale(1.1) rotate(-5deg); }
+
+  .product-body { padding: 24px; }
+  .product-cat { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .cat-robots { color: #8B5CF6; }
+  .cat-iot { color: var(--blue); }
+  .cat-pcb { color: var(--orange); }
+  .product-name { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 10px; line-height: 1.3; }
+  .product-desc { font-size: 13px; color: var(--gray-600); line-height: 1.65; margin-bottom: 16px; }
+
+  .product-specs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .spec-tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px; background: var(--off-white); color: var(--gray-600); }
+
+  .product-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--gray-100); }
+  .product-price { font-family: 'JetBrains Mono', monospace; }
+  .price-label { font-size: 10px; color: var(--gray-300); text-transform: uppercase; letter-spacing: 1px; }
+  .price-value { font-size: 20px; font-weight: 700; color: var(--navy); }
+  .price-value span { font-size: 13px; font-weight: 400; color: var(--gray-300); }
+  .price-contact { font-size: 14px; font-weight: 600; color: var(--accent); }
+
+  .enquire-btn {
+    background: var(--navy); color: #fff;
+    border: none; border-radius: 10px; padding: 10px 20px;
+    font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .enquire-btn:hover { background: var(--accent); color: var(--navy); transform: translateY(-1px); }
+
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: #fff; border-radius: 28px; max-width: 600px; width: 100%; overflow: hidden; animation: modalIn 0.3s ease; max-height: 90vh; overflow-y: auto; }
+  @keyframes modalIn { from{opacity:0;transform:scale(0.95)translateY(20px)} to{opacity:1;transform:scale(1)translateY(0)} }
+  .modal-img { width: 100%; height: 240px; display: flex; align-items: center; justify-content: center; font-size: 96px; position: relative; overflow: hidden; }
+  .modal-body { padding: 32px; }
+  .modal-cat { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .modal-name { font-size: 26px; font-weight: 800; color: var(--navy); margin-bottom: 12px; }
+  .modal-desc { font-size: 15px; color: var(--gray-600); line-height: 1.7; margin-bottom: 20px; }
+  .modal-specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+  .modal-spec { background: var(--off-white); border-radius: 10px; padding: 12px; }
+  .modal-spec-label { font-size: 10px; font-weight: 700; color: var(--gray-300); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .modal-spec-value { font-size: 14px; font-weight: 600; color: var(--navy); }
+  .modal-footer { display: flex; gap: 12px; align-items: center; padding-top: 20px; border-top: 1px solid var(--gray-100); }
+  .modal-price-big { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; color: var(--navy); }
+  .modal-enquire { flex: 1; background: var(--navy); color: #fff; border: none; border-radius: 12px; padding: 14px; font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .modal-enquire:hover { background: var(--accent); color: var(--navy); }
+  .modal-close-btn { background: var(--off-white); border: none; color: var(--gray-600); width: 44px; height: 44px; border-radius: 12px; cursor: pointer; font-size: 18px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+  .modal-close-btn:hover { background: var(--gray-100); }
+
+  /* NO RESULTS */
+  .no-results { text-align: center; padding: 80px 20px; display: none; }
+  .no-results.show { display: block; }
+  .no-results-icon { font-size: 48px; margin-bottom: 16px; }
+  .no-results-text { font-size: 18px; font-weight: 600; color: var(--gray-300); }
+
+  /* FOOTER */
+  footer { background: var(--gray-800); color: rgba(255,255,255,0.6); padding: 48px 5vw 32px; }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 28px; }
+  .footer-brand { font-size: 18px; font-weight: 700; color: #fff; }
+  .footer-brand span { display: block; font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.35); margin-top: 2px; }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 13px; }
+  .footer-made span { color: var(--accent); }
+
+  /* HAMBURGER */
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; }
+  .mobile-menu { display: none; position: fixed; top: 68px; left: 0; right: 0; background: rgba(11,27,58,0.98); z-index: 99; flex-direction: column; padding: 20px 5vw 28px; border-bottom: 1px solid rgba(0,212,170,0.15); }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 16px; font-weight: 500; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.06); transition: color 0.2s; }
+  .mobile-menu a:hover { color: var(--accent); }
+
+  @media (max-width: 900px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .products-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .carousel-item { flex: 0 0 280px; }
+    .search-box { display: none; }
+  }
+  @media (max-width: 600px) {
+    .products-grid { grid-template-columns: 1fr; }
+    .modal-specs-grid { grid-template-columns: 1fr; }
+    .filter-section { padding: 20px 4vw; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark">VI</div>
+    <div class="nav-brand">VI Microsystems<span>Pvt Ltd</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="products.html" class="active">Products</a></li>
+    <li><a href="index.html#internship">Internships</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <a href="index.html#contact" class="nav-cta">Get in Touch</a>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="index.html#about">About</a>
+  <a href="products.html">Products</a>
+  <a href="index.html#internship">Internships</a>
+  <a href="index.html#contact">Contact</a>
+</div>
+
+<!-- HERO -->
+<div class="products-hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Our Products</div>
+    <h1 class="hero-h1">Cutting-Edge<br /><em>Electronics & Robotics</em></h1>
+    <p class="hero-sub">From industrial robots to IoT devices and PCB solutions — explore our complete range of electronics products designed for the future.</p>
+  </div>
+</div>
+
+<!-- CAROUSEL -->
+<div class="carousel-section">
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="carousel-item">
+        <div class="carousel-img" style="background:linear-gradient(135deg,#1a1a4e,#2d2d8e)"><span style="font-size:64px;z-index:1;position:relative">🤖</span></div>
+        <div class="carousel-body">
+          <div class="carousel-cat">Robotics</div>
+          <div class="carousel-name">6-Axis Cobot</div>
+          <div class="carousel-price">₹2,50,000</div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="carousel-img" style="background:linear-gradient(135deg,#0a2a1a,#0d4a2e)"><span style="font-size:64px;z-index:1;position:relative">🦾</span></div>
+        <div class="carousel-body">
+          <div class="carousel-cat">Robotics</div>
+          <div class="carousel-name">ROS2 Robot — ESP32</div>
+          <div class="carousel-price">₹45,000</div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="carousel-img" style="background:linear-gradient(135deg,#1a0a2e,#3d1a6e)"><span style="font-size:64px;z-index:1;position:relative">🔬</span></div>
+        <div class="carousel-body">
+          <div class="carousel-cat">Robotics</div>
+          <div class="carousel-name">ROS2 Robot — Jetson Orin</div>
+          <div class="carousel-price">₹1,20,000</div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="carousel-img" style="background:linear-gradient(135deg,#1a0a0a,#4e1a1a)"><span style="font-size:64px;z-index:1;position:relative">📡</span></div>
+        <div class="carousel-body">
+          <div class="carousel-cat">IoT</div>
+          <div class="carousel-name">Smart Sensor Gateway</div>
+          <div class="carousel-price">₹12,000</div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="carousel-img" style="background:linear-gradient(135deg,#0a1a1a,#0a3d3d)"><span style="font-size:64px;z-index:1;position:relative">💡</span></div>
+        <div class="carousel-body">
+          <div class="carousel-cat">IoT</div>
+          <div class="carousel-name">Industrial IoT Kit</div>
+          <div class="carousel-price">₹8,500</div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="carousel-img" style="background:linear-gradient(135deg,#1a1500,#3d3200)"><span style="font-size:64px;z-index:1;position:relative">🖥️</span></div>
+        <div class="carousel-body">
+          <div class="carousel-cat">PCB</div>
+          <div class="carousel-name">Custom PCB Design</div>
+          <div class="carousel-price">Contact Us</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="carousel-controls">
+    <button class="carousel-btn" onclick="scrollCarousel(-1)">←</button>
+    <button class="carousel-btn" onclick="scrollCarousel(1)">→</button>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-section">
+  <div class="filter-inner">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" onclick="filterProducts('all', this)">All Products</button>
+    <button class="filter-btn" onclick="filterProducts('robots', this)">🤖 Robotics</button>
+    <button class="filter-btn" onclick="filterProducts('iot', this)">📡 IoT Devices</button>
+    <button class="filter-btn" onclick="filterProducts('pcb', this)">🖥️ PCB & Electronics</button>
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" placeholder="Search products..." id="searchInput" oninput="searchProducts()" />
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS GRID -->
+<section class="products-section">
+  <div class="section-header">
+    <h2 class="section-title">All Products</h2>
+    <div class="section-count" id="productCount">12 products</div>
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+
+    <!-- ROBOTICS -->
+    <div class="product-card featured" data-category="robots" data-name="6-axis cobot collaborative robot automation">
+      <div class="product-img">
+        <div class="img-bg" style="background:linear-gradient(135deg,#e8edf5,#d0d8f0)"></div>
+        <span class="emoji">🤖</span>
+      </div>
+      <div class="product-body">
+        <div class="product-cat cat-robots">Robotics & Automation</div>
+        <div class="product-name">6-Axis Cobot</div>
+        <div class="product-desc">Collaborative robot arm with 6 degrees of freedom. Ideal for assembly, pick & place, and industrial automation tasks.</div>
+        <div class="product-specs">
+          <span class="spec-tag">6-DOF</span><span class="spec-tag">Payload: 5kg</span>
+          <span class="spec-tag">Reach: 900mm</span><span class="spec-tag">ROS2</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">
+            <div class="price-label">Starting from</div>
+            <div class="price-value">₹2,50,000</div>
+          </div>
+          <button class="enquire-btn" onclick="openModal('cobot')">Enquire →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" data-category="robots" data-name="ros2 robot esp32 mobile robot navigation">
+      <div class="product-img">
+        <div class="img-bg" style="background:linear-gradient(135deg,#e8f5ee,#d0f0dc)"></div>
+        <span class="emoji">🦾</span>
+      </div>
+      <div class="product-body">
+        <div class="product-cat cat-robots">Robotics & Automation</div>
+        <div class="product-name">ROS2 Robot — ESP32</div>
+        <div class="product-desc">Compact mobile robot powered by ESP32 with ROS2 framework. Perfect for research, education, and prototyping.</div>
+        <div class="product-specs">
+          <span class="spec-tag">ESP32</span><span class="spec-tag">ROS2</span>
+          <span class="spec-tag">LIDAR</span><span class="spec-tag">WiFi</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">
+            <div class="price-label">Starting from</div>
+            <div class="price-value">₹45,000</div>
+          </div>
+          <button class="enquire-btn" onclick="openModal('ros2-esp32')">Enquire →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" data-category="robots" data-name="ros2 robot jetson orin AI autonomous navigation">
+      <div class="product-img">
+        <div class="img-bg" style="background:linear-gradient(135deg,#f0e8f5,#e0d0f0)"></div>
+        <span class="emoji">🔬</span>
+      </div>
+      <div class="product-body">
+        <div class="product-cat cat-robots">Robotics & Automation</div>
+        <div class="product-name">ROS2 Robot — Jetson Orin</div>
+        <div class="product-desc">High-performance autonomous robot with NVIDIA Jetson Orin for AI-powered navigation and computer vision tasks.</div>
+        <div class="product-specs">
+          <span class="spec-tag">Jetson Orin</span><span class="spec-tag">ROS2</span>
+          <span class="spec-tag">AI Vision</span><span class="spec-tag">SLAM</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">
+            <div class="price-label">Starting from</div>
+            <div class="price-value">₹1,20,000</div>
+          </div>
+          <button class="enquire-btn" onclick="openModal('ros2-jetson')">Enquire →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card featured" data-category="robots" data-name="ros2 robot uno q mobile education">
+      <div class="product-img">
+        <div class="img-bg" style="background:linear-gradient(135deg,#fff5e8,#ffe8cc)"></div>
+        <span class="emoji">🚗</span>
+      </div>
+      <div class="product-body">
+        <div class="product-cat cat-robots">Robotics & Automation</div>
+        <div class="product-name">ROS2 Robot — UNO Q</div>
+        <div class="product-desc">Entry-level mobile robot based on Arduino UNO with ROS2 support. Ideal for students and beginners in robotics.</div>
+        <div class="product-specs">
+          <span class="spec-tag">Arduino UNO</span><span class="spec-tag">ROS2</span>
+          <span class="spec-tag">Ultrasonic</span><span class="spec-tag">Bluetooth</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">
+            <div class="price-label">Starting from</div>
+            <div class="price-value">₹18,000</div>
+          </div>
+          <button class="enquire-btn" onclick="openModal('ros2-uno')">Enquire →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" data-category="robots" data-name="vilan trainer education robotics lab">
+      <div class="product-img">
+        <div class="img-bg" style="background:linear-gradient(135deg,#e8f5f5,#d0eeee)"></div>
+        <span class="emoji">🎓</span>
+      </div>
+      <div class="product-body">
+        <div class="product-cat cat-robots">Robotics & Automation</div>
+        <div class="product-name">ViLaN-05 Trainer</div>
+        <div class="product-desc">Complete robotics training kit for college labs. Includes hardware, software, and curriculum for hands-on learning.</div>
+        <div class="product-specs">
+          <span class="spec-tag">Lab Kit</span><span class="spec-tag">Curriculum</span>
+          <span class="spec-tag">Multi-platform</span><span class="spec-tag">Support</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">
+            <div class="price-label">Starting from</div>
+            <div class="price-value">₹35,000</div>
+          </div>
+          <button class="enquire-btn" onclick="openModal('vilan')">Enquire →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- IOT -->
+    <div class="product-card" data-category="iot" data-name="smart sensor gateway iot cloud monitoring">
+      <div class="product-img">
+        <div class="img-bg" style="background:linear-gradient(135deg,#e8f0ff,#d0e0ff)"></div>
+        <span class="emoji">📡</span>
+      </div>
+      <div class="product-body">
+        <div class="product-cat cat-iot">IoT Solutions</div>
+        <div class="product-name">Smart Sensor Gateway</div>
+        <div class="product-desc">Industrial-grade IoT gateway supporting multiple protocols. Connect sensors to cloud platforms seamlessly.</div>
+        <div class="product-specs">
+          <span class="spec-tag">MQTT</span><span class="spec-tag">WiFi/4G</span>
+          <span class="spec-tag">AWS IoT</span><span class="spec-tag">Modbus</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">
+            <div class="price-label">Starting from</div>
+            <div class="price-value">₹12,000</div>
+          </div>
+          <button class="enquire-btn" onclick="openModal('gateway')">Enquire →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card featured" data-category="iot" data-name="industrial iot kit esp32 sensors dashboard">
+      <div class="product-img">
+        <div class="img-bg" style="background:linear-gradient(135deg,#e8fff5,#d0ffe8)"></div>
+        <span class="emoji">💡</span>
+      </div>
+      <div class="product-body">
+        <div class="product-cat cat-iot">IoT Solutions</div>
+        <div class="product-name">Industrial IoT Starter Kit</div>
+        <div class="product-desc">Complete IoT development kit with ESP32, multiple sensors, and cloud dashboard. Start your IoT project today.</div>
+        <div class="product-specs">
+          <span class="spec-tag">ESP32</span><span class="spec-tag">10+ Sensors</span>
+          <span class="spec-tag">Dashboard</span><span class="spec-tag">OTA Update</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">
+            <div class="price-label">Starting from</div>
+            <div class="price-value">₹8,500</div>
+          </div>
+          <button class="enquire-btn" onclick="openModal('iot-kit')">Enquire →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" data-category="iot" data-name="energy monitoring system power consumption smart meter">
+      <div class="product-img">
+        <div class="img-bg" style="background:linear-gradient(135deg,#fff8e8,#fff0cc)"></div>
+        <span class="emoji">⚡</span>
+      </div>
+      <div class="product-body">
+        <div class="product-cat cat-iot">IoT Solutions</div>
+        <div class="product-name">Energy Monitor System</div>
+        <div class="product-desc">Real-time energy monitoring with smart alerts, consumption analytics, and automated reporting for industries.</div>
+        <div class="product-specs">
+          <span class="spec-tag">3-Phase</span><span class="spec-tag">Real-time</span>
+          <span class="spec-tag">Alerts</span><span class="spec-tag">Reports</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">
+            <div class="price-label">Starting from</div>
+            <div class="price-value">₹15,000</div>
+          </div>
+          <button class="enquire-btn" onclick="openModal('energy')">Enquire →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PCB -->
+    <div class="product-card" data-category="pcb" data-name="custom pcb design fabrication multilayer">
+      <div class="product-img">
+        <div class="img-bg" style="background:linear-gradient(135deg,#e8f5e8,#d0eed0)"></div>
+        <span class="emoji">🖥️</span>
+      </div>
+      <div class="product-body">
+        <div class="product-cat cat-pcb">PCB & Electronics</div>
+        <div class="product-name">Custom PCB Design</div>
+        <div class="product-desc">End-to-end PCB design service — schematic, layout, DFM review, and fabrication for single to multilayer boards.</div>
+        <div class="product-specs">
+          <span class="spec-tag">Altium</span><span class="spec-tag">KiCad</span>
+          <span class="spec-tag">SMT/THT</span><span class="spec-tag">Multilayer</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">
+            <div class="price-label">Price</div>
+            <div class="price-contact">Contact for Quote</div>
+          </div>
+          <button class="enquire-btn" onclick="openModal('pcb')">Enquire →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" data-category="pcb" data-name="embedded systems development microcontroller ARM STM32">
+      <div class="product-img">
+        <div class="img-bg" style="background:linear-gradient(135deg,#f5e8ff,#ead0ff)"></div>
+        <span class="emoji">🧠</span>
+      </div>
+      <div class="product-body">
+        <div class="product-cat cat-pcb">PCB & Electronics</div>
+        <div class="product-name">Embedded System Development</div>
+        <div class="product-desc">Custom embedded systems using ARM Cortex, STM32, and AVR platforms. From concept to production-ready firmware.</div>
+        <div class="product-specs">
+          <span class="spec-tag">ARM Cortex</span><span class="spec-tag">STM32</span>
+          <span class="spec-tag">RTOS</span><span class="spec-tag">Firmware</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">
+            <div class="price-label">Price</div>
+            <div class="price-contact">Contact for Quote</div>
+          </div>
+          <button class="enquire-btn" onclick="openModal('embedded')">Enquire →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" data-category="pcb" data-name="power electronics SMPS inverter motor drive converter">
+      <div class="product-img">
+        <div class="img-bg" style="background:linear-gradient(135deg,#fff5e8,#ffe0c0)"></div>
+        <span class="emoji">⚙️</span>
+      </div>
+      <div class="product-body">
+        <div class="product-cat cat-pcb">PCB & Electronics</div>
+        <div class="product-name">Power Electronics Module</div>
+        <div class="product-desc">Custom power supply units, DC-DC converters, inverters, and motor drive systems for industrial applications.</div>
+        <div class="product-specs">
+          <span class="spec-tag">SMPS</span><span class="spec-tag">Inverters</span>
+          <span class="spec-tag">Motor Drives</span><span class="spec-tag">Custom</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">
+            <div class="price-label">Price</div>
+            <div class="price-contact">Contact for Quote</div>
+          </div>
+          <button class="enquire-btn" onclick="openModal('power')">Enquire →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" data-category="pcb" data-name="industrial automation PLC SCADA HMI factory">
+      <div class="product-img">
+        <div class="img-bg" style="background:linear-gradient(135deg,#e8f8ff,#c0e8ff)"></div>
+        <span class="emoji">🔩</span>
+      </div>
+      <div class="product-body">
+        <div class="product-cat cat-pcb">PCB & Electronics</div>
+        <div class="product-name">Industrial Automation System</div>
+        <div class="product-desc">Complete PLC programming, SCADA integration, and HMI development for factory automation and process control.</div>
+        <div class="product-specs">
+          <span class="spec-tag">PLC</span><span class="spec-tag">SCADA</span>
+          <span class="spec-tag">HMI</span><span class="spec-tag">Modbus</span>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">
+            <div class="price-label">Price</div>
+            <div class="price-contact">Contact for Quote</div>
+          </div>
+          <button class="enquire-btn" onclick="openModal('automation')">Enquire →</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="no-results" id="noResults">
+    <div class="no-results-icon">🔍</div>
+    <div class="no-results-text">No products found. Try a different search.</div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal" id="modal">
+    <div class="modal-img" id="modalImg"></div>
+    <div class="modal-body">
+      <div class="modal-cat" id="modalCat"></div>
+      <div class="modal-name" id="modalName"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-specs-grid" id="modalSpecs"></div>
+      <div class="modal-footer">
+        <div class="modal-price-big" id="modalPrice"></div>
+        <button class="modal-enquire" id="modalEnquireBtn">📩 Send Enquiry</button>
+        <button class="modal-close-btn" onclick="closeModal()">✕</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div><div class="footer-brand">VI Microsystems Pvt Ltd<span>Electronics & Embedded Systems | Chennai, India</span></div></div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="index.html#internship">Internship</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 VI Microsystems Pvt Ltd. All rights reserved.</div>
+    <div class="footer-made">Crafted with <span>♥</span> in Chennai</div>
+  </div>
+</footer>
+
+<script>
+  // ── Product Data ──────────────────────────────────────────────────────────
+  const products = {
+    'cobot': {
+      emoji: '🤖', bg: 'linear-gradient(135deg,#1a1a4e,#2d2d8e)',
+      cat: 'Robotics & Automation', catClass: 'cat-robots',
+      name: '6-Axis Cobot',
+      desc: 'Our 6-Axis Collaborative Robot offers human-like dexterity with industrial-grade precision. Designed for safe human-robot collaboration, it excels in assembly, welding, pick & place, and quality inspection tasks.',
+      specs: [
+        { label: 'Degrees of Freedom', value: '6 DOF' },
+        { label: 'Payload', value: '5 kg' },
+        { label: 'Reach', value: '900 mm' },
+        { label: 'Repeatability', value: '±0.02 mm' },
+        { label: 'Interface', value: 'ROS2 / Modbus' },
+        { label: 'Power', value: '220V AC' },
+      ],
+      price: '₹2,50,000',
+      enquiryType: '6-Axis Cobot'
+    },
+    'ros2-esp32': {
+      emoji: '🦾', bg: 'linear-gradient(135deg,#0a2a1a,#0d4a2e)',
+      cat: 'Robotics & Automation', catClass: 'cat-robots',
+      name: 'ROS2 Robot — ESP32',
+      desc: 'Compact and affordable mobile robot platform powered by ESP32 microcontroller with full ROS2 framework support. Ideal for research, education, and rapid prototyping of autonomous navigation algorithms.',
+      specs: [
+        { label: 'Controller', value: 'ESP32' },
+        { label: 'Framework', value: 'ROS2 Humble' },
+        { label: 'Sensors', value: 'LIDAR + IMU' },
+        { label: 'Connectivity', value: 'WiFi + Bluetooth' },
+        { label: 'Battery', value: '10,000 mAh' },
+        { label: 'Max Speed', value: '0.5 m/s' },
+      ],
+      price: '₹45,000',
+      enquiryType: 'ROS2 Robot — ESP32'
+    },
+    'ros2-jetson': {
+      emoji: '🔬', bg: 'linear-gradient(135deg,#1a0a2e,#3d1a6e)',
+      cat: 'Robotics & Automation', catClass: 'cat-robots',
+      name: 'ROS2 Robot — Jetson Orin',
+      desc: 'High-performance autonomous robot platform with NVIDIA Jetson Orin NX. Designed for AI-powered navigation, object detection, and complex task execution in real-world environments.',
+      specs: [
+        { label: 'Compute', value: 'NVIDIA Jetson Orin NX' },
+        { label: 'AI Performance', value: '100 TOPS' },
+        { label: 'Framework', value: 'ROS2 + CUDA' },
+        { label: 'Navigation', value: 'SLAM + Nav2' },
+        { label: 'Camera', value: 'Intel RealSense D435' },
+        { label: 'Battery', value: '20,000 mAh' },
+      ],
+      price: '₹1,20,000',
+      enquiryType: 'ROS2 Robot — Jetson Orin'
+    },
+    'ros2-uno': {
+      emoji: '🚗', bg: 'linear-gradient(135deg,#fff5e8,#ffe8cc)',
+      cat: 'Robotics & Automation', catClass: 'cat-robots',
+      name: 'ROS2 Robot — UNO Q',
+      desc: 'Entry-level mobile robot built on Arduino UNO with ROS2 integration. Perfect for students learning robotics fundamentals, line following, obstacle avoidance, and basic navigation.',
+      specs: [
+        { label: 'Controller', value: 'Arduino UNO' },
+        { label: 'Framework', value: 'ROS2 (micro-ROS)' },
+        { label: 'Sensors', value: 'Ultrasonic + IR' },
+        { label: 'Connectivity', value: 'Bluetooth + USB' },
+        { label: 'Motors', value: 'DC + Encoder' },
+        { label: 'Target', value: 'Students & Beginners' },
+      ],
+      price: '₹18,000',
+      enquiryType: 'ROS2 Robot — UNO Q'
+    },
+    'vilan': {
+      emoji: '🎓', bg: 'linear-gradient(135deg,#e8f5f5,#d0eeee)',
+      cat: 'Robotics & Automation', catClass: 'cat-robots',
+      name: 'ViLaN-05 Trainer',
+      desc: 'Comprehensive robotics training system designed for college laboratories. Includes hardware kit, software platform, experiment manual, and curriculum support for hands-on engineering education.',
+      specs: [
+        { label: 'Type', value: 'Lab Training Kit' },
+        { label: 'Experiments', value: '25+ Modules' },
+        { label: 'Software', value: 'Custom IDE' },
+        { label: 'Support', value: '1 Year' },
+        { label: 'Curriculum', value: 'AICTE Aligned' },
+        { label: 'Students', value: 'Up to 30/batch' },
+      ],
+      price: '₹35,000',
+      enquiryType: 'ViLaN-05 Trainer'
+    },
+    'gateway': {
+      emoji: '📡', bg: 'linear-gradient(135deg,#e8f0ff,#d0e0ff)',
+      cat: 'IoT Solutions', catClass: 'cat-iot',
+      name: 'Smart Sensor Gateway',
+      desc: 'Industrial-grade IoT gateway that bridges field devices to cloud platforms. Supports multiple industrial protocols and provides secure, reliable data transmission.',
+      specs: [
+        { label: 'Protocols', value: 'MQTT, Modbus, OPC-UA' },
+        { label: 'Connectivity', value: 'WiFi + 4G + Ethernet' },
+        { label: 'Cloud', value: 'AWS IoT / Azure' },
+        { label: 'I/O Ports', value: '8 Digital + 4 Analog' },
+        { label: 'Storage', value: '32GB Local' },
+        { label: 'Rating', value: 'IP65 Industrial' },
+      ],
+      price: '₹12,000',
+      enquiryType: 'Services Inquiry'
+    },
+    'iot-kit': {
+      emoji: '💡', bg: 'linear-gradient(135deg,#e8fff5,#d0ffe8)',
+      cat: 'IoT Solutions', catClass: 'cat-iot',
+      name: 'Industrial IoT Starter Kit',
+      desc: 'Complete IoT development kit featuring ESP32, 10+ sensors, actuators, and a cloud dashboard. Everything you need to build and deploy your first industrial IoT application.',
+      specs: [
+        { label: 'MCU', value: 'ESP32 (Dual Core)' },
+        { label: 'Sensors', value: '10+ (Temp, Humidity, Gas...)' },
+        { label: 'Dashboard', value: 'Web + Mobile App' },
+        { label: 'Protocol', value: 'MQTT + HTTP' },
+        { label: 'Updates', value: 'OTA Firmware' },
+        { label: 'Battery', value: '3.7V LiPo' },
+      ],
+      price: '₹8,500',
+      enquiryType: 'Services Inquiry'
+    },
+    'energy': {
+      emoji: '⚡', bg: 'linear-gradient(135deg,#fff8e8,#fff0cc)',
+      cat: 'IoT Solutions', catClass: 'cat-iot',
+      name: 'Energy Monitor System',
+      desc: 'Smart energy monitoring system for industrial and commercial applications. Real-time consumption tracking with automated alerts and detailed analytics reports.',
+      specs: [
+        { label: 'Measurement', value: '3-Phase AC Power' },
+        { label: 'Accuracy', value: '±0.5%' },
+        { label: 'Display', value: 'Web Dashboard' },
+        { label: 'Alerts', value: 'SMS + Email' },
+        { label: 'Reports', value: 'Daily/Monthly/Yearly' },
+        { label: 'Connectivity', value: 'WiFi + GSM' },
+      ],
+      price: '₹15,000',
+      enquiryType: 'Services Inquiry'
+    },
+    'pcb': {
+      emoji: '🖥️', bg: 'linear-gradient(135deg,#e8f5e8,#d0eed0)',
+      cat: 'PCB & Electronics', catClass: 'cat-pcb',
+      name: 'Custom PCB Design',
+      desc: 'End-to-end PCB design service from schematic capture to fabrication. Our experienced engineers deliver high-quality, reliable PCBs for any application.',
+      specs: [
+        { label: 'Layers', value: 'Single to 12-Layer' },
+        { label: 'Tools', value: 'Altium Designer, KiCad' },
+        { label: 'Assembly', value: 'SMT + Through-Hole' },
+        { label: 'Min Track', value: '4 mil' },
+        { label: 'Delivery', value: '7-14 Working Days' },
+        { label: 'Quantity', value: 'Prototype to Mass' },
+      ],
+      price: 'Contact for Quote',
+      enquiryType: 'Services Inquiry'
+    },
+    'embedded': {
+      emoji: '🧠', bg: 'linear-gradient(135deg,#f5e8ff,#ead0ff)',
+      cat: 'PCB & Electronics', catClass: 'cat-pcb',
+      name: 'Embedded System Development',
+      desc: 'Custom embedded systems development using ARM Cortex, STM32, and AVR platforms. We deliver complete solutions from concept to production-ready firmware.',
+      specs: [
+        { label: 'Platforms', value: 'ARM, STM32, AVR, PIC' },
+        { label: 'OS', value: 'Bare Metal / RTOS' },
+        { label: 'Protocols', value: 'UART, SPI, I2C, CAN' },
+        { label: 'Tools', value: 'Keil, IAR, GCC' },
+        { label: 'Testing', value: 'Hardware in Loop' },
+        { label: 'Delivery', value: 'As per project scope' },
+      ],
+      price: 'Contact for Quote',
+      enquiryType: 'Services Inquiry'
+    },
+    'power': {
+      emoji: '⚙️', bg: 'linear-gradient(135deg,#fff5e8,#ffe0c0)',
+      cat: 'PCB & Electronics', catClass: 'cat-pcb',
+      name: 'Power Electronics Module',
+      desc: 'Custom power electronics solutions including SMPS, DC-DC converters, inverters, and motor drive systems designed for industrial and consumer applications.',
+      specs: [
+        { label: 'Products', value: 'SMPS, Inverters, Drives' },
+        { label: 'Input', value: '12V - 415V AC/DC' },
+        { label: 'Output', value: 'Custom as per spec' },
+        { label: 'Efficiency', value: 'Up to 97%' },
+        { label: 'Certifications', value: 'CE, RoHS' },
+        { label: 'Delivery', value: '15-30 Working Days' },
+      ],
+      price: 'Contact for Quote',
+      enquiryType: 'Services Inquiry'
+    },
+    'automation': {
+      emoji: '🔩', bg: 'linear-gradient(135deg,#e8f8ff,#c0e8ff)',
+      cat: 'PCB & Electronics', catClass: 'cat-pcb',
+      name: 'Industrial Automation System',
+      desc: 'Complete industrial automation solutions including PLC programming, SCADA development, and HMI design for manufacturing and process industries.',
+      specs: [
+        { label: 'PLC Brands', value: 'Siemens, Allen-Bradley' },
+        { label: 'SCADA', value: 'Wonderware, Ignition' },
+        { label: 'HMI', value: 'Custom Web + Panel' },
+        { label: 'Protocols', value: 'Modbus, Profibus, EtherNet/IP' },
+        { label: 'Support', value: '24/7 Available' },
+        { label: 'Delivery', value: 'As per project scope' },
+      ],
+      price: 'Contact for Quote',
+      enquiryType: 'Services Inquiry'
+    },
+  };
+
+  // ── NAV ───────────────────────────────────────────────────────────────────
+  const hamburger  = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobileMenu");
+  hamburger.addEventListener("click", () => mobileMenu.classList.toggle("open"));
+  window.addEventListener("scroll", () => mobileMenu.classList.remove("open"));
+
+  // ── CAROUSEL ──────────────────────────────────────────────────────────────
+  function scrollCarousel(dir) {
+    const track = document.getElementById("carouselTrack");
+    track.scrollBy({ left: dir * 340, behavior: "smooth" });
+  }
+
+  // ── FILTER ────────────────────────────────────────────────────────────────
+  function filterProducts(cat, btn) {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    const cards = document.querySelectorAll(".product-card");
+    let count = 0;
+    cards.forEach(card => {
+      const show = cat === "all" || card.dataset.category === cat;
+      card.style.display = show ? "block" : "none";
+      if (show) count++;
+    });
+
+    document.getElementById("productCount").textContent = `${count} product${count !== 1 ? "s" : ""}`;
+    document.getElementById("noResults").classList.toggle("show", count === 0);
+  }
+
+  // ── SEARCH ────────────────────────────────────────────────────────────────
+  function searchProducts() {
+    const query = document.getElementById("searchInput").value.toLowerCase();
+    const cards = document.querySelectorAll(".product-card");
+    let count = 0;
+    cards.forEach(card => {
+      const match = card.dataset.name.toLowerCase().includes(query);
+      card.style.display = match ? "block" : "none";
+      if (match) count++;
+    });
+    document.getElementById("productCount").textContent = `${count} product${count !== 1 ? "s" : ""}`;
+    document.getElementById("noResults").classList.toggle("show", count === 0);
+  }
+
+  // ── MODAL ─────────────────────────────────────────────────────────────────
+  function openModal(id) {
+    const p = products[id];
+    if (!p) return;
+
+    document.getElementById("modalImg").innerHTML = `
+      <div style="position:absolute;inset:0;background:${p.bg}"></div>
+      <span style="font-size:96px;position:relative;z-index:1">${p.emoji}</span>`;
+    document.getElementById("modalCat").innerHTML = `<span class="${p.catClass}" style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase">${p.cat}</span>`;
+    document.getElementById("modalName").textContent = p.name;
+    document.getElementById("modalDesc").textContent = p.desc;
+    document.getElementById("modalPrice").textContent = p.price;
+    document.getElementById("modalSpecs").innerHTML = p.specs.map(s => `
+      <div class="modal-spec">
+        <div class="modal-spec-label">${s.label}</div>
+        <div class="modal-spec-value">${s.value}</div>
+      </div>`).join("");
+
+    document.getElementById("modalEnquireBtn").onclick = () => {
+      window.location.href = `index.html#contact`;
+    };
+
+    document.getElementById("modalOverlay").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    document.getElementById("modalOverlay").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  function closeModalOnOverlay(e) {
+    if (e.target === document.getElementById("modalOverlay")) closeModal();
+  }
+
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+</script>
+</body>
+</html>
+```
