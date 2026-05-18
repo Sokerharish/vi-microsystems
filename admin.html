@@ -294,23 +294,31 @@
     }
  
     const rows = data.map(s => {
-      const initials = (s.firstName && s.lastName) ? (s.firstName[0] + s.lastName[0]).toUpperCase() : "VI";
-      const date = new Date(s.createdAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
-      const time = new Date(s.createdAt).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+      // Foolproof calculations to safeguard fields
+      const firstInit = s.firstName ? s.firstName[0] : "V";
+      const lastInit = s.lastName ? s.lastName[0] : "I";
+      const initials = (firstInit + lastInit).toUpperCase();
+      
+      const date = s.createdAt ? new Date(s.createdAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }) : "—";
+      const time = s.createdAt ? new Date(s.createdAt).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" }) : "—";
+      
+      const displayMessage = s.message || "(No message provided)";
+      const displayType = s.enquiryType || "General Enquiry";
+
       return `
         <tr>
           <td>
             <div class="name-cell">
               <div class="avatar">${initials}</div>
               <div>
-                <div class="name-text">${s.firstName} ${s.lastName}</div>
-                <div class="email-text">${s.email}</div>
+                <div class="name-text">${s.firstName || ""} ${s.lastName || "User"}</div>
+                <div class="email-text">${s.email || "—"}</div>
               </div>
             </div>
           </td>
-          <td>${getTypeBadge(s.enquiryType)}</td>
-          <td><div class="msg-preview">${s.message}</div></td>
-          <td>${getStatusBadge(s.status)}</td>
+          <td>${getTypeBadge(displayType)}</td>
+          <td><div class="msg-preview" title="${displayMessage}">${displayMessage}</div></td>
+          <td>${getStatusBadge(s.status || "new")}</td>
           <td>
             <div class="date-text">${date}</div>
             <div class="date-text" style="opacity:0.5">${time}</div>
@@ -408,11 +416,11 @@
       hour: "2-digit", minute: "2-digit", timeZone: "Asia/Kolkata"
     });
  
-    document.getElementById("modalTitle").textContent = `${s.firstName} ${s.lastName}`;
+    document.getElementById("modalTitle").textContent = `${s.firstName || ""} ${s.lastName || "User"}`;
     document.getElementById("modalContent").innerHTML = `
       <div class="modal-row">
         <div class="modal-label">Email</div>
-        <div class="modal-value mono">${s.email}</div>
+        <div class="modal-value mono">${s.email || "—"}</div>
       </div>
       <div class="modal-row">
         <div class="modal-label">Enquiry Type</div>
@@ -420,11 +428,11 @@
       </div>
       <div class="modal-row">
         <div class="modal-label">Full Enquiry Type</div>
-        <div class="modal-value mono" style="font-size:12px;color:rgba(255,255,255,0.5)">${s.enquiryType}</div>
+        <div class="modal-value mono" style="font-size:12px;color:rgba(255,255,255,0.5)">${s.enquiryType || ""}</div>
       </div>
       <div class="modal-row">
         <div class="modal-label">Status</div>
-        <div class="modal-value">${getStatusBadge(s.status)}</div>
+        <div class="modal-value">${getStatusBadge(s.status || "new")}</div>
       </div>
       <div class="modal-row">
         <div class="modal-label">Submitted</div>
@@ -432,7 +440,7 @@
       </div>
       <div class="modal-row">
         <div class="modal-label">Message</div>
-        <div class="modal-msg">${s.message}</div>
+        <div class="modal-msg">${s.message || "(No message provided)"}</div>
       </div>`;
  
     const btn = document.getElementById("modalStatusBtn");
