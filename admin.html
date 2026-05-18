@@ -281,8 +281,7 @@
     ).length;
     document.getElementById("statInternship").textContent = internshipCount;
  
-    // Foolproof Fix: Product enquiries are simply Total minus Internships!
-    // This handles general "Product / Services Inquiry" strings flawlessly.
+    // Product enquiries are simply Total minus Internships!
     document.getElementById("statProduct").textContent = data.length - internshipCount;
   }
  
@@ -352,7 +351,11 @@
     if (type.includes("EEE")) return `<span class="badge badge-eee">⚡ EEE</span>`;
     if (type.includes("CSE")) return `<span class="badge badge-cse">💻 CSE</span>`;
  
-    // Product types
+    // Explicit general backend string tracking
+    if (type === "Product / Services Inquiry" || type.includes("Services") || type.includes("Product"))
+      return `<span class="badge badge-product">📦 Product Inquiry</span>`;
+ 
+    // Product hardware types
     if (type.includes("6-Axis") || type.includes("Cobot") || type.includes("collaborative"))
       return `<span class="badge badge-product">🦾 6-Axis Cobot</span>`;
     if (type.includes("ESP32"))
@@ -364,9 +367,7 @@
     if (type.includes("ViLaN") || type.includes("LAN") || type.includes("Cyber") || type.includes("Networking"))
       return `<span class="badge badge-network">🌐 ViLaN-05</span>`;
  
-    // General types
-    if (type.includes("Services") || type.includes("Product"))
-      return `<span class="badge badge-read">🔧 Services</span>`;
+    // Other types
     if (type.includes("R&D") || type.includes("Custom"))
       return `<span class="badge badge-rd">🔬 R&D</span>`;
     if (type.includes("Consulting"))
