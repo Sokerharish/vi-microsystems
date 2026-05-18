@@ -200,12 +200,12 @@
     </select>
     <select class="filter-select" id="typeFilter" onchange="filterTable()">
       <option value="">All Types</option>
+      <option value="Product / Services Inquiry">Services Inquiry</option>
       <option value="6-Axis Collaborative Robot">6-Axis Cobot</option>
       <option value="ROS2 Robot — ESP32">ROS2 Robot — ESP32</option>
       <option value="ROS2 Robot — Jetson Orin Nano">ROS2 Robot — Jetson Orin</option>
       <option value="ROS2 Robot — Arduino UNO Q">ROS2 Robot — UNO Q</option>
       <option value="ViLaN-05 LAN & Cyber Security Trainer">ViLaN-05 Trainer</option>
-      <option value="Product / Services Inquiry">Services Inquiry</option>
       <option value="Custom Product / R&D">Custom / R&D</option>
       <option value="ECE Internship">ECE Internship</option>
       <option value="EEE Internship">EEE Internship</option>
@@ -274,14 +274,16 @@
  
     // Count internship enquiries cleanly
     const internshipCount = data.filter(d =>
-      d.enquiryType.includes("Internship") || 
-      d.enquiryType.includes("ECE") ||
-      d.enquiryType.includes("EEE") || 
-      d.enquiryType.includes("CSE")
+      d.enquiryType && (
+        d.enquiryType.includes("Internship") || 
+        d.enquiryType.includes("ECE") ||
+        d.enquiryType.includes("EEE") || 
+        d.enquiryType.includes("CSE")
+      )
     ).length;
     document.getElementById("statInternship").textContent = internshipCount;
  
-    // Product enquiries are simply Total minus Internships!
+    // Product enquiries are Total minus Internships
     document.getElementById("statProduct").textContent = data.length - internshipCount;
   }
  
@@ -294,7 +296,6 @@
     }
  
     const rows = data.map(s => {
-      // Foolproof calculations to safeguard raw entries
       const firstInit = s.firstName ? s.firstName[0] : "V";
       const lastInit = s.lastName ? s.lastName[0] : "I";
       const initials = (firstInit + lastInit).toUpperCase();
@@ -353,35 +354,35 @@
   // ── Type Badge ──
   function getTypeBadge(type) {
     if (!type) return `<span class="badge badge-other">Unknown</span>`;
+    const tStr = String(type);
  
     // Internship types
-    if (type.includes("ECE")) return `<span class="badge badge-ece">🎓 ECE</span>`;
-    if (type.includes("EEE")) return `<span class="badge badge-eee">⚡ EEE</span>`;
-    if (type.includes("CSE")) return `<span class="badge badge-cse">💻 CSE</span>`;
+    if (tStr.includes("ECE")) return `<span class="badge badge-ece">🎓 ECE</span>`;
+    if (tStr.includes("EEE")) return `<span class="badge badge-eee">⚡ EEE</span>`;
+    if (tStr.includes("CSE")) return `<span class="badge badge-cse">💻 CSE</span>`;
  
-    // Explicit general backend string tracking
-    if (type === "Product / Services Inquiry" || type.includes("Services") || type.includes("Product"))
+    // General / Fallback Product types
+    if (tStr.includes("Services") || tStr.includes("Product") || tStr.includes("Inquiry"))
       return `<span class="badge badge-product">📦 Product Inquiry</span>`;
  
-    // Product hardware types
-    if (type.includes("6-Axis") || type.includes("Cobot") || type.includes("collaborative"))
+    // Hardware types
+    if (tStr.includes("6-Axis") || tStr.includes("Cobot"))
       return `<span class="badge badge-product">🦾 6-Axis Cobot</span>`;
-    if (type.includes("ESP32"))
+    if (tStr.includes("ESP32"))
       return `<span class="badge badge-robot">🤖 ROS2 ESP32</span>`;
-    if (type.includes("Jetson") || type.includes("Orin"))
+    if (tStr.includes("Jetson") || tStr.includes("Orin"))
       return `<span class="badge badge-robot">🧠 Jetson Orin</span>`;
-    if (type.includes("UNO Q") || type.includes("Arduino"))
+    if (tStr.includes("UNO") || tStr.includes("Arduino"))
       return `<span class="badge badge-robot">⚙️ UNO Q</span>`;
-    if (type.includes("ViLaN") || type.includes("LAN") || type.includes("Cyber") || type.includes("Networking"))
+    if (tStr.includes("ViLaN") || tStr.includes("LAN"))
       return `<span class="badge badge-network">🌐 ViLaN-05</span>`;
  
-    // Other types
-    if (type.includes("R&D") || type.includes("Custom"))
+    if (tStr.includes("R&D") || tStr.includes("Custom"))
       return `<span class="badge badge-rd">🔬 R&D</span>`;
-    if (type.includes("Consulting"))
+    if (tStr.includes("Consulting"))
       return `<span class="badge badge-rd">💡 Consulting</span>`;
  
-    return `<span class="badge badge-other">${type}</span>`;
+    return `<span class="badge badge-other">${tStr}</span>`;
   }
  
   // ── Filter Table ──
@@ -391,21 +392,27 @@
     const type   = document.getElementById("typeFilter").value;
  
     const filtered = allSubmissions.filter(s => {
-      const matchSearch = !search ||
-        `${s.firstName || ""} ${s.lastName || ""}`.toLowerCase().includes(search) ||
-        (s.email && s.email.toLowerCase().includes(search)) ||
-        (s.message && s.message.toLowerCase().includes(search)) ||
-        (s.enquiryType && s.enquiryType.toLowerCase().includes(search));
+      const sName = `${s.firstName || ""} ${s.lastName || ""}`.toLowerCase();
+      const sEmail = (s.email || "").toLowerCase();
+      const sMsg = (s.message || "").toLowerCase();
+      const sType = (s.enquiryType || "").toLowerCase();
+
+      const matchSearch = !search || 
+        sName.includes(search) || 
+        sEmail.includes(search) || 
+        sMsg.includes(search) || 
+        sType.includes(search);
         
       const matchStatus = !status || s.status === status;
       
-      // Flexible lookup match prevents whitespace or encoding mismatches from dropping product rows
+      // COMPLETE REMOVAL OF STRICT STRINGS: If an item belongs to product or internship metrics, pass it natively.
       let matchType = !type;
       if (type && s.enquiryType) {
+        const isInternship = sType.includes("internship") || sType.includes("ece") || sType.includes("eee") || sType.includes("cse");
         if (type === "Product / Services Inquiry") {
-          matchType = s.enquiryType.includes("Product") || s.enquiryType.includes("Services");
+          matchType = !isInternship;
         } else {
-          matchType = s.enquiryType.toLowerCase().includes(type.toLowerCase()) || type === s.enquiryType;
+          matchType = sType.includes(type.toLowerCase()) || type.toLowerCase().includes(sType);
         }
       }
       
@@ -438,7 +445,7 @@
         <div class="modal-value">${getTypeBadge(s.enquiryType)}</div>
       </div>
       <div class="modal-row">
-        <div class="modal-label">Full Enquiry Type</div>
+        <div class="modal-label">Full Enquiry Type Description</div>
         <div class="modal-value mono" style="font-size:12px;color:rgba(255,255,255,0.5)">${s.enquiryType || ""}</div>
       </div>
       <div class="modal-row">
